@@ -5,7 +5,7 @@ package HHS_PROJGR6;
 
 public class App {
     public String getGreeting() {
-        return "Hello world";
+        return "Hello world.";
     }
 
 
