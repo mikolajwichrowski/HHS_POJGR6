@@ -5,10 +5,10 @@ package HHS_PROJGR6;
 
 public class App {
     public String getGreeting() {
-        return "Hello world from group 6.";
+        return "Hello world";
     }
 
-    // Ghallo
+
 
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
