@@ -1,4 +1,4 @@
-package HHS_PROJGR6;
+package HHS_PROJGR6.External;
 
 public enum HotelEventType{
     NONE,        //empty event

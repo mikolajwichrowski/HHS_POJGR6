@@ -1,4 +1,4 @@
-package HHS_PROJGR6;
+package HHS_PROJGR6.External;
 
 import java.util.ArrayList;
 import java.util.HashMap;
