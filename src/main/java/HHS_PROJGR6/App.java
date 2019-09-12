@@ -28,6 +28,7 @@ public class App extends JFrame {
         add(buttonMinus);
 
         // Show window
+        setTitle("HotelSimulatie GR6");
         setLayout(null);
         setResizable(false);
         setSize(d);
