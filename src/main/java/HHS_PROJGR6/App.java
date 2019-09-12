@@ -1,9 +1,44 @@
 package HHS_PROJGR6;
 
-public class App {
+import java.awt.Dimension;
+
+import javax.swing.*;  
+
+public class App extends JFrame {
+    /**
+     * Generated serial id
+     */
+    private static final long serialVersionUID = -2280803615953081532L;
+
+    public App() {
+        // Set dimensions and add canvas to draw the hotel on
+        Dimension d = new Dimension(400, 500);
+        add(new Canvas(d));
+
+        // Add buttons and add dimension to window to fit buttons
+        d.width += 200;
+
+        JButton buttonPlus = new JButton("HTE +");
+        buttonPlus.setBounds(600, 0,100, 40);
+
+        JButton buttonMinus = new JButton("HTE -");
+        buttonMinus.setBounds(600, 50,100, 40);
+ 
+        add(buttonMinus);
+        add(buttonMinus);
+
+        // Show window
+        setLayout(null);
+        setResizable(false);
+        setSize(d);
+        setLayout(null);
+        setVisible(true);
+    }
+
     public static void main(String[] args) {
         // Run Application
         // Show buttons
-        // new Canvas();
+        // new Canvas();    
+        new App();
     }
 }

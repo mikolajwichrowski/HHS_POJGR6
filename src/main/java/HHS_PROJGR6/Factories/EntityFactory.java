@@ -9,7 +9,7 @@ import HHS_PROJGR6.Entities.*;
 */ 
 public class EntityFactory {
     // Constructor
-    EntityFactory() {
+    public EntityFactory() {
 
     }
 
@@ -17,7 +17,6 @@ public class EntityFactory {
     public IEntity createEntity() {
         // Logic for Factory entity.
         // Make sure to implement features by OOSE principles
-
         return new EntityRoom();
     }
 }

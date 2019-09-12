@@ -7,7 +7,7 @@ import HHS_PROJGR6.Interfaces.IFileReader;
 */ 
 public class JsonReader implements IFileReader {
     // Constructor
-    JsonReader() {
+    public JsonReader() {
 
     }
 }
