@@ -6,7 +6,7 @@ public class Hotel {
 
     // Creates a grid from 5x6
     public Hotel(Canvas hotelCanvas) {
-        this.grid = new String[31][19];
+        this.grid = new String[23][13];
         this.hotelCanvas = hotelCanvas;
         hotelCanvas.setGrid(grid);
     }

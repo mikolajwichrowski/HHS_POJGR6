@@ -13,7 +13,7 @@ public class App extends JFrame {
 
     public App() {
         // Set dimensions and add canvas to draw the hotel on
-        Dimension d = new Dimension(1700, 1100);
+        Dimension d = new Dimension(1400, 800);
         Hotel myHotel = new Hotel(new Canvas(d));
         add(myHotel.hotelCanvas);
 
@@ -21,12 +21,12 @@ public class App extends JFrame {
         d.width += 200;
 
         JButton buttonPlus = new JButton("Hotel TijdsEenheid +");
-        buttonPlus.setBounds(1600, 50,200, 80);
+        buttonPlus.setBounds(1175, 50,175, 80);
         buttonPlus.setBackground(Color.DARK_GRAY);
         buttonPlus.setForeground(Color.WHITE);
 
         JButton buttonMinus = new JButton("Hotel TijdsEenheid -");
-        buttonMinus.setBounds(1600, 150,200, 80);
+        buttonMinus.setBounds(1175, 150,175, 80);
         buttonMinus.setBackground(Color.DARK_GRAY);
         buttonMinus.setForeground(Color.WHITE);
 
@@ -48,5 +48,6 @@ public class App extends JFrame {
         // Show buttons
         // new Canvas();
         new App();
+        new Clock();
     }
 }
