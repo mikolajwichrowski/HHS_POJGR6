@@ -1,7 +1,6 @@
 package HHS_PROJGR6;
 
 import java.awt.Dimension;
-
 import javax.swing.*;  
 
 public class App extends JFrame {
@@ -13,7 +12,8 @@ public class App extends JFrame {
     public App() {
         // Set dimensions and add canvas to draw the hotel on
         Dimension d = new Dimension(400, 500);
-        add(new Canvas(d));
+        Hotel myHotel = new Hotel(new Canvas(d));
+        add(myHotel.hotelCanvas);
 
         // Add buttons and add dimension to window to fit buttons
         d.width += 200;
