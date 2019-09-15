@@ -3,46 +3,31 @@ package HHS_PROJGR6.Factories;
 import HHS_PROJGR6.Interfaces.IEntity;
 import HHS_PROJGR6.Entities.*;
 
+/**
+ * The class EntityFactory creates new Entities en return the correct type.
+ */
 
 public class EntityFactory {
 
 
-    // Constructor
-    public EntityFactory() {
+    public static IEntity createEntity(String type) {
+        switch (type) {
 
-    }
+            case "EntityDiner":
+                return new EntityDiner();
 
-    // Action to execute when triggered
-    public static Entity createEntity(Entity type) {
+            case "EntityGuest":
+                return new EntityGuest();
 
-Entity entity = null;
+            case "EntityHouseKeeping":
+                return new EntityHousekeeping();
 
-switch (type) {
+            case "EntityRoom":
+                return new EntityRoom();
 
-    case Entity:
-        entity = new Entity();
-        break;
-
-    case EntityDiner:
-        entity = new EntityDiner();
-        break;
-
-    case EntityGuest:
-        entity = new EntityGuest();
-        break;
-
-    case EntityHousekeeping:
-        entity = new EntityHousekeeping();
-        break;
-
-    case EntityRoom:
-        entity = new EntityRoom();
-        break;
-
+            default:
+                return new Entity();
         }
-        // Logic for Factory entity.
-        // Make sure to implement features by OOSE principles
-        return new EntityRoom();
     }
 }
 
