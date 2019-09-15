@@ -4,8 +4,10 @@ import HHS_PROJGR6.Interfaces.IEntity;
 
 /*
 * Entity class
-*/ 
+*/
+
 public class Entity implements IEntity {
+
     // Constructor
     public Entity() {
 
