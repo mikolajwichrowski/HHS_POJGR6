@@ -5,8 +5,10 @@ import HHS_PROJGR6.Interfaces.IEntity;
 /*
 * Room class
 * Inherits from Entity
-*/ 
+*/
+
 public class EntityRoom extends Entity implements IEntity {
+
     // Constructor
     public EntityRoom() {
 
