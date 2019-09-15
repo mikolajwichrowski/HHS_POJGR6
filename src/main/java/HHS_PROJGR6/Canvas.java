@@ -4,8 +4,8 @@ import java.awt.*;
 import javax.swing.*;
 
 /*
-* Entity class
-*/
+ * Entity class
+ */
 
 public class Canvas extends JPanel {
     public String[][] grid;
@@ -40,7 +40,7 @@ public class Canvas extends JPanel {
             for (String cell : row) {
                 // TODO: Draw grid
                 g.setColor(Color.BLACK);
-                g.drawString("E", currentRow * 50, currentCell * 50);
+                g.drawRect(50, 50, currentCell*50, currentRow*50);
 
                 // Increment onze teller van welke cel in de row we tekenen.
                 currentCell++;

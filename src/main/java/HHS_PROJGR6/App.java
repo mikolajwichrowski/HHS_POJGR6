@@ -11,21 +11,22 @@ public class App extends JFrame {
 
     public App() {
         // Set dimensions and add canvas to draw the hotel on
-        Dimension d = new Dimension(400, 500);
+        Dimension d = new Dimension(900, 750);
         Hotel myHotel = new Hotel(new Canvas(d));
         add(myHotel.hotelCanvas);
+
 
         // Add buttons and add dimension to window to fit buttons
         d.width += 200;
 
         JButton buttonPlus = new JButton("HTE +");
-        buttonPlus.setBounds(600, 0,100, 40);
+        buttonPlus.setBounds(510, 50,100, 40);
 
         JButton buttonMinus = new JButton("HTE -");
-        buttonMinus.setBounds(600, 50,100, 40);
+        buttonMinus.setBounds(510, 100,100, 40);
  
         add(buttonMinus);
-        add(buttonMinus);
+        add(buttonPlus);
 
         // Show window
         setTitle("HotelSimulatie GR6");
