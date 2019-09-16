@@ -6,14 +6,12 @@ import java.awt.*;
 /**
  * Entity class
  */
-
 public class Canvas extends JPanel {
     public String[][] grid;
 
     /**
      * Generated serial id
      */
-
     private static final long serialVersionUID = -2041936094389559508L;
 
     // Constructor
@@ -23,14 +21,18 @@ public class Canvas extends JPanel {
         repaint();
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        drawGrid(g);
+    // TODO: MIKO javadoc
+    public String[][] getGrid() {
+        return grid;
+    }
+
+    // TODO: MIKO javadoc
+    public void setGrid(String[][] grid) {
+        this.grid = grid;
     }
 
     // Draw een grid for hotel.
     private void drawGrid(Graphics g) {
-
         // Loop door elke row heen
         int currentRow = 0;
         for (String[] row : grid) {
@@ -38,12 +40,9 @@ public class Canvas extends JPanel {
             int currentCell = 0;
 
             for (String cell : row) {
-                // TODO: Draw grid
+                // Drawing one square per position
                 g.setColor(Color.BLACK);
                 g.drawRect(50,50, currentRow *50, currentCell * 50);
-
-
-                //g.drawString("E", currentRow * 50, currentCell * 50);
 
                 // Increment onze teller van welke cel in de row we tekenen.
                 currentCell++;
@@ -53,13 +52,13 @@ public class Canvas extends JPanel {
         }
     }
 
+    // TODO: Entiteiten tekenen
+    // public ..... ..... ... (entieiten, graphics)
 
-    public String[][] getGrid() {
-        return grid;
-    }
-
-    public void setGrid(String[][] grid) {
-        this.grid = grid;
+    // Dit aan het einde laten staan svp
+    @Override
+    protected void paintComponent(Graphics g) {
+        drawGrid(g);
     }
 }
 
