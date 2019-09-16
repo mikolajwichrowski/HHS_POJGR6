@@ -2,6 +2,8 @@ package HHS_PROJGR6.Entities;
 
 import HHS_PROJGR6.Interfaces.IEntity;
 
+import java.awt.*;
+
 /*
 * Entity class
 */
