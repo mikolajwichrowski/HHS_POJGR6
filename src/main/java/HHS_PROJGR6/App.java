@@ -1,6 +1,7 @@
 package HHS_PROJGR6;
 
 import java.awt.Dimension;
+
 import javax.swing.*;  
 
 public class App extends JFrame {
@@ -11,22 +12,20 @@ public class App extends JFrame {
 
     public App() {
         // Set dimensions and add canvas to draw the hotel on
-        Dimension d = new Dimension(900, 750);
-        Hotel myHotel = new Hotel(new Canvas(d));
-        add(myHotel.hotelCanvas);
-
+        Dimension d = new Dimension(400, 500);
+        add(new Canvas(d));
 
         // Add buttons and add dimension to window to fit buttons
         d.width += 200;
 
         JButton buttonPlus = new JButton("HTE +");
-        buttonPlus.setBounds(510, 50,100, 40);
+        buttonPlus.setBounds(600, 0,100, 40);
 
         JButton buttonMinus = new JButton("HTE -");
-        buttonMinus.setBounds(510, 100,100, 40);
+        buttonMinus.setBounds(600, 50,100, 40);
  
         add(buttonMinus);
-        add(buttonPlus);
+        add(buttonMinus);
 
         // Show window
         setTitle("HotelSimulatie GR6");
@@ -44,7 +43,3 @@ public class App extends JFrame {
         new App();
     }
 }
-
-
-
-
