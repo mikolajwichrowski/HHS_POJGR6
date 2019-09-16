@@ -5,8 +5,10 @@ import HHS_PROJGR6.Interfaces.IEntity;
 /*
 * Housekeeping class
 * Inherits from Entity
-*/ 
+*/
+
 public class EntityHousekeeping extends Entity implements IEntity {
+
     // Constructor
     public EntityHousekeeping() {
 
