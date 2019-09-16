@@ -7,6 +7,9 @@ import java.awt.*;
  * Entity class
  */
 public class Canvas extends JPanel {
+    /**
+     * Our grid containing ....
+     */
     public String[][] grid;
 
     /**
@@ -14,24 +17,36 @@ public class Canvas extends JPanel {
      */
     private static final long serialVersionUID = -2041936094389559508L;
 
-    // Constructor
-    public Canvas(Dimension d) {
-        setSize(d);
+    /**
+     * 
+     * @param dimension
+     */
+    public Canvas(Dimension dimension) {
+        setSize(dimension);
         setBackground(Color.BLUE);
         repaint();
     }
 
-    // TODO: MIKO javadoc
+    /**
+     * 
+     * @return Two dimensional string array with the grid
+     */
     public String[][] getGrid() {
         return grid;
     }
 
-    // TODO: MIKO javadoc
+    /**
+     * 
+     * @param grid
+     */
     public void setGrid(String[][] grid) {
         this.grid = grid;
     }
 
-    // Draw een grid for hotel.
+    /**
+     * 
+     * @param g
+     */
     private void drawGrid(Graphics g) {
         // Loop door elke row heen
         int currentRow = 0;
@@ -55,7 +70,9 @@ public class Canvas extends JPanel {
     // TODO: Entiteiten tekenen
     // public ..... ..... ... (entieiten, graphics)
 
-    // Dit aan het einde laten staan svp
+    /**
+     * We are overriding the paint method because we want to draw our own elements in a specific order.
+     */
     @Override
     protected void paintComponent(Graphics g) {
         drawGrid(g);

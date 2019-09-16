@@ -14,23 +14,33 @@ public class Entity implements IEntity {
     private int XPosition;
     private int YPosition;
 
-    // Constructor
+    /**
+     * 
+     */
     public Entity() {
         // TODO: Kijk maar of het nodig is
     }
 
-    // Action to execute when triggered
+    /**
+     * Action to execute when triggered
+     * 
+     * 
+     */
     public void doAction() {
         // Logic for entity.
         // Make sure to implement features by OOSE principles
         // NOT TO DO : hier komen de algoritmes, afblijven
     }
 
-    public void drawEntity(Graphics g) 
+    /**
+     * 
+     * @param graphics
+     */
+    public void drawEntity(Graphics graphics) 
     {
         // TODO: Teken mij :)
-        g.setColor(Color.RED);
-        g.drawRect(50,50, 50, 50);
+        graphics.setColor(Color.RED);
+        graphics.drawRect(50,50, 50, 50);
     }
 
     // TODO: getters, setters
