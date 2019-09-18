@@ -12,30 +12,43 @@ import java.awt.*;
 */
 
 public class Entity implements IEntity {
-    // TODO: dit is belangrijk
     private int XPosition;
     private int YPosition;
 
     // Constructor
     public Entity() {
-        // TODO: Kijk maar of het nodig is
+        // Start positie entiteit
+        XPosition = 50;
+        YPosition = 600;
     }
 
     // Action to execute when triggered
     public void doAction() {
+        if (XPosition == 50) {
+            XPosition += 100;
+        }
+
         // Logic for entity.
         // Make sure to implement features by OOSE principles
-        // NOT TO DO : hier komen de algoritmes, afblijven
+        // NOT TO DO : hier komen de algoritmes, afblijven HAHA
+
+        // I verander aan de hand van waar ik ben
     }
 
-    public void drawEntity(Graphics g) 
-    {
+    public void drawEntity(Graphics g) {
         // TODO: Teken mij :)
         g.setColor(Color.RED);
-        g.drawRect(50,50, 50, 50);
+        g.drawRect(XPosition, YPosition, 50, 50);
     }
 
-    // TODO: getters, setters
+
+    public int getXPosition() {
+        return XPosition;
+    }
+
+    public int getYPosition() {
+        return YPosition;
+    }
 }
 
 
