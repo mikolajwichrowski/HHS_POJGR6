@@ -19,11 +19,6 @@ public class Hotel implements HotelEventListener {
     /**
      * 
      */
-    public String[][] grid;
-
-    /**
-     * 
-     */
     public Entity[] drawableEntities;
 
     /**
@@ -57,4 +52,4 @@ public class Hotel implements HotelEventListener {
         }
         // What will hotel do if its being called upon?
     }
-}git
+}
