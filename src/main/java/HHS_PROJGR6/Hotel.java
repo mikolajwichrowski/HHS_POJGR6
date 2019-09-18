@@ -14,12 +14,12 @@ public class Hotel implements HotelEventListener {
     /**
      * 
      */
-    public Canvas hotelCanvas;
+    private Canvas hotelCanvas;
 
     /**
      * 
      */
-    public Entity[] drawableEntities;
+    // private Entity[] drawableEntities;
 
     /**
      * Hotel class
@@ -33,8 +33,8 @@ public class Hotel implements HotelEventListener {
      */
     public Hotel(Canvas hotelCanvas) {
         this.hotelCanvas = hotelCanvas;
-        hotelCanvas.setWidth(23);
-        hotelCanvas.setHeight(13);
+        hotelCanvas.setGridWidth(20);
+        hotelCanvas.setGridHeight(20);
 
         // System.out.println(new JsonReader("hotel(1).layout").getJsonObject());
 
@@ -45,10 +45,14 @@ public class Hotel implements HotelEventListener {
         // new Thread(eventManager).start();
     }
 
+    public Canvas getHotelCanvas() {
+        return hotelCanvas;
+    }
+
     @Override
     public void Notify(HotelEvent event) {
         if (event.Type == HotelEventType.EVACUATE) {
-            hotelCanvas.setWidth(5);
+            hotelCanvas.setGridWidth(5);
         }
         // What will hotel do if its being called upon?
     }

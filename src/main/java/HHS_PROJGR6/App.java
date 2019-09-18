@@ -25,7 +25,8 @@ public class App extends JFrame {
         // Set dimensions and add canvas to draw the hotel on
         Dimension d = new Dimension(1400, 800);
         Hotel myHotel = new Hotel(new Canvas(d));
-        add(myHotel.hotelCanvas);
+
+        add(myHotel.getHotelCanvas());
 
         // Add buttons and add dimension to window to fit buttons
         d.width += 200;
