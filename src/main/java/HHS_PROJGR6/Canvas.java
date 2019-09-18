@@ -34,10 +34,10 @@ public class Canvas extends JPanel {
      */
     public Canvas(Dimension d) {
         // Set sizes
-        height = 0;
-        width = 0;
+        this.height = 0;
+        this.width = 0;
+
         setSize(d);
-        setBackground(Color.BLUE);
     }
 
     /**
@@ -46,8 +46,8 @@ public class Canvas extends JPanel {
      */
     private void drawGrid(Graphics g) {
         // Loop door elke row heen
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
+        for (int i = 1; i <= this.height; i++) {
+            for (int j = 1; j <= this.width; j++) {
                 g.setColor(Color.BLACK);
                 g.drawRect(50, 50, i * 50, j * 50);
             }
@@ -113,6 +113,9 @@ public class Canvas extends JPanel {
         repaint();
     }
 
+    /**
+     * 
+     */
     @Override
     protected void paintComponent(Graphics g) {
         drawGrid(g);

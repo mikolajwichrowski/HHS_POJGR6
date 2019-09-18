@@ -22,36 +22,34 @@ public class App extends JFrame {
      */
     public App() {
         // Set dimensions and add canvas to draw the hotel on
+        // Set dimensions and add canvas to draw the hotel on
         Dimension d = new Dimension(1400, 800);
         Hotel myHotel = new Hotel(new Canvas(d));
-
-        // Add canvas to JPanel
         add(myHotel.hotelCanvas);
 
         // Add buttons and add dimension to window to fit buttons
         d.width += 200;
 
-        JButton buttonPlus = new JButton("HTE +");
-        buttonPlus.setBounds(600, 0, 100, 40);
+        JButton buttonPlus = new JButton("Hotel TijdsEenheid +");
+        buttonPlus.setBounds(1175, 50, 175, 80);
+        buttonPlus.setBackground(Color.DARK_GRAY);
+        buttonPlus.setForeground(Color.WHITE);
 
-        // Button decrease definition
         JButton buttonMinus = new JButton("Hotel TijdsEenheid -");
         buttonMinus.setBounds(1175, 150, 175, 80);
         buttonMinus.setBackground(Color.DARK_GRAY);
         buttonMinus.setForeground(Color.WHITE);
 
-        // TODO: add input box for HTE
-
-        // Adds buttons
         add(buttonPlus);
         add(buttonMinus);
 
         // Show window
         setTitle("HotelSimulatie GR6");
         setLayout(null);
-        setResizable(false);
+        setResizable(true);
         setSize(d);
         setLayout(null);
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
