@@ -20,5 +20,3 @@ public class EntityRoom extends Entity implements IEntity {
         // Make sure to implement features by OOSE principles
     }
 }
-
-

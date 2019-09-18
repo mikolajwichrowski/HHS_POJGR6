@@ -8,26 +8,21 @@ plugins {
 
     // Apply the application plugin to add support for building a CLI application
     application
-
-    // Apply plugin for code coverage
-    jacoco
 }
 
 repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
-    jcenter()
+    mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
     // This dependencies are used by the application.
-    implementation("com.google.guava:guava:28.0-jre")
-    implementation("com.github.cliftonlabs:json-simple:3.1.0")
+    implementation("com.googlecode.json-simple:json-simple:1.1.1")
 
     // Use JUnit test framework
     testImplementation("junit:junit:4.12")
-
-
 }
 
 application {

@@ -49,7 +49,6 @@ public class Entity implements HotelEventListener, IEntity {
         g.drawRect(XPosition, YPosition, 50, 50);
     }
 
-
     public int getXPosition() {
         return XPosition;
     }
@@ -64,5 +63,3 @@ public class Entity implements HotelEventListener, IEntity {
 
     }
 }
-
-

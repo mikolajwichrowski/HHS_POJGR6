@@ -1,17 +1,15 @@
 package HHS_PROJGR6;
 
 import javax.swing.*;
-
 import HHS_PROJGR6.External.HotelEventManager;
-
 import java.awt.*;
 
 /**
  * App class
  * 
- * Used as the application entry class. 
- * This class is part of the main only its a bit neater because insteat of running the application from a method
- * we run it from an object.
+ * Used as the application entry class. This class is part of the main only its
+ * a bit neater because insteat of running the application from a method we run
+ * it from an object.
  */
 public class App extends JFrame {
     /**
@@ -34,11 +32,11 @@ public class App extends JFrame {
         d.width += 200;
 
         JButton buttonPlus = new JButton("HTE +");
-        buttonPlus.setBounds(600, 0,100, 40);
+        buttonPlus.setBounds(600, 0, 100, 40);
 
         // Button decrease definition
         JButton buttonMinus = new JButton("Hotel TijdsEenheid -");
-        buttonMinus.setBounds(1175, 150,175, 80);
+        buttonMinus.setBounds(1175, 150, 175, 80);
         buttonMinus.setBackground(Color.DARK_GRAY);
         buttonMinus.setForeground(Color.WHITE);
 
@@ -55,12 +53,6 @@ public class App extends JFrame {
         setSize(d);
         setLayout(null);
         setVisible(true);
-
-        // Start Events thread
-        HotelEventManager eventManager = new HotelEventManager();
-        eventManager.register(myHotel);
-        eventManager.changeSpeed(2);
-        new Thread(eventManager).start();
     }
 
     /**
@@ -71,7 +63,7 @@ public class App extends JFrame {
     public static void main(String[] args) {
         // Run Application
         // Show buttons
-        // new Canvas();    
+        // new Canvas();
         new App();
         // new Clock();
     }

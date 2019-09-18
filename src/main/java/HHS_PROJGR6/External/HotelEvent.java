@@ -11,10 +11,10 @@ public class HotelEvent {
 
     public int Time;
 
-    //Data is GuestID + General type data such as Number of Stars
+    // Data is GuestID + General type data such as Number of Stars
     public Map<String, String> Data;
 
-    HotelEvent(HotelEventType _type, String _message, int _time, HashMap<String, String> _data){
+    HotelEvent(HotelEventType _type, String _message, int _time, HashMap<String, String> _data) {
         Type = _type;
         Message = _message;
         Time = _time;
@@ -22,8 +22,7 @@ public class HotelEvent {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Event: " + Type;
     }
 }
-
