@@ -3,13 +3,15 @@ package HHS_PROJGR6.Entities;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import HHS_PROJGR6.External.HotelEvent;
+import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.Interfaces.IEntity;
 
 /*
 * Entity class
 */
 
-public class Entity implements IEntity {
+public class Entity implements HotelEventListener, IEntity {
     // TODO: dit is belangrijk
     private int XPosition;
     private int YPosition;
@@ -36,11 +38,16 @@ public class Entity implements IEntity {
      * 
      * @param graphics
      */
-    public void drawEntity(Graphics graphics) 
-    {
+    public void drawEntity(Graphics graphics) {
         // TODO: Teken mij :)
         graphics.setColor(Color.RED);
-        graphics.drawRect(50,50, 50, 50);
+        graphics.drawRect(50, 50, 50, 50);
+    }
+
+    @Override
+    public void Notify(HotelEvent event) {
+        // TODO Auto-generated method stub
+
     }
 
     // TODO: getters, setters

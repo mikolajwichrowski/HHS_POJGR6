@@ -8,10 +8,8 @@ import java.util.Calendar;
 
 /**
  * bron: https://www.youtube.com/watch?v=wznbvBuf8ys
- *
+ * Timer is een leuk extratje voor de weergave
  */
-
-// ff uitzoeken hoe ik hem straks aan de bestande JFrame kan toepassen
 public class Clock extends JFrame {
 
     private static final long serialVersionUID = 1L;

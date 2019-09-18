@@ -23,7 +23,6 @@ public class Canvas extends JPanel {
      */
     public Canvas(Dimension dimension) {
         setSize(dimension);
-        setBackground(Color.BLUE);
         repaint();
     }
 

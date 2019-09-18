@@ -1,6 +1,9 @@
 package HHS_PROJGR6;
 
 import javax.swing.*;
+
+import HHS_PROJGR6.External.HotelEventManager;
+
 import java.awt.*;
 
 /**
@@ -11,7 +14,6 @@ import java.awt.*;
  * we run it from an object.
  */
 public class App extends JFrame {
-
     /**
      * Generated serial id
      */
@@ -45,6 +47,8 @@ public class App extends JFrame {
         buttonMinus.setBackground(Color.DARK_GRAY);
         buttonMinus.setForeground(Color.WHITE);
 
+        // TODO: add input box for HTE
+
         // Adds buttons
         add(buttonPlus);
         add(buttonMinus);
@@ -57,6 +61,12 @@ public class App extends JFrame {
         setLayout(null);
         super.setLocationRelativeTo(null);
         setVisible(true);
+
+        // Start Events thread
+        HotelEventManager eventManager = new HotelEventManager();
+        eventManager.register(myHotel);
+        eventManager.changeSpeed(2);
+        new Thread(eventManager).start();
     }
 
     /**
@@ -69,6 +79,6 @@ public class App extends JFrame {
         // Show buttons
         // new Canvas();
         new App();
-        new Clock();
+        // new Clock();
     }
 }
