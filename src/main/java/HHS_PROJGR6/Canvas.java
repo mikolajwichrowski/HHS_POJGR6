@@ -7,6 +7,9 @@ import java.awt.*;
  * Entity class
  */
 public class Canvas extends JPanel {
+    /**
+     * Our grid containing ....
+     */
     public String[][] grid;
     public Entity[] drawableEntities;
 
@@ -14,6 +17,7 @@ public class Canvas extends JPanel {
      * Generated serial id
      */
     private static final long serialVersionUID = -2041936094389559508L;
+
     // Constructor
     public Canvas(Dimension d) {
         grid = new String[0][0];
@@ -21,11 +25,13 @@ public class Canvas extends JPanel {
         setBackground(Color.BLUE);
         repaint();
     }
+
     @Override
     protected void paintComponent(Graphics g) {
         drawGrid(g);
         drawableEntity(g);
     }
+    
     // Draw een grid for hotel.
     private void drawGrid(Graphics g) {
         // Loop door elke row heen

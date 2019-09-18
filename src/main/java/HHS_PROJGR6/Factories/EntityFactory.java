@@ -2,6 +2,7 @@ package HHS_PROJGR6.Factories;
 
 import HHS_PROJGR6.Interfaces.IEntity;
 import HHS_PROJGR6.Entities.*;
+import HHS_PROJGR6.Enums.EntityType;
 
 /**
  * The sources below have been used to design the factory.
@@ -12,25 +13,26 @@ import HHS_PROJGR6.Entities.*;
 public class EntityFactory {
 
     /**
-     *  Below switch method creates a String Entity type and returns the new object.
-     *  Each Entity is a place on the screen.
-     *  The interface will tell them what to do because the classes inherits the interface IEntity.
+     * Below switch method creates a String Entity type and returns the new object.
+     * Each Entity is a place on the screen.
+     * The interface will tell them what to do because the classes inherits the interface IEntity.
+     * 
+     * @param type is from Enum EntityType
+     * @return IEntity
      */
-
-    public static IEntity createEntity (String type) {
-
+    public static IEntity createEntity (EntityType type) {
+        // What type of entity do we want to generate
         switch (type) {
-
-            case "EntityDiner":
+            case ENTITY_DINER:
                 return new EntityDiner();
 
-            case "EntityGuest":
+            case ENTITY_GUEST:
                 return new EntityGuest();
 
-            case "EntityHouseKeeping":
+            case ENTITY_HOUSEKEEPING:
                 return new EntityHousekeeping();
 
-            case "EntityRoom":
+            case ENTITY_ROOM:
                 return new EntityRoom();
 
             default:

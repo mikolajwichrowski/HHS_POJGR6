@@ -19,7 +19,6 @@ public class HotelEvent {
         Message = _message;
         Time = _time;
         Data = _data;
-
     }
 
     @Override

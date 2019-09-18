@@ -1,15 +1,27 @@
 package HHS_PROJGR6;
 
-import java.awt.Dimension;
+import javax.swing.*;
 
-import javax.swing.*;  
+import HHS_PROJGR6.External.HotelEventManager;
 
+import java.awt.*;
+
+/**
+ * App class
+ * 
+ * Used as the application entry class. 
+ * This class is part of the main only its a bit neater because insteat of running the application from a method
+ * we run it from an object.
+ */
 public class App extends JFrame {
     /**
      * Generated serial id
      */
     private static final long serialVersionUID = -2280803615953081532L;
 
+    /**
+     * Constructor
+     */
     public App() {
         // Set dimensions and add canvas to draw the hotel on
         Dimension d = new Dimension(1400, 800);
@@ -24,10 +36,16 @@ public class App extends JFrame {
         JButton buttonPlus = new JButton("HTE +");
         buttonPlus.setBounds(600, 0,100, 40);
 
-        JButton buttonMinus = new JButton("HTE -");
-        buttonMinus.setBounds(600, 50,100, 40);
- 
-        add(buttonMinus);
+        // Button decrease definition
+        JButton buttonMinus = new JButton("Hotel TijdsEenheid -");
+        buttonMinus.setBounds(1175, 150,175, 80);
+        buttonMinus.setBackground(Color.DARK_GRAY);
+        buttonMinus.setForeground(Color.WHITE);
+
+        // TODO: add input box for HTE
+
+        // Adds buttons
+        add(buttonPlus);
         add(buttonMinus);
 
         // Show window
@@ -37,12 +55,24 @@ public class App extends JFrame {
         setSize(d);
         setLayout(null);
         setVisible(true);
+
+        // Start Events thread
+        HotelEventManager eventManager = new HotelEventManager();
+        eventManager.register(myHotel);
+        eventManager.changeSpeed(2);
+        new Thread(eventManager).start();
     }
 
+    /**
+     * Application entry point
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
         // Run Application
         // Show buttons
         // new Canvas();    
         new App();
+        // new Clock();
     }
 }
