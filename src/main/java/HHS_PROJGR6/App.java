@@ -25,9 +25,7 @@ public class App extends JFrame {
     public App() {
         // Set dimensions and add canvas to draw the hotel on
         Dimension d = new Dimension(1400, 800);
-        Hotel myHotel = new Hotel(
-            new Canvas(d)
-        );
+        Hotel myHotel = new Hotel(new Canvas(d));
 
         // Add canvas to JPanel
         add(myHotel.hotelCanvas);
@@ -35,11 +33,8 @@ public class App extends JFrame {
         // Add buttons and add dimension to window to fit buttons
         d.width += 200;
 
-        // Button add tempo definition
-        JButton buttonPlus = new JButton("Hotel TijdsEenheid +");
-        buttonPlus.setBounds(1175, 50,175, 80);
-        buttonPlus.setBackground(Color.DARK_GRAY);
-        buttonPlus.setForeground(Color.WHITE);
+        JButton buttonPlus = new JButton("HTE +");
+        buttonPlus.setBounds(600, 0,100, 40);
 
         // Button decrease definition
         JButton buttonMinus = new JButton("Hotel TijdsEenheid -");
@@ -53,13 +48,12 @@ public class App extends JFrame {
         add(buttonPlus);
         add(buttonMinus);
 
-        // Shows window with title and other parameters
+        // Show window
         setTitle("HotelSimulatie GR6");
         setLayout(null);
-        setResizable(true);
+        setResizable(false);
         setSize(d);
         setLayout(null);
-        super.setLocationRelativeTo(null);
         setVisible(true);
 
         // Start Events thread
@@ -77,7 +71,7 @@ public class App extends JFrame {
     public static void main(String[] args) {
         // Run Application
         // Show buttons
-        // new Canvas();
+        // new Canvas();    
         new App();
         // new Clock();
     }

@@ -1,5 +1,6 @@
 package HHS_PROJGR6;
 
+import HHS_PROJGR6.Entities.Entity;
 import HHS_PROJGR6.External.HotelEvent;
 import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.External.HotelEventManager;
@@ -17,6 +18,8 @@ public class Hotel implements HotelEventListener {
      * 
      */
     public String[][] grid;
+    public Entity[] drawableEntities;
+
 
     /**
      * Hotel class
@@ -28,22 +31,22 @@ public class Hotel implements HotelEventListener {
      * 
      * @param hotelCanvas
      */
-    public Hotel(Canvas hotelCanvas) {
+    public Hotel(Canvas hotelCanvas) 
+    {
 
         // Set grid sizes
         this.grid = new String[23][13];
-
         // Agregate, hotel contains a canvas
         this.hotelCanvas = hotelCanvas;
-
         // Set grid on canvas
         hotelCanvas.setGrid(grid);
+        hotelCanvas.repaint();
 
-        // TODO: Entities .... (Goed nadenken)
     }
 
     @Override
-    public void Notify(HotelEvent event) {
+    public void Notify(HotelEvent event) 
+    {
         System.out.println("From hotel: \n" + event.Message);
 
 
