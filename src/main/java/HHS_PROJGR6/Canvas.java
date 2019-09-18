@@ -12,12 +12,12 @@ public class Canvas extends JPanel {
     /**
      * 
      */
-    private Integer height;
+    private Integer gridHeight;
 
     /**
      * 
      */
-    private Integer width;
+    private Integer gridWidth;
 
     /**
      * 
@@ -34,10 +34,12 @@ public class Canvas extends JPanel {
      */
     public Canvas(Dimension d) {
         // Set sizes
-        this.height = 0;
-        this.width = 0;
+        this.gridHeight = 10;
+        this.gridWidth = 10;
 
         setSize(d);
+        setBackground(Color.BLUE);
+        repaint();
     }
 
     /**
@@ -46,10 +48,10 @@ public class Canvas extends JPanel {
      */
     private void drawGrid(Graphics g) {
         // Loop door elke row heen
-        for (int i = 1; i <= this.height; i++) {
-            for (int j = 1; j <= this.width; j++) {
+        for (int i = 1; i <= this.gridHeight; i++) {
+            for (int j = 1; j <= this.gridWidth; j++) {
                 g.setColor(Color.BLACK);
-                g.drawRect(50, 50, i * 50, j * 50);
+                g.drawRect(30, 30, i * 30, j * 30);
             }
         }
     }
@@ -71,30 +73,30 @@ public class Canvas extends JPanel {
     /**
      * 
      */
-    public int getHeight() {
-        return height;
+    public int getGridHeight() {
+        return gridHeight;
     }
 
     /**
      * 
      */
-    public void setHeight(int height) {
-        this.height = height;
+    public void setGridHeight(int height) {
+        this.gridHeight = height;
         repaint();
     }
 
     /**
      * 
      */
-    public int getWidth() {
-        return width;
+    public int getGridWidth() {
+        return gridWidth;
     }
 
     /**
      * 
      */
-    public void setWidth(int width) {
-        this.width = width;
+    public void setGridWidth(int width) {
+        this.gridWidth = width;
         repaint();
     }
 
@@ -119,6 +121,6 @@ public class Canvas extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         drawGrid(g);
-        drawableEntity(g);
+        // drawableEntity(g);
     }
 }
