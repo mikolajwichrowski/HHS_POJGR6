@@ -4,54 +4,65 @@ import HHS_PROJGR6.Interfaces.IFileReader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-// import org.json.simple.JSONParser;
+import java.text.ParseException;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 /*
 * Entity class
-*/ 
+*/
 public class JsonReader implements IFileReader {
     private File resource;
 
     // Constructor
-    public JsonReader(String filename) 
-    {
+    public JsonReader(String filename) {
         this.resource = resourceReader(filename);
     }
 
-    public String getString()
-    {
+    public String getString() {
         try {
+            // Declare content variable and reader
+            String content = "";
             BufferedReader reader = new BufferedReader(new FileReader(this.resource));
-            StringBuilder stringBuilder = new StringBuilder();
-            String line = null;
 
             // Read line by line for markup
+            String line = null;
             while ((line = reader.readLine()) != null) {
-                stringBuilder.append(line);
+                content += line;
             }
 
             // Close reader
             reader.close();
 
-            String content = stringBuilder.toString();
+            // Return string
             return content;
         } catch (Exception e) {
             return "";
         }
     }
 
-    public Object getJsonObject() 
-    {
-        // JSONParser parser = new JSONParser();
-        // Object obj = parser.parse(getString());
-        return null;
+    public JSONArray getJsonObject() {
+        JSONParser parser = new JSONParser();
+
+        try {
+            JSONArray jsonArray = (JSONArray) parser.parse(getString());
+            return jsonArray;
+        } catch (Exception exceptionOnParsingArray) {
+            try {
+                JSONArray jsonArray = new JSONArray();
+                JSONObject jsonObject = (JSONObject) parser.parse(getString());
+                jsonArray.add(jsonObject);
+                return jsonArray;
+            } catch (Exception exceptionOnParsingObject) {
+                return null;
+            }
+        }
     }
 
-    private File resourceReader(String resourceName)
-    {
+    private File resourceReader(String resourceName) {
         return new File(Thread.currentThread().getContextClassLoader().getResource(resourceName).getFile());
     }
 
 }
-
-

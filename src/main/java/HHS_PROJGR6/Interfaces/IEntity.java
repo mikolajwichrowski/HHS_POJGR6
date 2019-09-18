@@ -4,5 +4,4 @@ public interface IEntity {
 
     void doAction();
 
-
 }

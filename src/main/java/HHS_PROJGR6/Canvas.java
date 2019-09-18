@@ -1,57 +1,63 @@
 package HHS_PROJGR6;
+
 import HHS_PROJGR6.Entities.Entity;
 
 import javax.swing.*;
 import java.awt.*;
+
 /**
  * Entity class
  */
 public class Canvas extends JPanel {
     /**
-     * Our grid containing ....
+     * 
      */
-    public String[][] grid;
-    public Entity[] drawableEntities;
+    private Integer height;
+
+    /**
+     * 
+     */
+    private Integer width;
+
+    /**
+     * 
+     */
+    private Entity[] drawableEntities;
 
     /**
      * Generated serial id
      */
     private static final long serialVersionUID = -2041936094389559508L;
 
-    // Constructor
+    /**
+     * 
+     */
     public Canvas(Dimension d) {
-        grid = new String[0][0];
+        // Set sizes
+        height = 0;
+        width = 0;
         setSize(d);
         setBackground(Color.BLUE);
-        repaint();
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        drawGrid(g);
-        drawableEntity(g);
-    }
-    
-    // Draw een grid for hotel.
+    /**
+     * 
+     * @param g
+     */
     private void drawGrid(Graphics g) {
         // Loop door elke row heen
-        int currentRow = 0;
-        for (String[] row : grid) {
-            // Loop door elke cell heen in de de row array
-            int currentCell = 0;
-            for (String cell : row) {
-                // Draw's grid
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 g.setColor(Color.BLACK);
-                g.drawRect(50,50, currentRow *50, currentCell * 50);
-
-                // Increment onze teller van welke cel in de row we tekenen.
-                currentCell++;
+                g.drawRect(50, 50, i * 50, j * 50);
             }
-            // Increment onze teller van welke row we tekenen.
-            currentRow++;
         }
     }
 
+    /**
+     * 
+     * @param g
+     */
     private void drawableEntity(Graphics g) {
         // Loop door elke row heen
         drawableEntities = new Entity[1];
@@ -62,12 +68,54 @@ public class Canvas extends JPanel {
         }
     }
 
-
-    public String[][] getGrid() {
-        return grid;
+    /**
+     * 
+     */
+    public int getHeight() {
+        return height;
     }
 
-    public void setGrid(String[][] grid) {
-        this.grid = grid;
+    /**
+     * 
+     */
+    public void setHeight(int height) {
+        this.height = height;
+        repaint();
+    }
+
+    /**
+     * 
+     */
+    public int getWidth() {
+        return width;
+    }
+
+    /**
+     * 
+     */
+    public void setWidth(int width) {
+        this.width = width;
+        repaint();
+    }
+
+    /**
+     * 
+     */
+    public Entity[] getDrawableEntities() {
+        return drawableEntities;
+    }
+
+    /**
+     * 
+     */
+    public void setDrawableEntities(Entity[] drawableEntities) {
+        this.drawableEntities = drawableEntities;
+        repaint();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        drawGrid(g);
+        drawableEntity(g);
     }
 }

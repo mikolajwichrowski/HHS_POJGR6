@@ -19,5 +19,3 @@ public class EntityGuest extends Entity implements IEntity {
         // Make sure to implement features by OOSE principles
     }
 }
-
-
