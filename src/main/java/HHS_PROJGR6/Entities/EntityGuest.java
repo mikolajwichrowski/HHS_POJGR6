@@ -11,7 +11,6 @@ public class EntityGuest extends Entity implements IEntity {
 
     // Constructor
     public EntityGuest() {
-
     }
 
     // Action to execute when triggered

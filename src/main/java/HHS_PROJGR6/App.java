@@ -1,22 +1,19 @@
 package HHS_PROJGR6;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
+
+import javax.swing.*;  
 
 public class App extends JFrame {
-
     /**
      * Generated serial id
      */
-
     private static final long serialVersionUID = -2280803615953081532L;
 
     public App() {
         // Set dimensions and add canvas to draw the hotel on
         Dimension d = new Dimension(1400, 800);
-        Hotel myHotel = new Hotel(
-            new Canvas(d)
-        );
+        Hotel myHotel = new Hotel(new Canvas(d));
 
         // Add canvas to JPanel
         add(myHotel.hotelCanvas);
@@ -24,37 +21,28 @@ public class App extends JFrame {
         // Add buttons and add dimension to window to fit buttons
         d.width += 200;
 
-        // Button add tempo definition
-        JButton buttonPlus = new JButton("Hotel TijdsEenheid +");
-        buttonPlus.setBounds(1175, 50,175, 80);
-        buttonPlus.setBackground(Color.DARK_GRAY);
-        buttonPlus.setForeground(Color.WHITE);
+        JButton buttonPlus = new JButton("HTE +");
+        buttonPlus.setBounds(600, 0,100, 40);
 
-        // Button decrease definition
-        JButton buttonMinus = new JButton("Hotel TijdsEenheid -");
-        buttonMinus.setBounds(1175, 150,175, 80);
-        buttonMinus.setBackground(Color.DARK_GRAY);
-        buttonMinus.setForeground(Color.WHITE);
-
-        // Adds buttons
-        add(buttonPlus);
+        JButton buttonMinus = new JButton("HTE -");
+        buttonMinus.setBounds(600, 50,100, 40);
+ 
+        add(buttonMinus);
         add(buttonMinus);
 
-        // Shows window with title and other parameters
+        // Show window
         setTitle("HotelSimulatie GR6");
         setLayout(null);
-        setResizable(true);
+        setResizable(false);
         setSize(d);
         setLayout(null);
-        super.setLocationRelativeTo(null);
         setVisible(true);
     }
 
     public static void main(String[] args) {
         // Run Application
         // Show buttons
-        // new Canvas();
+        // new Canvas();    
         new App();
-        new Clock();
     }
 }
