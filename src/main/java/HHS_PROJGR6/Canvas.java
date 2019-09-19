@@ -62,8 +62,6 @@ public class Canvas extends JPanel {
      */
     private void drawableEntity(Graphics g) {
         // Loop door elke row heen
-        drawableEntities = new Entity[1];
-        drawableEntities[0] = new Entity();
 
         for (Entity entity : drawableEntities) {
             entity.drawEntity(g);
@@ -121,6 +119,6 @@ public class Canvas extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         drawGrid(g);
-        // drawableEntity(g);
+        drawableEntity(g);
     }
 }

@@ -9,6 +9,9 @@ import HHS_PROJGR6.Interfaces.IEntity;
 
 public class EntityHousekeeping extends Entity implements IEntity {
 
+    EntityRoom entityroom;
+
+
     // Constructor
     public EntityHousekeeping() {
 
@@ -18,5 +21,12 @@ public class EntityHousekeeping extends Entity implements IEntity {
     public void doAction() {
         // Logic for Housekeeping entity.
         // Make sure to implement features by OOSE principles
+    }
+
+    public void checkRoom(boolean clean) {
+        if (entityroom.getClean() == false) {
+            // code schrijven voor maak kamer schoon. 
+        }
+
     }
 }

@@ -1,11 +1,10 @@
 package HHS_PROJGR6;
 
 import HHS_PROJGR6.Entities.Entity;
+import HHS_PROJGR6.Entities.EntityRoom;
 import HHS_PROJGR6.External.HotelEvent;
-import HHS_PROJGR6.External.HotelEventType;
 import HHS_PROJGR6.External.HotelEventListener;
-import HHS_PROJGR6.External.HotelEventManager;
-import HHS_PROJGR6.Utils.JsonReader;
+import HHS_PROJGR6.External.HotelEventType;
 
 /**
  * 
@@ -35,6 +34,22 @@ public class Hotel implements HotelEventListener {
         this.hotelCanvas = hotelCanvas;
         hotelCanvas.setGridWidth(20);
         hotelCanvas.setGridHeight(20);
+
+        Entity[] entities = new Entity[4];
+        entities[0] = new Entity();
+        entities[0].setPosition(3, 3);
+        entities[1] = new Entity();
+        entities[1].setPosition(4, 4);
+        entities[2] = new Entity();
+        entities[2].setPosition(5, 5);
+
+        /*
+        @ miek entiteit room waardes meegegeven. Gaarne checken wat je er van vindt.
+         */
+        entities[3] = new EntityRoom(2,true);
+        entities[3].setPosition(7,7);
+
+        hotelCanvas.setDrawableEntities(entities);
 
         // System.out.println(new JsonReader("hotel(1).layout").getJsonObject());
 

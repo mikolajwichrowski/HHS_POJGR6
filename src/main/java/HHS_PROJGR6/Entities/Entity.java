@@ -1,8 +1,5 @@
 package HHS_PROJGR6.Entities;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
 import HHS_PROJGR6.External.HotelEvent;
 import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.Interfaces.IEntity;
@@ -15,8 +12,8 @@ import java.awt.*;
 
 public class Entity implements HotelEventListener, IEntity {
     // TODO: dit is belangrijk
-    private int XPosition;
-    private int YPosition;
+    public int XPosition;
+    public int YPosition;
 
     /**
      * 
@@ -46,7 +43,13 @@ public class Entity implements HotelEventListener, IEntity {
 
     public void drawEntity(Graphics g) {
         g.setColor(Color.RED);
-        g.drawRect(XPosition, YPosition, 50, 50);
+        g.fillRect(XPosition*30, YPosition*30, 30, 30);
+        //g.drawRect(XPosition*30, YPosition*30, 30, 30);
+    }
+
+    @Override
+    public void Notify(HotelEvent event) {
+        // TODO Auto-generated method stub
     }
 
     public int getXPosition() {
@@ -57,9 +60,10 @@ public class Entity implements HotelEventListener, IEntity {
         return YPosition;
     }
 
-    @Override
-    public void Notify(HotelEvent event) {
-        // TODO Auto-generated method stub
+    public void setPosition(int y, int x){
+        this.XPosition = x;
+        this.YPosition = y;
 
     }
+
 }
