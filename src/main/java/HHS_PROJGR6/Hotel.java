@@ -45,6 +45,7 @@ public class Hotel implements HotelEventListener {
 
         /*
         @ miek entiteit room waardes meegegeven. Gaarne checken wat je er van vindt.
+        @ fer/boyd/ruben : Gebruik nu de entity factory om dit te doen ;) 
          */
         entities[3] = new EntityRoom(2,true);
         entities[3].setPosition(7,7);
