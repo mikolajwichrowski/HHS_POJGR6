@@ -1,11 +1,15 @@
 package HHS_PROJGR6;
 
-import HHS_PROJGR6.Entities.Entity;
+import HHS_PROJGR6.Entities.*;
 import HHS_PROJGR6.External.HotelEvent;
 import HHS_PROJGR6.External.HotelEventType;
 import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.External.HotelEventManager;
 import HHS_PROJGR6.Utils.JsonReader;
+import HHS_PROJGR6.Interfaces.*;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 /**
  * 
@@ -15,11 +19,6 @@ public class Hotel implements HotelEventListener {
      * 
      */
     private Canvas hotelCanvas;
-
-    /**
-     * 
-     */
-    // private Entity[] drawableEntities;
 
     /**
      * Hotel class
@@ -36,7 +35,21 @@ public class Hotel implements HotelEventListener {
         hotelCanvas.setGridWidth(20);
         hotelCanvas.setGridHeight(20);
 
-        // System.out.println(new JsonReader("hotel(1).layout").getJsonObject());
+        // Zo haal je het layout bestand op. Dit geeft voor nu altijd een error in de
+        // weeraven maar niet in het starten
+        JSONArray array = new JsonReader("hotel(1).layout").getJsonObject();
+
+        Entity[] entities = new Entity[3];
+        entities[0] = new EntityDiner();
+        entities[0].setPosition(3, 3);
+
+        entities[1] = new EntityGuest();
+        entities[1].setPosition(4, 4);
+
+        entities[2] = new EntityHousekeeping();
+        entities[2].setPosition(5, 5);
+
+        hotelCanvas.setDrawableEntities(entities);
 
         // Start Events thread
         // HotelEventManager eventManager = new HotelEventManager();

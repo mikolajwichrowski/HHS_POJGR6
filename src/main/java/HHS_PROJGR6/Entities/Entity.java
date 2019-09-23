@@ -23,8 +23,13 @@ public class Entity implements HotelEventListener, IEntity {
      */
     public Entity() {
         // Start positie entiteit
-        XPosition = 50;
+        XPosition = 30;
         YPosition = 600;
+    }
+
+    public void setPosition(Integer x, Integer y) {
+        this.XPosition = x;
+        this.YPosition = y;
     }
 
     /**
@@ -33,7 +38,7 @@ public class Entity implements HotelEventListener, IEntity {
      * 
      */
     public void doAction() {
-        if (XPosition == 50) {
+        if (XPosition == 30) {
             XPosition += 100;
         }
 
@@ -46,7 +51,7 @@ public class Entity implements HotelEventListener, IEntity {
 
     public void drawEntity(Graphics g) {
         g.setColor(Color.RED);
-        g.drawRect(XPosition, YPosition, 50, 50);
+        g.drawRect(XPosition * 30, YPosition * 30, 30, 30);
     }
 
     public int getXPosition() {
