@@ -1,17 +1,26 @@
 package HHS_PROJGR6;
 
+// imports from project
 import HHS_PROJGR6.Entities.*;
 import HHS_PROJGR6.External.HotelEvent;
 import HHS_PROJGR6.External.HotelEventListener;
+import HHS_PROJGR6.External.HotelEventManager;
 import HHS_PROJGR6.External.HotelEventType;
 import HHS_PROJGR6.Factories.EntityFactory;
 import HHS_PROJGR6.Interfaces.IEntity;
 import HHS_PROJGR6.Utils.JsonReader;
 
+// External imports
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Iterator;
-import static HHS_PROJGR6.Enums.EntityType.ENTITY_DINER;
+
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * 
@@ -21,6 +30,11 @@ public class Hotel implements HotelEventListener {
      * 
      */
     private Canvas hotelCanvas;
+
+    /**
+     * 
+     */
+    private ArrayList<IEntity> entities;
 
     /**
      * Hotel class
@@ -33,61 +47,87 @@ public class Hotel implements HotelEventListener {
      * @param hotelCanvas
      */
     public Hotel(Canvas hotelCanvas) {
+        // init the canvas and rooms
         this.hotelCanvas = hotelCanvas;
-        hotelCanvas.setGridWidth(20);
-        hotelCanvas.setGridHeight(30);
+        this.initRooms();
 
-        // Start Events thread
-        // HotelEventManager eventManager = new HotelEventManager();
-        // eventManager.register(this);
-        // eventManager.changeSpeed(2);
-        // new Thread(eventManager).start();
+        HotelEventManager eventManager = new HotelEventManager();
+        eventManager.register(this);
+        eventManager.changeSpeed(2);
+        new Thread(eventManager).start();
 
-        roomsInit();
+        // Timer TODO: oplossen met een design pattern
+        Timer t = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Clock.updateState();
+                for (int i = 0; i < Clock.getClockspeed(); i++) {
+                    for (IEntity entity : entities) {
+                        entity.doAction();
+                    }
+                }
+
+                hotelCanvas.setDrawableEntities(entities);
+            }
+        });
+
+        // Start timer
+        t.start();
+
     }
 
-    private void roomsInit() {
-        /*
-         * @ miek entiteit room waardes meegegeven. Gaarne checken wat je er van vindt.
-         * 
-         * @ fer/boyd/ruben : Gebruik nu de entity factory om dit te doen ;)
-         */
+    /**
+     * 
+     * @param actor
+     */
+    private void addActor(IEntity actor) {
+        entities.add(actor);
+        hotelCanvas.setDrawableEntities(entities);
+    }
 
+    /**
+     * 
+     */
+    private void initRooms() {
         try {
-            JSONArray slideContent = (JSONArray) new JsonReader("hotel(1).layout").getJsonObject();
-            Iterator i = slideContent.iterator();
+            // Read hotel and get highest position values
+            JSONArray jsonArray = (JSONArray) new JsonReader("hotel(1).layout").getJsonObject();
+            Iterator i = jsonArray.iterator();
+            int[] highestPositions = getHighest(jsonArray, "Position");
 
-            // Aantal elementen die in de json zitten
-            IEntity[] entities = new IEntity[slideContent.size()];
+            // Init array with the size of the json array (better for memory)
+            entities = new ArrayList<IEntity>();
 
-            int counter = 0;
+            // Loop trough json array
             while (i.hasNext()) {
-                JSONObject slide = (JSONObject) i.next();
-                String title = (String) slide.get("AreaType");
-                String[] position = ((String) slide.get("Position")).split(",");
+                JSONObject jsonObject = (JSONObject) i.next();
 
-                // Dimensions
-                String[] dimension = ((String) slide.get("Dimension")).split(",");
+                String type = (String) jsonObject.get("AreaType");
+                String[] position = ((String) jsonObject.get("Position")).split(",");
 
-                // Create entity
-                IEntity entity = EntityFactory.createEntity(title);
+                // Dimensions TODO: set dimensions
+                String[] dimension = ((String) jsonObject.get("Dimension")).split(",");
 
-                // Set entity on array position and set location on entity
-                entities[counter] = entity;
-
-                // Reverse
+                // Reverse the grid layout
                 int x = Integer.parseInt(position[1].trim());
-                int y = getHighest(slideContent, "Position")[0] + 1 - Integer.parseInt(position[0].trim());
+                int y = highestPositions[0] + 1 - Integer.parseInt(position[0].trim());
 
-                entities[counter].setPosition(x, y);
+                // Create entity with factory
+                IEntity entity = EntityFactory.createEntity(type);
+                entity.setPosition(x, y);
 
-                counter++;
+                // Add entity
+                entities.add(entity);
             }
 
-            hotelCanvas.setGridHeight(getHighest(slideContent, "Position")[1]);
-            hotelCanvas.setGridWidth(getHighest(slideContent, "Position")[0]);
+            // Draw only the nessecary grid size
+            hotelCanvas.setGridHeight(highestPositions[1]);
+            hotelCanvas.setGridWidth(highestPositions[0]);
+
+            // Draw entities
             hotelCanvas.setDrawableEntities(entities);
         } catch (Exception e) {
+            // TODO: better exception handling
             throw e;
         }
     }
@@ -98,13 +138,22 @@ public class Hotel implements HotelEventListener {
 
     @Override
     public void Notify(HotelEvent event) {
-        if (event.Type == HotelEventType.EVACUATE) {
-            hotelCanvas.setGridWidth(5);
+        if (event.Type == HotelEventType.CHECK_IN) {
+            IEntity actor = EntityFactory.createEntity("Guest");
+            actor.setPosition(1, 1);
+            addActor(actor);
         }
-        // What will hotel do if its being called upon?
     }
 
+    /**
+     * 
+     * @param array
+     * @param value
+     * @return
+     */
     private int[] getHighest(JSONArray array, String value) {
+        // TODO: make this a better algol
+
         Iterator i = array.iterator();
         int[] highes = new int[2];
         highes[0] = 0;
@@ -124,7 +173,8 @@ public class Hotel implements HotelEventListener {
                 }
             }
         } catch (Exception e) {
-            System.out.println("TODO ALL OF THIS");
+            // TODO: better exception handling
+            throw e;
         }
         return highes;
     }

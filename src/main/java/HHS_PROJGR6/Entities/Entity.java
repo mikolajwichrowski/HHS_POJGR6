@@ -10,7 +10,7 @@ import java.awt.*;
 * Entity class
 */
 
-public class Entity implements HotelEventListener, IEntity {
+public class Entity implements IEntity {
     // TODO: dit is belangrijk
     public int XPosition;
     public int YPosition;
@@ -19,14 +19,16 @@ public class Entity implements HotelEventListener, IEntity {
      * 
      */
     public Entity() {
-
-        XPosition = 50;
-        YPosition = 600;
+        XPosition = 0;
+        YPosition = 0;
     }
 
+    /**
+     * 
+     */
     public void setPosition(Integer x, Integer y) {
-        this.XPosition = x;
-        this.YPosition = y;
+        this.XPosition = x; // drawing offset
+        this.YPosition = y; // drawinf offeset
     }
 
     /**
@@ -35,10 +37,6 @@ public class Entity implements HotelEventListener, IEntity {
      * 
      */
     public void doAction() {
-        if (XPosition == 30) {
-            XPosition += 100;
-        }
-
         // Logic for entity.
         // Make sure to implement features by OOSE principles
         // NOT TO DO : hier komen de algoritmes, afblijven HAHA
@@ -46,24 +44,34 @@ public class Entity implements HotelEventListener, IEntity {
         // I verander aan de hand van waar ik ben
     }
 
+    /**
+     * 
+     */
     public void drawEntity(Graphics g) {
         g.setColor(Color.PINK);
         g.drawRect(XPosition * 30, YPosition * 30, 30, 30);
     }
 
-    @Override
-    public void Notify(HotelEvent event) {
-        // TODO Auto-generated method stub
-    }
-
+    /**
+     * 
+     * @return
+     */
     public int getXPosition() {
         return XPosition;
     }
 
+    /**
+     * 
+     */
     public int getYPosition() {
         return YPosition;
     }
 
+    /**
+     * 
+     * @param y
+     * @param x
+     */
     public void setPosition(int y, int x) {
         this.XPosition = x;
         this.YPosition = y;

@@ -5,55 +5,96 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 /**
- * bron: https://www.youtube.com/watch?v=wznbvBuf8ys
- * Timer is een leuk extratje voor de weergave
+ * bron: https://www.youtube.com/watch?v=wznbvBuf8ys TODO: oplossen met een
+ * normaal object en een singleton
  */
 public class Clock extends JPanel {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 5747202131986299347L;
 
-    private JTextField timeF;
+    /**
+     * 
+     */
+    private static JTextField timeDisplay;
+
+    /**
+     * 
+     */
+    private static JTextField timeFactor;
+
+    /**
+     * 
+     */
     private static int clockspeed = 1;
-    private Timer internalClock;
-    private LocalDateTime datetime;
 
+    /**
+     * 
+     */
+    private static LocalDateTime datetime;
+
+    /**
+     * 
+     */
     public Clock() {
-        setBounds(1175,250,175,60);
+        // Init panel, show panel and set current (start)datetime
+        setBounds(1175, 250, 175, 120);
         setVisible(true);
         datetime = LocalDateTime.now();
 
-        timeF = new JTextField(5);
+        // Init display fields
+        timeDisplay = new JTextField(5);
+        timeFactor = new JTextField(5);
 
-        // true gezet zodat we straks de tijd kunnen versnellen.
-        timeF.setEditable(true);
-        timeF.setFont(new Font("Arial", Font.PLAIN, 32));
+        // Set time display and factor display style
+        timeDisplay.setFont(new Font("Consolas", Font.PLAIN, 32));
+        timeDisplay.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        timeFactor.setFont(new Font("Consolas", Font.PLAIN, 32));
+        timeFactor.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 
-        add(timeF);
+        // Add to current panel
+        add(timeDisplay);
+        add(timeFactor);
 
-
-        Timer t = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                datetime = datetime.plusSeconds(Clock.getClockspeed());
-                System.out.println(Clock.getClockspeed());
-                timeF.setText(datetime.getHour()+":"+datetime.getMinute()+":"+datetime.getSecond());
-            }
-        });
-        t.start();
     }
 
+    public static void updateState() {
+        // The factor only changes when time goes faster
+        timeFactor.setText("HTE: " + getClockspeed());
+
+        // Set the visible time
+        datetime = datetime.plusSeconds(Clock.getClockspeed());
+
+        // Format time and display
+        timeDisplay.setText(datetime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)));
+    }
+
+    /**
+     * 
+     */
     public static void addClockspeed() {
-        // Iets op bedenken
         Clock.clockspeed += 1;
     }
 
-    public static void decreaseClockspeed(){
+    /**
+     * 
+     */
+    public static void reduceClockspeed() {
         Clock.clockspeed -= 1;
     }
 
+    /**
+     * 
+     * @return
+     */
     public static int getClockspeed() {
         return clockspeed;
     }
+
 }

@@ -4,6 +4,7 @@ import HHS_PROJGR6.Interfaces.IEntity;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Entity class
@@ -22,7 +23,7 @@ public class Canvas extends JPanel {
     /**
      * 
      */
-    private IEntity[] drawableEntities;
+    private ArrayList<IEntity> drawableEntities;
 
     /**
      * Generated serial id
@@ -103,14 +104,14 @@ public class Canvas extends JPanel {
     /**
      * 
      */
-    public IEntity[] getDrawableEntities() {
+    public ArrayList<IEntity> getDrawableEntities() {
         return drawableEntities;
     }
 
     /**
      * 
      */
-    public void setDrawableEntities(IEntity[] drawableEntities) {
+    public void setDrawableEntities(ArrayList<IEntity> drawableEntities) {
         this.drawableEntities = drawableEntities;
         repaint();
     }

@@ -35,7 +35,7 @@ public class App extends JFrame {
         buttonPlus = new JButton("Hotel TijdsEenheid +");
         buttonPlus.setBounds(1175, 50, 175, 80);
         buttonPlus.setBackground(Color.DARK_GRAY);
-        buttonPlus.setForeground(Color.WHITE);
+        buttonPlus.setForeground(Color.BLACK);
         buttonPlus.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -46,11 +46,18 @@ public class App extends JFrame {
         buttonMinus = new JButton("Hotel TijdsEenheid -");
         buttonMinus.setBounds(1175, 150, 175, 80);
         buttonMinus.setBackground(Color.DARK_GRAY);
-        buttonMinus.setForeground(Color.WHITE);
+        buttonMinus.setForeground(Color.BLACK);
+        buttonMinus.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Clock.reduceClockspeed();
+            }
+        });
 
         add(myHotel.getHotelCanvas());
         add(buttonPlus);
         add(buttonMinus);
+
         add(new Clock());
 
         // Show window
@@ -60,7 +67,7 @@ public class App extends JFrame {
         setSize(d);
         setLayout(null);
         setLocationRelativeTo(null);
-        super.getContentPane().setBackground(Color.WHITE);
+        // super.getContentPane().setBackground(Color.WHITE);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
@@ -72,10 +79,7 @@ public class App extends JFrame {
      */
     public static void main(String[] args) {
         // Run Application
-
-        // new Canvas();
         new App();
-
     }
 
 }

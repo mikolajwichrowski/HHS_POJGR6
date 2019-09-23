@@ -22,7 +22,7 @@ public class EntityFactory {
      * @return IEntity
      */
     public static IEntity createEntity(String type) {
-        // What type of entity do we want to generate
+        // Creating entity based on requested type
         switch (type) {
         case "Restaurant":
             return new EntityDiner();
