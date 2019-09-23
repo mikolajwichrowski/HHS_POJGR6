@@ -4,4 +4,6 @@ public interface IEntity {
 
     void doAction();
 
+    void setPosition(Integer x, Integer y);
+
 }

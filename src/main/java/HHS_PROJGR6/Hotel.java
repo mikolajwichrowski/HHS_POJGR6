@@ -48,7 +48,7 @@ public class Hotel implements HotelEventListener {
             Iterator i = slideContent.iterator();
 
             // Aantal elementen die in de json zitten
-            Entity[] entities = new Entity[slideContent.size()];
+            IEntity[] entities = new IEntity[slideContent.size()];
 
             int counter = 0;
             while (i.hasNext()) {
@@ -57,21 +57,22 @@ public class Hotel implements HotelEventListener {
                 String[] position = ((String) slide.get("Position")).split(",");
                 String[] dimension = ((String) slide.get("Dimension")).split(",");
 
-                System.out.println("Room type:" + title + " Position:" + position + " Dimension:" + dimension);
+                // System.out.println("Room type:" + title + " Position:" + position + "
+                // Dimension:" + dimension);
 
                 // Create entity
                 IEntity entity = EntityFactory.createEntity(title);
 
                 // Set entity on array position and set location on entity
-                entities[counter] = (Entity) entity;
-                entities[counter].setPosition(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
+                entities[counter] = entity;
+                entities[counter].setPosition(Integer.parseInt(position[0].trim()), Integer.parseInt(position[1].trim()));
 
                 counter++;
             }
 
-            hotelCanvas.setDrawableEntities(entities);
+            hotelCanvas.setDrawableEntities((Entity[]) entities);
         } catch (Exception e) {
-
+            throw e;
         }
 
         // Start Events thread
