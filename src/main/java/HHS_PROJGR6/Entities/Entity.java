@@ -47,7 +47,7 @@ public class Entity implements HotelEventListener, IEntity {
     }
 
     public void drawEntity(Graphics g) {
-        g.setColor(Color.BLACK);
+        g.setColor(Color.PINK);
         g.drawRect(XPosition * 30, YPosition * 30, 30, 30);
     }
 

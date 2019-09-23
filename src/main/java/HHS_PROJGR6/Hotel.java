@@ -37,6 +37,16 @@ public class Hotel implements HotelEventListener {
         hotelCanvas.setGridWidth(20);
         hotelCanvas.setGridHeight(30);
 
+        // Start Events thread
+        // HotelEventManager eventManager = new HotelEventManager();
+        // eventManager.register(this);
+        // eventManager.changeSpeed(2);
+        // new Thread(eventManager).start();
+
+        roomsInit();
+    }
+
+    private void roomsInit() {
         /*
          * @ miek entiteit room waardes meegegeven. Gaarne checken wat je er van vindt.
          * 
@@ -55,10 +65,9 @@ public class Hotel implements HotelEventListener {
                 JSONObject slide = (JSONObject) i.next();
                 String title = (String) slide.get("AreaType");
                 String[] position = ((String) slide.get("Position")).split(",");
-                String[] dimension = ((String) slide.get("Dimension")).split(",");
 
-                // System.out.println("Room type:" + title + " Position:" + position + "
-                // Dimension:" + dimension);
+                // Dimensions
+                String[] dimension = ((String) slide.get("Dimension")).split(",");
 
                 // Create entity
                 IEntity entity = EntityFactory.createEntity(title);
@@ -81,12 +90,6 @@ public class Hotel implements HotelEventListener {
         } catch (Exception e) {
             throw e;
         }
-
-        // Start Events thread
-        // HotelEventManager eventManager = new HotelEventManager();
-        // eventManager.register(this);
-        // eventManager.changeSpeed(2);
-        // new Thread(eventManager).start();
     }
 
     public Canvas getHotelCanvas() {
