@@ -65,11 +65,18 @@ public class Hotel implements HotelEventListener {
 
                 // Set entity on array position and set location on entity
                 entities[counter] = entity;
-                entities[counter].setPosition(Integer.parseInt(position[0].trim()), Integer.parseInt(position[1].trim()));
+
+                // Reverse
+                int x = Integer.parseInt(position[1].trim());
+                int y = getHighest(slideContent, "Position")[0] + 1 - Integer.parseInt(position[0].trim());
+
+                entities[counter].setPosition(x, y);
 
                 counter++;
             }
 
+            hotelCanvas.setGridHeight(getHighest(slideContent, "Position")[1]);
+            hotelCanvas.setGridWidth(getHighest(slideContent, "Position")[0]);
             hotelCanvas.setDrawableEntities(entities);
         } catch (Exception e) {
             throw e;
@@ -92,5 +99,30 @@ public class Hotel implements HotelEventListener {
             hotelCanvas.setGridWidth(5);
         }
         // What will hotel do if its being called upon?
+    }
+
+    private int[] getHighest(JSONArray array, String value) {
+        Iterator i = array.iterator();
+        int[] highes = new int[2];
+        highes[0] = 0;
+        highes[1] = 0;
+
+        try {
+            while (i.hasNext()) {
+                JSONObject slide = (JSONObject) i.next();
+                String[] compare = ((String) slide.get(value)).split(",");
+
+                if (Integer.parseInt(compare[0].trim()) > highes[0]) {
+                    highes[0] = Integer.parseInt(compare[0].trim());
+                }
+
+                if (Integer.parseInt(compare[1].trim()) > highes[1]) {
+                    highes[1] = Integer.parseInt(compare[1].trim());
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("TODO ALL OF THIS");
+        }
+        return highes;
     }
 }

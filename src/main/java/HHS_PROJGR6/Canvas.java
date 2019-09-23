@@ -64,7 +64,9 @@ public class Canvas extends JPanel {
     private void drawableEntity(Graphics g) {
         // Loop door elke row heen
         for (IEntity entity : drawableEntities) {
-            entity.drawEntity(g);
+            if (entity != null) {
+                entity.drawEntity(g);
+            }
         }
     }
 
