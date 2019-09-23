@@ -35,7 +35,6 @@ public class EntityFactory {
         case ENTITY_ROOM:
             return new EntityRoom();
 
-
         default:
             return new Entity();
         }

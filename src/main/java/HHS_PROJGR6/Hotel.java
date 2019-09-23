@@ -41,7 +41,6 @@ public class Hotel implements HotelEventListener {
         hotelCanvas.setGridWidth(20);
         hotelCanvas.setGridHeight(30);
 
-        Entity[] entities = new Entity[3];
 
         /*
         @ miek entiteit room waardes meegegeven. Gaarne checken wat je er van vindt.
@@ -52,10 +51,13 @@ public class Hotel implements HotelEventListener {
             JSONArray slideContent = (JSONArray) new JsonReader("hotel(1).layout").getJsonObject();
             Iterator i = slideContent.iterator();
 
+            // Aantal elementen die in de json zitten
+            Entity[] entities = new Entity[slideContent.size()];
+
             while (i.hasNext()) {
                 JSONObject slide = (JSONObject) i.next();
                 String title = (String)slide.get("AreaType");
-                String position = (String)slide.get("Position");
+                String[] position = ((String)slide.get("Position")).split(",");
                 String dimension = (String)slide.get("Dimension");
                 System.out.println("Room type:" + title + " Position:"+ position + " Dimension:" + dimension);
 

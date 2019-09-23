@@ -47,20 +47,10 @@ public class App extends JFrame {
         buttonMinus.setBackground(Color.DARK_GRAY);
         buttonMinus.setForeground(Color.WHITE);
 
-//        timeF = new JTextField(5);
-//        timeF.setBounds(1175,250,175,60);
-//        timeF.setEditable(true);
-//        timeF.setFont(new Font("Arial", Font.PLAIN, 32));
-//        timeF.setForeground(Color.RED);
-
         add(myHotel.getHotelCanvas());
         add(buttonPlus);
         add(buttonMinus);
-        //add(timeF);
         add(new Clock());
-
-        //Timer t = new Timer(1000, new Listener());
-        //t.start();
 
         // Show window
         setTitle("HotelSimulatie GR6");

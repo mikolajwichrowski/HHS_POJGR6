@@ -41,7 +41,6 @@ public class Canvas extends JPanel {
         this.gridWidth = 10;
 
         setSize(d);
-        setBackground(Color.WHITE);
         repaint();
     }
 
