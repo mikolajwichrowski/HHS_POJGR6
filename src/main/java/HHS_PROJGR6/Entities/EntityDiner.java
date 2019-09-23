@@ -12,11 +12,9 @@ import java.awt.*;
 
 public class EntityDiner extends Entity implements IEntity {
 
-    String AreaType;
-
     // Constructor
-    public EntityDiner(String AreaType) {
-        this.AreaType= AreaType;
+    public EntityDiner() {
+
     }
 
     // Action to execute when triggered
@@ -27,7 +25,7 @@ public class EntityDiner extends Entity implements IEntity {
 
     public void drawEntity(Graphics g) {
         g.setColor(Color.ORANGE);
-        g.drawRect(XPosition*30, YPosition*30, 30, 30);
+        g.fillRect(XPosition * 30, YPosition * 30, 30, 30);
 
     }
 }

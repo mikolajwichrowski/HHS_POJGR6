@@ -24,8 +24,8 @@ public class EntityFactory {
     public static IEntity createEntity(String type) {
         // What type of entity do we want to generate
         switch (type) {
-        case "Diner":
-            return new EntityDiner("Restaurant");
+        case "Restaurant":
+            return new EntityDiner();
 
         case "Guest":
             return new EntityGuest();
