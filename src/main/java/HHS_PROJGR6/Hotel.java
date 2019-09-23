@@ -70,7 +70,7 @@ public class Hotel implements HotelEventListener {
                 counter++;
             }
 
-            hotelCanvas.setDrawableEntities((Entity[]) entities);
+            hotelCanvas.setDrawableEntities(entities);
         } catch (Exception e) {
             throw e;
         }

@@ -1,6 +1,6 @@
 package HHS_PROJGR6;
 
-import HHS_PROJGR6.Entities.Entity;
+import HHS_PROJGR6.Interfaces.IEntity;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +22,7 @@ public class Canvas extends JPanel {
     /**
      * 
      */
-    private Entity[] drawableEntities;
+    private IEntity[] drawableEntities;
 
     /**
      * Generated serial id
@@ -63,7 +63,7 @@ public class Canvas extends JPanel {
      */
     private void drawableEntity(Graphics g) {
         // Loop door elke row heen
-        for (Entity entity : drawableEntities) {
+        for (IEntity entity : drawableEntities) {
             entity.drawEntity(g);
         }
     }
@@ -101,14 +101,14 @@ public class Canvas extends JPanel {
     /**
      * 
      */
-    public Entity[] getDrawableEntities() {
+    public IEntity[] getDrawableEntities() {
         return drawableEntities;
     }
 
     /**
      * 
      */
-    public void setDrawableEntities(Entity[] drawableEntities) {
+    public void setDrawableEntities(IEntity[] drawableEntities) {
         this.drawableEntities = drawableEntities;
         repaint();
     }
