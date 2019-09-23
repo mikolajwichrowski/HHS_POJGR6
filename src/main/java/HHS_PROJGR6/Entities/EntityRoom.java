@@ -15,22 +15,19 @@ public class EntityRoom extends Entity implements IEntity {
 private int StarRoom;
 public boolean Clean;
 
-    public EntityRoom(int starRoom, boolean clean){
-    this.StarRoom = starRoom;
-    this.Clean = clean;
+String AreaType;
 
-    // clean = true;
-    // wij dachten zelf bovenstaande regel toe te passen.
-    /*
-    @ miek: zullen we de kamer bij default op true zetten en wanneer een klant is geweest dat deze veranderd naar false?
-     */
+
+    public EntityRoom() {
+
     }
 
     @Override
     public void drawEntity(Graphics g) {
         super.drawEntity(g);
         g.setColor(Color.BLUE);
-        g.fillRect(XPosition*30, YPosition*30, 60, 60);
+        g.drawRect(XPosition*30, YPosition*30, 30, 30);
+
     }
 
     // Action to execute when triggered

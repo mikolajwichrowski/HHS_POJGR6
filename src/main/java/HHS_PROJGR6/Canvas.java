@@ -32,13 +32,16 @@ public class Canvas extends JPanel {
     /**
      * 
      */
+
+
+
     public Canvas(Dimension d) {
         // Set sizes
         this.gridHeight = 10;
         this.gridWidth = 10;
 
         setSize(d);
-        setBackground(Color.BLUE);
+        setBackground(Color.WHITE);
         repaint();
     }
 
@@ -51,7 +54,8 @@ public class Canvas extends JPanel {
         for (int i = 1; i <= this.gridHeight; i++) {
             for (int j = 1; j <= this.gridWidth; j++) {
                 g.setColor(Color.BLACK);
-                g.drawRect(30, 30, i * 30, j * 30);
+                g.drawRect(30, 30, i* 30, j * 30);
+
             }
         }
     }

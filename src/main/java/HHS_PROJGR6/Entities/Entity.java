@@ -19,7 +19,7 @@ public class Entity implements HotelEventListener, IEntity {
      * 
      */
     public Entity() {
-        // Start positie entiteit
+
         XPosition = 50;
         YPosition = 600;
     }
@@ -42,9 +42,9 @@ public class Entity implements HotelEventListener, IEntity {
     }
 
     public void drawEntity(Graphics g) {
-        g.setColor(Color.RED);
-        g.fillRect(XPosition*30, YPosition*30, 30, 30);
-        //g.drawRect(XPosition*30, YPosition*30, 30, 30);
+        g.setColor(Color.BLUE);
+        g.drawRect(XPosition*30, YPosition*30, 30, 30);
+
     }
 
     @Override

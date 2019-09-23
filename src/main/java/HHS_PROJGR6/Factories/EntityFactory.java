@@ -24,7 +24,7 @@ public class EntityFactory {
         // What type of entity do we want to generate
         switch (type) {
         case ENTITY_DINER:
-            return new EntityDiner();
+            return new EntityDiner("Restaurant");
 
         case ENTITY_GUEST:
             return new EntityGuest();
@@ -34,6 +34,7 @@ public class EntityFactory {
 
         case ENTITY_ROOM:
             return new EntityRoom();
+
 
         default:
             return new Entity();
