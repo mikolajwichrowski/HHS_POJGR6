@@ -21,6 +21,7 @@ public class App extends JFrame {
 
     JButton buttonPlus;
     JButton buttonMinus;
+
     /**
      * Constructor
      */
@@ -59,7 +60,7 @@ public class App extends JFrame {
         setSize(d);
         setLayout(null);
         setLocationRelativeTo(null);
-        super.getContentPane().setBackground(Color.PINK);
+        super.getContentPane().setBackground(Color.WHITE);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
