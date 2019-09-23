@@ -4,7 +4,6 @@ import HHS_PROJGR6.Interfaces.IEntity;
 
 import java.awt.*;
 
-
 /*
 * Room class
 * Inherits from Entity
@@ -12,11 +11,10 @@ import java.awt.*;
 
 public class EntityRoom extends Entity implements IEntity {
 
-private int StarRoom;
-public boolean Clean;
+    private int StarRoom;
+    public boolean Clean;
 
-String AreaType;
-
+    String AreaType;
 
     public EntityRoom() {
 
@@ -26,8 +24,7 @@ String AreaType;
     public void drawEntity(Graphics g) {
         super.drawEntity(g);
         g.setColor(Color.BLUE);
-        g.drawRect(XPosition*30, YPosition*30, 30, 30);
-
+        g.fillRect(XPosition * 30, YPosition * 30, 30, 30);
     }
 
     // Action to execute when triggered
@@ -40,8 +37,8 @@ String AreaType;
         return Clean;
     }
 
-        public void setClean(boolean clean){
-            this.Clean = true;
+    public void setClean(boolean clean) {
+        this.Clean = true;
     }
 
 }
