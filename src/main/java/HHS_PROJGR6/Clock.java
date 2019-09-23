@@ -4,53 +4,56 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
 /**
  * bron: https://www.youtube.com/watch?v=wznbvBuf8ys
  * Timer is een leuk extratje voor de weergave
  */
-public class Clock extends JFrame {
+public class Clock extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    JTextField timeF;
-    JPanel panel;
+    private JTextField timeF;
+    private static int clockspeed = 1;
+    private Timer internalClock;
+    private LocalDateTime datetime;
 
     public Clock() {
-        //super("Java Clock");
-        setSize(175, 90);
-        setLocation(1180,600);
-        setResizable(true);
+        setBounds(1175,250,175,60);
         setVisible(true);
-        //setLocationRelativeTo(null);
+        datetime = LocalDateTime.now();
 
-        panel = new JPanel();
-        panel.setLayout(new FlowLayout());
         timeF = new JTextField(5);
 
         // true gezet zodat we straks de tijd kunnen versnellen.
         timeF.setEditable(true);
         timeF.setFont(new Font("Arial", Font.PLAIN, 32));
 
-        panel.add(timeF);
-        add(panel);
+        add(timeF);
 
-        Timer t = new Timer(1000, new Listener());
+
+        Timer t = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                datetime = datetime.plusSeconds(Clock.getClockspeed());
+                System.out.println(Clock.getClockspeed());
+                timeF.setText(datetime.getHour()+":"+datetime.getMinute()+":"+datetime.getSecond());
+            }
+        });
         t.start();
     }
 
-    // deze moet straks in een aparte class
-        public class Listener implements ActionListener {
-            public void actionPerformed (ActionEvent e) {
-
-                Calendar thisMoment = Calendar.getInstance();
-
-                int hour = thisMoment.get(Calendar.HOUR_OF_DAY);
-                int minute = thisMoment.get(Calendar.MINUTE);
-                int second = thisMoment.get(Calendar.SECOND);
-
-                timeF.setText(hour+":"+minute+":"+second);
-            }
-        }
+    public static void addClockspeed() {
+        // Iets op bedenken
+        Clock.clockspeed += 1;
     }
+
+    public static void decreaseClockspeed(){
+        Clock.clockspeed -= 1;
+    }
+
+    public static int getClockspeed() {
+        return clockspeed;
+    }
+}

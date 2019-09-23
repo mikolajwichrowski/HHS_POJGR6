@@ -17,22 +17,23 @@ public class EntityFactory {
      * Each Entity is a place on the screen. The interface will tell them what to do
      * because the classes inherits the interface IEntity.
      * 
-     * @param type is from Enum EntityType
+     * @param type
+     *                 is from Enum EntityType
      * @return IEntity
      */
-    public static IEntity createEntity(EntityType type) {
+    public static IEntity createEntity(String type) {
         // What type of entity do we want to generate
         switch (type) {
-        case ENTITY_DINER:
-            return new EntityDiner();
+        case "Diner":
+            return new EntityDiner("Restaurant");
 
-        case ENTITY_GUEST:
+        case "Guest":
             return new EntityGuest();
 
-        case ENTITY_HOUSEKEEPING:
+        case "Housekeeping":
             return new EntityHousekeeping();
 
-        case ENTITY_ROOM:
+        case "Room":
             return new EntityRoom();
 
         default:

@@ -2,14 +2,16 @@ package HHS_PROJGR6;
 
 import HHS_PROJGR6.Entities.*;
 import HHS_PROJGR6.External.HotelEvent;
-import HHS_PROJGR6.External.HotelEventType;
 import HHS_PROJGR6.External.HotelEventListener;
-import HHS_PROJGR6.External.HotelEventManager;
+import HHS_PROJGR6.External.HotelEventType;
+import HHS_PROJGR6.Factories.EntityFactory;
+import HHS_PROJGR6.Interfaces.IEntity;
 import HHS_PROJGR6.Utils.JsonReader;
-import HHS_PROJGR6.Interfaces.*;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import java.util.Iterator;
+import static HHS_PROJGR6.Enums.EntityType.ENTITY_DINER;
 
 /**
  * 
@@ -33,23 +35,44 @@ public class Hotel implements HotelEventListener {
     public Hotel(Canvas hotelCanvas) {
         this.hotelCanvas = hotelCanvas;
         hotelCanvas.setGridWidth(20);
-        hotelCanvas.setGridHeight(20);
+        hotelCanvas.setGridHeight(30);
 
-        // Zo haal je het layout bestand op. Dit geeft voor nu altijd een error in de
-        // weeraven maar niet in het starten
-        JSONArray array = new JsonReader("hotel(1).layout").getJsonObject();
+        /*
+         * @ miek entiteit room waardes meegegeven. Gaarne checken wat je er van vindt.
+         * 
+         * @ fer/boyd/ruben : Gebruik nu de entity factory om dit te doen ;)
+         */
 
-        Entity[] entities = new Entity[3];
-        entities[0] = new EntityDiner();
-        entities[0].setPosition(3, 3);
+        try {
+            JSONArray slideContent = (JSONArray) new JsonReader("hotel(1).layout").getJsonObject();
+            Iterator i = slideContent.iterator();
 
-        entities[1] = new EntityGuest();
-        entities[1].setPosition(4, 4);
+            // Aantal elementen die in de json zitten
+            Entity[] entities = new Entity[slideContent.size()];
 
-        entities[2] = new EntityHousekeeping();
-        entities[2].setPosition(5, 5);
+            int counter = 0;
+            while (i.hasNext()) {
+                JSONObject slide = (JSONObject) i.next();
+                String title = (String) slide.get("AreaType");
+                String[] position = ((String) slide.get("Position")).split(",");
+                String[] dimension = ((String) slide.get("Dimension")).split(",");
 
-        hotelCanvas.setDrawableEntities(entities);
+                System.out.println("Room type:" + title + " Position:" + position + " Dimension:" + dimension);
+
+                // Create entity
+                IEntity entity = EntityFactory.createEntity(title);
+
+                // Set entity on array position and set location on entity
+                entities[counter] = (Entity) entity;
+                entities[counter].setPosition(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
+
+                counter++;
+            }
+
+            hotelCanvas.setDrawableEntities(entities);
+        } catch (Exception e) {
+
+        }
 
         // Start Events thread
         // HotelEventManager eventManager = new HotelEventManager();
