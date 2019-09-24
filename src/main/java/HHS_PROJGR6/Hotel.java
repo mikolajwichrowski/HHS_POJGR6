@@ -60,7 +60,7 @@ public class Hotel implements HotelEventListener, Runnable {
      */
     private void register(IEntity actor) {
         entities.add(actor);
-        if(hotelCanvas != null) {
+        if (hotelCanvas != null) {
             hotelCanvas.setDrawableEntities(entities);
         }
 
@@ -77,7 +77,7 @@ public class Hotel implements HotelEventListener, Runnable {
     public void initRooms() {
         try {
             // Read hotel and get highest position values
-            JSONArray jsonArray = (JSONArray) new JsonReader("hotel(1).layout").getJsonObject();
+            JSONArray jsonArray = (JSONArray) new JsonReader("hotel(2).layout").getJsonObject();
             Iterator i = jsonArray.iterator();
             int[] highestPositions = getHighest(jsonArray, "Position");
 
@@ -92,24 +92,42 @@ public class Hotel implements HotelEventListener, Runnable {
                 String[] dimension = ((String) jsonObject.get("Dimension")).split(",");
 
                 // Reverse the grid layout
-                int x = Integer.parseInt(position[1].trim());
-                int y = highestPositions[0] + 1 - Integer.parseInt(position[0].trim());
+                int x = Integer.parseInt(position[0].trim()) + 1;
+                int y = highestPositions[1] - Integer.parseInt(position[1].trim()) + 1;
 
                 // Entity size
-                int width = Integer.parseInt(dimension[1].trim());
-                int height = Integer.parseInt(dimension[0].trim());
+                int width = Integer.parseInt(dimension[0].trim());
+                int height = Integer.parseInt(dimension[1].trim());
 
                 // Create entity with factory
                 IEntity entity = EntityFactory.createEntity(type);
-                entity.setPosition(x, y);
+                entity.setPosition(y, x);
                 entity.setDimensions(width, height);
 
                 // Add entity
                 this.register(entity);
             }
 
+            // TODO: maak deze automatisch!
+            // Create entity with factory
+            IEntity entityStairs = EntityFactory.createEntity("Transport");
+            entityStairs.setPosition(9, 1);
+            entityStairs.setDimensions(1, 9);
+
+            // Add entity
+            this.register(entityStairs);
+
+            // TODO: maak deze automatisch!
+            // Create entity with factory
+            IEntity entityEscalator = EntityFactory.createEntity("Transport");
+            entityEscalator.setPosition(9, 8);
+            entityEscalator.setDimensions(1, 9);
+
+            // Add entity
+            this.register(entityEscalator);
+
             // Draw only the nessecary grid size
-            hotelCanvas.setGridHeight(highestPositions[1]);
+            hotelCanvas.setGridHeight(highestPositions[1] + 1);
             hotelCanvas.setGridWidth(highestPositions[0]);
 
             // Draw entities

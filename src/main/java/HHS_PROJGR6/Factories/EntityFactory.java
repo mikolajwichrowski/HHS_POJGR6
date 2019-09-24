@@ -4,6 +4,8 @@ import HHS_PROJGR6.Interfaces.IEntity;
 import HHS_PROJGR6.Entities.*;
 import HHS_PROJGR6.Enums.EntityType;
 
+import java.awt.*;
+
 /**
  * The sources below have been used to design the factory. Bron:
  * https://blackboard.hhs.nl/bbcswebdav/pid-2782283-dt-content-rid-23462854_2/courses/H-SE-OOSE-1-17-2019/Advanced%20Programming%201.pdf
@@ -25,7 +27,13 @@ public class EntityFactory {
         // Creating entity based on requested type
         switch (type) {
         case "Restaurant":
-            return new EntityDiner();
+            return new EntityRoom(Color.BLUE);
+        case "Fitness":
+            return new EntityRoom(Color.RED);
+        case "Cinema":
+            return new EntityRoom(Color.ORANGE);
+        case "Room":
+            return new EntityRoom(Color.GREEN);
 
         case "Guest":
             return new EntityGuest();
@@ -33,8 +41,8 @@ public class EntityFactory {
         case "Housekeeping":
             return new EntityHousekeeping();
 
-        case "Room":
-            return new EntityRoom();
+        case "Transport":
+            return new EntityTransport();
 
         default:
             return new Entity();

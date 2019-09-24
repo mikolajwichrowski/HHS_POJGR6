@@ -10,10 +10,10 @@ import java.awt.*;
 * Inherits from Entity
 */
 
-public class EntityDiner extends Entity implements IEntity {
+public class EntityTransport extends Entity implements IEntity {
 
     // Constructor
-    public EntityDiner() {
+    public EntityTransport() {
 
     }
 
@@ -25,7 +25,7 @@ public class EntityDiner extends Entity implements IEntity {
 
     public void drawEntity(Graphics g) {
         super.drawEntity(g);
-        g.setColor(Color.ORANGE);
+        g.setColor(Color.BLACK);
         g.fillRect(x * 30, (y - (height - 1)) * 30, width * 30, height * 30);
     }
 }

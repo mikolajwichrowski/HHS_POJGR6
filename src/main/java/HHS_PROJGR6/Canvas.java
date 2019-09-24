@@ -49,10 +49,10 @@ public class Canvas extends JPanel {
      */
     private void drawGrid(Graphics g) {
         // Loop door elke row heen
-        for (int i = 1; i <= this.gridHeight; i++) {
-            for (int j = 1; j <= this.gridWidth; j++) {
+        for (int i = 1; i <= this.gridWidth; i++) {
+            for (int j = 1; j <= this.gridHeight; j++) {
                 g.setColor(Color.PINK);
-                g.drawRect(30, 30, i * 30, j * 30);
+                g.drawRect(30, 30, (i + 1) * 30, j * 30);
 
             }
         }

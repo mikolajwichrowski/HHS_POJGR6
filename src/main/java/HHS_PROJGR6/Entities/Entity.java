@@ -43,7 +43,7 @@ public class Entity implements IEntity {
      */
     public void drawEntity(Graphics g) {
         g.setColor(Color.PINK);
-        g.drawRect(x * 30, y * 30, width * 30, height * 30);
+        g.drawRect(x * 30, (y - (height - 1)) * 30, width * 30, height * 30);
     }
 
     /**

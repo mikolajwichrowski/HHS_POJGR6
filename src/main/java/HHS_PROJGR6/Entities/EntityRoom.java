@@ -10,35 +10,26 @@ import java.awt.*;
 */
 
 public class EntityRoom extends Entity implements IEntity {
+    public Color roomColor;
 
-    private int StarRoom;
-    public boolean Clean;
-
-    String AreaType;
-
-    public EntityRoom() {
-
+    public EntityRoom(Color roomColor) {
+        this.roomColor = roomColor;
     }
 
     @Override
     public void drawEntity(Graphics g) {
         super.drawEntity(g);
-        g.setColor(Color.BLUE);
-        g.fillRect(x * 30, y * 30, width * 30, height * 30);
+        g.setColor(roomColor);
+        g.fillRect(x * 30, (y - (height - 1)) * 30, width * 30, height * 30);
+
+        g.setColor(Color.PINK);
+        g.drawString("R", (x * 30) + (width * 30 / 2), (y * 30) + (width * 30 / 2));
     }
 
     // Action to execute when triggered
     public void Notify() {
         // Logic for Room entity.
         // Make sure to implement features by OOSE principles
-    }
-
-    private boolean getClean() {
-        return Clean;
-    }
-
-    private void setClean(boolean clean) {
-        this.Clean = true;
     }
 
 }
