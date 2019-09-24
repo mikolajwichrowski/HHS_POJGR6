@@ -16,7 +16,7 @@ public class EntityHousekeeping extends Entity implements IEntity {
     }
 
     // Action to execute when triggered
-    public void doAction() {
+    public void Notify() {
         // Logic for Housekeeping entity.
         // Make sure to implement features by OOSE principles
     }
@@ -33,7 +33,6 @@ public class EntityHousekeeping extends Entity implements IEntity {
         super.drawEntity(g);
         g.setColor(Color.GREEN);
         g.fillRect(XPosition * 30, YPosition * 30, 30, 30);
-
     }
 
 }

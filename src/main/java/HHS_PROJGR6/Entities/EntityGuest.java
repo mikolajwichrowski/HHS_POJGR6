@@ -17,7 +17,7 @@ public class EntityGuest extends Entity implements IEntity {
     }
 
     // Action to execute when triggered
-    public void doAction() {
+    public void Notify() {
         // Logic for Guest entity.
         // Make sure to implement features by OOSE principles
 
