@@ -99,6 +99,7 @@ public class App extends JFrame {
         add(myHotel.getHotelCanvas());
 
         // Run hotel
+        myHotel.initRooms();
         new Thread(myHotel, "HotelThread").start();
 
         // Show window

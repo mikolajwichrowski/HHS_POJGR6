@@ -22,7 +22,7 @@ public class EntityRoom extends Entity implements IEntity {
 
     @Override
     public void drawEntity(Graphics g) {
-        drawEntity(g);
+        super.drawEntity(g);
         g.setColor(Color.BLUE);
         g.fillRect(x * 30, y * 30, width * 30, height * 30);
     }

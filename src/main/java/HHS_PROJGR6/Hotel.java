@@ -1,7 +1,6 @@
 package HHS_PROJGR6;
 
 // imports from project
-import HHS_PROJGR6.Entities.*;
 import HHS_PROJGR6.External.HotelEvent;
 import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.External.HotelEventManager;
@@ -9,18 +8,16 @@ import HHS_PROJGR6.External.HotelEventType;
 import HHS_PROJGR6.Factories.EntityFactory;
 import HHS_PROJGR6.Interfaces.IEntity;
 import HHS_PROJGR6.Utils.JsonReader;
-
-// External imports
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.lang.reflect.Array;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.Timer;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+// External imports
 
 /**
  * 
@@ -47,9 +44,8 @@ public class Hotel implements HotelEventListener, Runnable {
      * @param hotelCanvas
      */
     public Hotel() {
-        // init the rooms and entities
+        // Initilize entities
         this.entities = new ArrayList<IEntity>();
-        this.initRooms();
 
         // Run events
         HotelEventManager eventManager = new HotelEventManager();
@@ -64,7 +60,10 @@ public class Hotel implements HotelEventListener, Runnable {
      */
     private void register(IEntity actor) {
         entities.add(actor);
-        hotelCanvas.setDrawableEntities(entities);
+        if(hotelCanvas != null) {
+            hotelCanvas.setDrawableEntities(entities);
+        }
+
     }
 
     // private void deregister(IEntity actor) {
@@ -75,7 +74,7 @@ public class Hotel implements HotelEventListener, Runnable {
     /**
      * 
      */
-    private void initRooms() {
+    public void initRooms() {
         try {
             // Read hotel and get highest position values
             JSONArray jsonArray = (JSONArray) new JsonReader("hotel(1).layout").getJsonObject();

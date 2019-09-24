@@ -30,7 +30,7 @@ public class EntityHousekeeping extends Entity implements IEntity {
     }
 
     public void drawEntity(Graphics g) {
-        drawEntity(g);
+        super.drawEntity(g);
         g.setColor(Color.GREEN);
         g.fillRect(x * 30, y * 30, width * 30, height * 30);
     }
