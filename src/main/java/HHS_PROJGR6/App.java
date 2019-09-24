@@ -36,7 +36,7 @@ public class App extends JFrame {
         Hotel myHotel = new Hotel();
         
         // Set canvas and add width for gui elements
-        myHotel.setCanvas(canvas);
+        myHotel.setHotelCanvas(canvas);
         d.width += 500;
 
         // Set button plus and functionality
