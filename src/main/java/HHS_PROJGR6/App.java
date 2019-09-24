@@ -30,12 +30,16 @@ public class App extends JFrame {
      * Constructor
      */
     public App() {
-        // Set dimensions and add canvas to draw the hotel on
-        // Set dimensions and add canvas to draw the hotel on
+        // Set dimensions, create canvas and hotel
         Dimension d = new Dimension(1000, 800);
-        Hotel myHotel = new Hotel(new Canvas(d));
+        Canvas canvas = new Canvas(d);
+        Hotel myHotel = new Hotel();
+        
+        // Set canvas and add width for gui elements
+        myHotel.setHotelCanvas(canvas);
         d.width += 500;
 
+        // Set button plus and functionality
         buttonPlus = new JButton("Hotel TijdsEenheid +");
         buttonPlus.setBounds(1175, 50, 175, 80);
         buttonPlus.setBackground(Color.DARK_GRAY);
@@ -48,6 +52,7 @@ public class App extends JFrame {
             }
         });
 
+        // Set button minus and functionality
         buttonMinus = new JButton("Hotel TijdsEenheid -");
         buttonMinus.setBounds(1175, 150, 175, 80);
         buttonMinus.setBackground(Color.DARK_GRAY);
@@ -60,13 +65,14 @@ public class App extends JFrame {
             }
         });
 
-        // Set time display and factor display style
+        // Set time display
         timeDisplay = new JTextField(5);
         timeDisplay.setFont(new Font("Consolas", Font.PLAIN, 32));
         timeDisplay.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         timeDisplay.setBounds(1175, 250, 175, 80);
         timeDisplay.setText(Clock.datetime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)));
 
+        // Set factor display
         timeFactor = new JTextField(5);
         timeFactor.setFont(new Font("Consolas", Font.PLAIN, 32));
         timeFactor.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
@@ -90,7 +96,6 @@ public class App extends JFrame {
         add(timeFactor);
         add(buttonPlus);
         add(buttonMinus);
-
         add(myHotel.getHotelCanvas());
 
         // Run hotel

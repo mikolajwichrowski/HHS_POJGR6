@@ -46,11 +46,11 @@ public class Hotel implements HotelEventListener, Runnable {
      * 
      * @param hotelCanvas
      */
-    public Hotel(Canvas hotelCanvas) {
-        // init the canvas and rooms
-        this.hotelCanvas = hotelCanvas;
+    public Hotel() {
+        // init the rooms
         this.initRooms();
 
+        // Run events
         HotelEventManager eventManager = new HotelEventManager();
         eventManager.register(this);
         eventManager.changeSpeed(2);
@@ -59,8 +59,8 @@ public class Hotel implements HotelEventListener, Runnable {
 
     @Override
     public void run() {
-        // Timer TODO: oplossen met een design pattern
-        Timer t = new Timer(1000, new ActionListener() {
+        // Draw every frame
+        new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (int i = 0; i < Clock.getClockspeed(); i++) {
@@ -71,10 +71,7 @@ public class Hotel implements HotelEventListener, Runnable {
 
                 hotelCanvas.setDrawableEntities(entities);
             }
-        });
-
-        // Start timer
-        t.start();
+        }).start();
     }
 
     /**
@@ -149,7 +146,7 @@ public class Hotel implements HotelEventListener, Runnable {
      * @return
      */
     private int[] getHighest(JSONArray array, String value) {
-        // TODO: make this a better algol
+        // TODO: make this a better algol !!!!!!!!!!!!
 
         Iterator i = array.iterator();
         int[] highes = new int[2];
@@ -178,6 +175,10 @@ public class Hotel implements HotelEventListener, Runnable {
 
     public Canvas getHotelCanvas() {
         return hotelCanvas;
+    }
+
+    public Canvas setHotelCanvas(Canvas hotelCanvas) {
+        this.hotelCanvas = hotelCanvas;
     }
 
     @Override

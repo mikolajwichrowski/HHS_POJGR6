@@ -33,14 +33,14 @@ public class Clock extends JPanel {
      * 
      */
     public static void addClockspeed() {
-        Clock.clockspeed += 1;
+        Clock.clockspeed++;
     }
 
     /**
      * 
      */
     public static void reduceClockspeed() {
-        Clock.clockspeed -= 1;
+        Clock.clockspeed--;
     }
 
     /**
