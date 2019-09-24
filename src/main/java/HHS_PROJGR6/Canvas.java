@@ -1,9 +1,10 @@
 package HHS_PROJGR6;
 
-import HHS_PROJGR6.Entities.Entity;
+import HHS_PROJGR6.Interfaces.IEntity;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Entity class
@@ -22,7 +23,7 @@ public class Canvas extends JPanel {
     /**
      * 
      */
-    private Entity[] drawableEntities;
+    private ArrayList<IEntity> drawableEntities;
 
     /**
      * Generated serial id
@@ -32,13 +33,13 @@ public class Canvas extends JPanel {
     /**
      * 
      */
+
     public Canvas(Dimension d) {
         // Set sizes
-        this.gridHeight = 10;
-        this.gridWidth = 10;
+        this.gridHeight = 0;
+        this.gridWidth = 0;
 
         setSize(d);
-        setBackground(Color.BLUE);
         repaint();
     }
 
@@ -50,8 +51,9 @@ public class Canvas extends JPanel {
         // Loop door elke row heen
         for (int i = 1; i <= this.gridHeight; i++) {
             for (int j = 1; j <= this.gridWidth; j++) {
-                g.setColor(Color.BLACK);
+                g.setColor(Color.PINK);
                 g.drawRect(30, 30, i * 30, j * 30);
+
             }
         }
     }
@@ -62,11 +64,10 @@ public class Canvas extends JPanel {
      */
     private void drawableEntity(Graphics g) {
         // Loop door elke row heen
-        drawableEntities = new Entity[1];
-        drawableEntities[0] = new Entity();
-
-        for (Entity entity : drawableEntities) {
-            entity.drawEntity(g);
+        for (IEntity entity : drawableEntities) {
+            if (entity != null) {
+                entity.drawEntity(g);
+            }
         }
     }
 
@@ -103,14 +104,14 @@ public class Canvas extends JPanel {
     /**
      * 
      */
-    public Entity[] getDrawableEntities() {
+    public ArrayList<IEntity> getDrawableEntities() {
         return drawableEntities;
     }
 
     /**
      * 
      */
-    public void setDrawableEntities(Entity[] drawableEntities) {
+    public void setDrawableEntities(ArrayList<IEntity> drawableEntities) {
         this.drawableEntities = drawableEntities;
         repaint();
     }
@@ -121,6 +122,6 @@ public class Canvas extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         drawGrid(g);
-        // drawableEntity(g);
+        drawableEntity(g);
     }
 }

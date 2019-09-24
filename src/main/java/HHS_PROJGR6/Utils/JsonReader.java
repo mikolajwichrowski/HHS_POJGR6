@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.text.ParseException;
 
-import org.json.simple.JSONArray;
+import org.json.simple.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -52,7 +52,7 @@ public class JsonReader implements IFileReader {
         } catch (Exception exceptionOnParsingArray) {
             try {
                 JSONArray jsonArray = new JSONArray();
-                JSONObject jsonObject = (JSONObject) parser.parse(getString());
+                JSONObject jsonObject = (JSONObject)parser.parse(getString());
                 jsonArray.add(jsonObject);
                 return jsonArray;
             } catch (Exception exceptionOnParsingObject) {
