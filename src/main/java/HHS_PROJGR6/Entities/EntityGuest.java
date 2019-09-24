@@ -20,7 +20,7 @@ public class EntityGuest extends Entity implements IEntity {
     public void doAction() {
         // Logic for Guest entity.
         // Make sure to implement features by OOSE principles
-        System.out.println("move from " + getYPosition());
+
         if (getYPosition() == 1) {
             setPosition(2, 1);
         } else if (getYPosition() == 2) {
