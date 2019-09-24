@@ -28,16 +28,16 @@ public class EntityRoom extends Entity implements IEntity {
     }
 
     // Action to execute when triggered
-    public void doAction() {
+    public void Notify() {
         // Logic for Room entity.
         // Make sure to implement features by OOSE principles
     }
 
-    public boolean getClean() {
+    private boolean getClean() {
         return Clean;
     }
 
-    public void setClean(boolean clean) {
+    private void setClean(boolean clean) {
         this.Clean = true;
     }
 

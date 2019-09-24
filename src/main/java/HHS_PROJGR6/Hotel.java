@@ -25,7 +25,7 @@ import java.awt.event.ActionListener;
 /**
  * 
  */
-public class Hotel implements HotelEventListener {
+public class Hotel implements HotelEventListener, Runnable {
     /**
      * 
      */
@@ -54,16 +54,18 @@ public class Hotel implements HotelEventListener {
         HotelEventManager eventManager = new HotelEventManager();
         eventManager.register(this);
         eventManager.changeSpeed(2);
-        new Thread(eventManager).start();
+        eventManager.start();
+    }
 
+    @Override
+    public void run() {
         // Timer TODO: oplossen met een design pattern
         Timer t = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Clock.updateState();
                 for (int i = 0; i < Clock.getClockspeed(); i++) {
                     for (IEntity entity : entities) {
-                        entity.doAction();
+                        entity.Notify();
                     }
                 }
 
@@ -73,15 +75,23 @@ public class Hotel implements HotelEventListener {
 
         // Start timer
         t.start();
-
     }
 
     /**
      * 
      * @param actor
      */
-    private void addActor(IEntity actor) {
+    private void register(IEntity actor) {
         entities.add(actor);
+        hotelCanvas.setDrawableEntities(entities);
+    }
+
+    /**
+     * 
+     * @param actor
+     */
+    private void deregister(IEntity actor) {
+        entities.remove(actor);
         hotelCanvas.setDrawableEntities(entities);
     }
 
@@ -117,7 +127,7 @@ public class Hotel implements HotelEventListener {
                 entity.setPosition(x, y);
 
                 // Add entity
-                entities.add(entity);
+                register(entity);
             }
 
             // Draw only the nessecary grid size
@@ -129,19 +139,6 @@ public class Hotel implements HotelEventListener {
         } catch (Exception e) {
             // TODO: better exception handling
             throw e;
-        }
-    }
-
-    public Canvas getHotelCanvas() {
-        return hotelCanvas;
-    }
-
-    @Override
-    public void Notify(HotelEvent event) {
-        if (event.Type == HotelEventType.CHECK_IN) {
-            IEntity actor = EntityFactory.createEntity("Guest");
-            actor.setPosition(1, 1);
-            addActor(actor);
         }
     }
 
@@ -177,5 +174,19 @@ public class Hotel implements HotelEventListener {
             throw e;
         }
         return highes;
+    }
+
+    public Canvas getHotelCanvas() {
+        return hotelCanvas;
+    }
+
+    @Override
+    public void Notify(HotelEvent event) {
+        if (event.Type == HotelEventType.CHECK_IN) {
+            IEntity actor = EntityFactory.createEntity("Guest");
+            actor.setPosition(1, 1);
+
+            register(actor);
+        }
     }
 }

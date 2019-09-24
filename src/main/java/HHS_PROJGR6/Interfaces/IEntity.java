@@ -4,7 +4,7 @@ import java.awt.*;
 
 public interface IEntity {
 
-    void doAction();
+    void Notify();
 
     void drawEntity(Graphics g);
 

@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 /**
  * App class
@@ -21,6 +23,8 @@ public class App extends JFrame {
 
     JButton buttonPlus;
     JButton buttonMinus;
+    JTextField timeDisplay;
+    JTextField timeFactor;
 
     /**
      * Constructor
@@ -28,9 +32,9 @@ public class App extends JFrame {
     public App() {
         // Set dimensions and add canvas to draw the hotel on
         // Set dimensions and add canvas to draw the hotel on
-        Dimension d = new Dimension(1400, 800);
+        Dimension d = new Dimension(1000, 800);
         Hotel myHotel = new Hotel(new Canvas(d));
-        d.width += 200;
+        d.width += 500;
 
         buttonPlus = new JButton("Hotel TijdsEenheid +");
         buttonPlus.setBounds(1175, 50, 175, 80);
@@ -40,6 +44,7 @@ public class App extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Clock.addClockspeed();
+                timeFactor.setText("HTE: " + Clock.getClockspeed());
             }
         });
 
@@ -51,14 +56,45 @@ public class App extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Clock.reduceClockspeed();
+                timeFactor.setText("HTE: " + Clock.getClockspeed());
             }
         });
 
-        add(myHotel.getHotelCanvas());
+        // Set time display and factor display style
+        timeDisplay = new JTextField(5);
+        timeDisplay.setFont(new Font("Consolas", Font.PLAIN, 32));
+        timeDisplay.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        timeDisplay.setBounds(1175, 250, 175, 80);
+        timeDisplay.setText(Clock.datetime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)));
+
+        timeFactor = new JTextField(5);
+        timeFactor.setFont(new Font("Consolas", Font.PLAIN, 32));
+        timeFactor.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        timeFactor.setBounds(1175, 300, 175, 80);
+        timeFactor.setText("HTE: " + Clock.getClockspeed());
+
+        // Set timer for hotel clock
+        new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Set the visible time
+                Clock.datetime = Clock.datetime.plusSeconds(Clock.getClockspeed());
+
+                // Format time and display
+                timeDisplay.setText(Clock.datetime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)));
+            }
+        }).start();
+
+        // Add to current panel
+        add(timeDisplay);
+        add(timeFactor);
         add(buttonPlus);
         add(buttonMinus);
 
-        add(new Clock());
+        add(myHotel.getHotelCanvas());
+
+        // Run hotel
+        new Thread(myHotel, "HotelThread").start();
 
         // Show window
         setTitle("HotelSimulatie GR6");
@@ -67,9 +103,11 @@ public class App extends JFrame {
         setSize(d);
         setLayout(null);
         setLocationRelativeTo(null);
-        // super.getContentPane().setBackground(Color.WHITE);
+        getContentPane().setBackground(Color.WHITE);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        
     }
 
     /**
@@ -81,5 +119,4 @@ public class App extends JFrame {
         // Run Application
         new App();
     }
-
 }

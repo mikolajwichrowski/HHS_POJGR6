@@ -36,7 +36,7 @@ public class Entity implements IEntity {
      * 
      * 
      */
-    public void doAction() {
+    public void Notify() {
         // Logic for entity.
         // Make sure to implement features by OOSE principles
         // NOT TO DO : hier komen de algoritmes, afblijven HAHA
