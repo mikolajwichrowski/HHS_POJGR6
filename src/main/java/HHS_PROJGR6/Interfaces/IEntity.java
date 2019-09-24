@@ -10,4 +10,5 @@ public interface IEntity {
 
     void setPosition(Integer x, Integer y);
 
+    void setDimensions(Integer width, Integer height);
 }
