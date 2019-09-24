@@ -1,7 +1,6 @@
 package HHS_PROJGR6;
 
 // imports from project
-import HHS_PROJGR6.Entities.*;
 import HHS_PROJGR6.External.HotelEvent;
 import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.External.HotelEventManager;
@@ -9,18 +8,16 @@ import HHS_PROJGR6.External.HotelEventType;
 import HHS_PROJGR6.Factories.EntityFactory;
 import HHS_PROJGR6.Interfaces.IEntity;
 import HHS_PROJGR6.Utils.JsonReader;
-
-// External imports
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.lang.reflect.Array;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.Timer;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+// External imports
 
 /**
  * 
@@ -47,8 +44,8 @@ public class Hotel implements HotelEventListener, Runnable {
      * @param hotelCanvas
      */
     public Hotel() {
-        // init the rooms
-        this.initRooms();
+        // Initilize entities
+        this.entities = new ArrayList<IEntity>();
 
         // Run events
         HotelEventManager eventManager = new HotelEventManager();
@@ -57,53 +54,32 @@ public class Hotel implements HotelEventListener, Runnable {
         eventManager.start();
     }
 
-    @Override
-    public void run() {
-        // Draw every frame
-        new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                for (int i = 0; i < Clock.getClockspeed(); i++) {
-                    for (IEntity entity : entities) {
-                        entity.Notify();
-                    }
-                }
-
-                hotelCanvas.setDrawableEntities(entities);
-            }
-        }).start();
-    }
-
     /**
      * 
      * @param actor
      */
     private void register(IEntity actor) {
         entities.add(actor);
-        hotelCanvas.setDrawableEntities(entities);
+        if (hotelCanvas != null) {
+            hotelCanvas.setDrawableEntities(entities);
+        }
+
     }
+
+    // private void deregister(IEntity actor) {
+    // entities.remove(actor);
+    // hotelCanvas.setDrawableEntities(entities);
+    // }
 
     /**
      * 
-     * @param actor
      */
-    private void deregister(IEntity actor) {
-        entities.remove(actor);
-        hotelCanvas.setDrawableEntities(entities);
-    }
-
-    /**
-     * 
-     */
-    private void initRooms() {
+    public void initRooms() {
         try {
             // Read hotel and get highest position values
-            JSONArray jsonArray = (JSONArray) new JsonReader("hotel(1).layout").getJsonObject();
+            JSONArray jsonArray = (JSONArray) new JsonReader("hotel(2).layout").getJsonObject();
             Iterator i = jsonArray.iterator();
             int[] highestPositions = getHighest(jsonArray, "Position");
-
-            // Init array with the size of the json array (better for memory)
-            entities = new ArrayList<IEntity>();
 
             // Loop trough json array
             while (i.hasNext()) {
@@ -112,23 +88,46 @@ public class Hotel implements HotelEventListener, Runnable {
                 String type = (String) jsonObject.get("AreaType");
                 String[] position = ((String) jsonObject.get("Position")).split(",");
 
-                // Dimensions TODO: set dimensions
+                // Dimensions
                 String[] dimension = ((String) jsonObject.get("Dimension")).split(",");
 
                 // Reverse the grid layout
-                int x = Integer.parseInt(position[1].trim());
-                int y = highestPositions[0] + 1 - Integer.parseInt(position[0].trim());
+                int x = Integer.parseInt(position[0].trim()) + 1;
+                int y = highestPositions[1] - Integer.parseInt(position[1].trim()) + 1;
+
+                // Entity size
+                int width = Integer.parseInt(dimension[0].trim());
+                int height = Integer.parseInt(dimension[1].trim());
 
                 // Create entity with factory
                 IEntity entity = EntityFactory.createEntity(type);
-                entity.setPosition(x, y);
+                entity.setPosition(y, x);
+                entity.setDimensions(width, height);
 
                 // Add entity
-                register(entity);
+                this.register(entity);
             }
 
+            // TODO: maak deze automatisch!
+            // Create entity with factory
+            IEntity entityStairs = EntityFactory.createEntity("Transport");
+            entityStairs.setPosition(9, 1);
+            entityStairs.setDimensions(1, 9);
+
+            // Add entity
+            this.register(entityStairs);
+
+            // TODO: maak deze automatisch!
+            // Create entity with factory
+            IEntity entityEscalator = EntityFactory.createEntity("Transport");
+            entityEscalator.setPosition(9, 8);
+            entityEscalator.setDimensions(1, 9);
+
+            // Add entity
+            this.register(entityEscalator);
+
             // Draw only the nessecary grid size
-            hotelCanvas.setGridHeight(highestPositions[1]);
+            hotelCanvas.setGridHeight(highestPositions[1] + 1);
             hotelCanvas.setGridWidth(highestPositions[0]);
 
             // Draw entities
@@ -173,15 +172,23 @@ public class Hotel implements HotelEventListener, Runnable {
         return highes;
     }
 
+    /**
+     * 
+     */
     public Canvas getHotelCanvas() {
         return hotelCanvas;
     }
 
-    public Canvas setHotelCanvas(Canvas hotelCanvas) {
+    /**
+     * 
+     */
+    public void setHotelCanvas(Canvas hotelCanvas) {
         this.hotelCanvas = hotelCanvas;
     }
 
-    @Override
+    /**
+     * 
+     */
     public void Notify(HotelEvent event) {
         if (event.Type == HotelEventType.CHECK_IN) {
             IEntity actor = EntityFactory.createEntity("Guest");
@@ -189,5 +196,22 @@ public class Hotel implements HotelEventListener, Runnable {
 
             register(actor);
         }
+    }
+
+    @Override
+    public void run() {
+        // Draw every frame
+        new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (int i = 0; i < Clock.getClockspeed(); i++) {
+                    for (IEntity entity : entities) {
+                        entity.Notify();
+                    }
+                }
+
+                hotelCanvas.setDrawableEntities(entities);
+            }
+        }).start();
     }
 }

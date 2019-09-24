@@ -34,7 +34,7 @@ public class App extends JFrame {
         Dimension d = new Dimension(1000, 800);
         Canvas canvas = new Canvas(d);
         Hotel myHotel = new Hotel();
-        
+
         // Set canvas and add width for gui elements
         myHotel.setHotelCanvas(canvas);
         d.width += 500;
@@ -76,7 +76,7 @@ public class App extends JFrame {
         timeFactor = new JTextField(5);
         timeFactor.setFont(new Font("Consolas", Font.PLAIN, 32));
         timeFactor.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-        timeFactor.setBounds(1175, 300, 175, 80);
+        timeFactor.setBounds(1175, 350, 175, 80);
         timeFactor.setText("HTE: " + Clock.getClockspeed());
 
         // Set timer for hotel clock
@@ -99,6 +99,7 @@ public class App extends JFrame {
         add(myHotel.getHotelCanvas());
 
         // Run hotel
+        myHotel.initRooms();
         new Thread(myHotel, "HotelThread").start();
 
         // Show window
@@ -108,11 +109,10 @@ public class App extends JFrame {
         setSize(d);
         setLayout(null);
         setLocationRelativeTo(null);
-        getContentPane().setBackground(Color.WHITE);
+        // getContentPane().setBackground(Color.WHITE);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        
     }
 
     /**

@@ -12,23 +12,17 @@ import java.awt.*;
 
 public class Entity implements IEntity {
     // TODO: dit is belangrijk
-    public int XPosition;
-    public int YPosition;
+    public int x;
+    public int y;
+    public int width;
+    public int height;
 
     /**
      * 
      */
     public Entity() {
-        XPosition = 0;
-        YPosition = 0;
-    }
-
-    /**
-     * 
-     */
-    public void setPosition(Integer x, Integer y) {
-        this.XPosition = x; // drawing offset
-        this.YPosition = y; // drawinf offeset
+        this.x = 0;
+        this.y = 0;
     }
 
     /**
@@ -49,7 +43,7 @@ public class Entity implements IEntity {
      */
     public void drawEntity(Graphics g) {
         g.setColor(Color.PINK);
-        g.drawRect(XPosition * 30, YPosition * 30, 30, 30);
+        g.drawRect(x * 30, (y - (height - 1)) * 30, width * 30, height * 30);
     }
 
     /**
@@ -57,14 +51,14 @@ public class Entity implements IEntity {
      * @return
      */
     public int getXPosition() {
-        return XPosition;
+        return x;
     }
 
     /**
      * 
      */
     public int getYPosition() {
-        return YPosition;
+        return y;
     }
 
     /**
@@ -72,10 +66,20 @@ public class Entity implements IEntity {
      * @param y
      * @param x
      */
-    public void setPosition(int y, int x) {
-        this.XPosition = x;
-        this.YPosition = y;
+    public void setPosition(Integer y, Integer x) {
+        this.x = x;
+        this.y = y;
 
+    }
+
+    /**
+     * 
+     * @param y
+     * @param x
+     */
+    public void setDimensions(Integer width, Integer height) {
+        this.width = width;
+        this.height = height;
     }
 
 }
