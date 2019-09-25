@@ -20,10 +20,10 @@ public class EntityRoom extends Entity implements IEntity {
     public void drawEntity(Graphics g) {
         super.drawEntity(g);
         g.setColor(roomColor);
-        g.fillRect(x * 30, (y - (height - 1)) * 30, width * 30, height * 30);
+        g.fillRect(x * 60, (y - (height - 1)) * 60, width * 60, height * 60);
 
-        g.setColor(Color.PINK);
-        g.drawString("R", (x * 30) + (width * 30 / 2), (y * 30) + (width * 30 / 2));
+        g.setColor(Color.BLACK);
+        g.drawString("R", (x * 60) + (width * 60 / 2), (y * 60) + (width * 60 / 2));
     }
 
     // Action to execute when triggered

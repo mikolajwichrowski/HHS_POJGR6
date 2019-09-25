@@ -26,6 +26,6 @@ public class EntityDiner extends Entity implements IEntity {
     public void drawEntity(Graphics g) {
         super.drawEntity(g);
         g.setColor(Color.ORANGE);
-        g.fillRect(x * 30, (y - (height - 1)) * 30, width * 30, height * 30);
+        g.fillRect(x * 60, (y - (height - 1)) * 60, width * 60, height * 60);
     }
 }

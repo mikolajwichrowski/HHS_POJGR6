@@ -35,14 +35,15 @@ public class App extends JFrame {
         Canvas canvas = new Canvas(d);
         Hotel myHotel = new Hotel();
 
+
         // Set canvas and add width for gui elements
         myHotel.setHotelCanvas(canvas);
         d.width += 500;
 
         // Set button plus and functionality
         buttonPlus = new JButton("Hotel TijdsEenheid +");
-        buttonPlus.setBounds(1175, 50, 175, 80);
-        buttonPlus.setBackground(Color.DARK_GRAY);
+        buttonPlus.setBounds(1150, 50, 175, 80);
+        buttonPlus.setBackground(Color.GREEN);
         buttonPlus.setForeground(Color.BLACK);
         buttonPlus.addActionListener(new ActionListener() {
             @Override
@@ -54,8 +55,8 @@ public class App extends JFrame {
 
         // Set button minus and functionality
         buttonMinus = new JButton("Hotel TijdsEenheid -");
-        buttonMinus.setBounds(1175, 150, 175, 80);
-        buttonMinus.setBackground(Color.DARK_GRAY);
+        buttonMinus.setBounds(1150, 150, 175, 80);
+        buttonMinus.setBackground(Color.RED);
         buttonMinus.setForeground(Color.BLACK);
         buttonMinus.addActionListener(new ActionListener() {
             @Override
@@ -69,14 +70,16 @@ public class App extends JFrame {
         timeDisplay = new JTextField(5);
         timeDisplay.setFont(new Font("Consolas", Font.PLAIN, 32));
         timeDisplay.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-        timeDisplay.setBounds(1175, 250, 175, 80);
+        timeDisplay.setHorizontalAlignment(SwingConstants.CENTER);
+        timeDisplay.setBounds(1150, 250, 175, 80);
         timeDisplay.setText(Clock.datetime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)));
 
         // Set factor display
         timeFactor = new JTextField(5);
         timeFactor.setFont(new Font("Consolas", Font.PLAIN, 32));
         timeFactor.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-        timeFactor.setBounds(1175, 350, 175, 80);
+        timeFactor.setHorizontalAlignment(SwingConstants.CENTER);
+        timeFactor.setBounds(1150, 350, 175, 80);
         timeFactor.setText("HTE: " + Clock.getClockspeed());
 
         // Set timer for hotel clock
@@ -98,18 +101,18 @@ public class App extends JFrame {
         add(buttonMinus);
         add(myHotel.getHotelCanvas());
 
+
         // Run hotel
         myHotel.initRooms();
         new Thread(myHotel, "HotelThread").start();
 
         // Show window
         setTitle("HotelSimulatie GR6");
-        setLayout(null);
         setResizable(true);
         setSize(d);
         setLayout(null);
         setLocationRelativeTo(null);
-        // getContentPane().setBackground(Color.WHITE);
+        getContentPane().setBackground(Color.WHITE);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 

@@ -39,7 +39,7 @@ public class EntityGuest extends Entity implements IEntity {
     public void drawEntity(Graphics g) {
         super.drawEntity(g);
         g.setColor(Color.BLACK);
-        g.fillRect(x * 30, y * 30, width * 30, height * 30);
+        g.fillRect(x * 60, y * 60, width * 60, height * 60);
         // g.drawRect(XPosition*30, YPosition*30, 30, 30);
 
     }
