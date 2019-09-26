@@ -1,7 +1,5 @@
 package HHS_PROJGR6.Entities;
 
-import HHS_PROJGR6.External.HotelEvent;
-import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.Interfaces.IEntity;
 
 import java.awt.*;
@@ -42,8 +40,8 @@ public class Entity implements IEntity {
      * 
      */
     public void drawEntity(Graphics g) {
-        g.setColor(Color.PINK);
-        g.drawRect(x * 30, (y - (height - 1)) * 30, width * 30, height * 30);
+        g.setColor(Color.BLACK);
+        g.drawRect(x * 60, (y - (height - 1)) * 60, width * 60, height * 60);
     }
 
     /**

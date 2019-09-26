@@ -51,8 +51,8 @@ public class Canvas extends JPanel {
         // Loop door elke row heen
         for (int i = 1; i <= this.gridWidth; i++) {
             for (int j = 1; j <= this.gridHeight; j++) {
-                g.setColor(Color.PINK);
-                g.drawRect(30, 30, (i + 1) * 30, j * 30);
+                g.setColor(Color.BLACK);
+                g.drawRect(60, 60, i  * 60, j * 60);
 
             }
         }
@@ -113,7 +113,7 @@ public class Canvas extends JPanel {
      */
     public void setDrawableEntities(ArrayList<IEntity> drawableEntities) {
         this.drawableEntities = drawableEntities;
-        repaint();
+        //repaint();
     }
 
     /**
