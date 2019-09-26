@@ -11,9 +11,6 @@ import HHS_PROJGR6.Utils.JsonReader;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -77,7 +74,7 @@ public class Hotel implements HotelEventListener, Runnable {
     public void initRooms() {
         try {
             // Read hotel and get highest position values
-            JSONArray jsonArray = (JSONArray) new JsonReader("hotel(2).layout").getJsonObject();
+            JSONArray jsonArray = (JSONArray) new JsonReader("hotel(3).layout").getJsonObject();
             Iterator i = jsonArray.iterator();
             int[] highestPositions = getHighest(jsonArray, "Position");
 
@@ -86,6 +83,9 @@ public class Hotel implements HotelEventListener, Runnable {
                 JSONObject jsonObject = (JSONObject) i.next();
 
                 String type = (String) jsonObject.get("AreaType");
+
+//                String classification = (String) jsonObject.get("Classification");
+
                 String[] position = ((String) jsonObject.get("Position")).split(",");
 
                 // Dimensions
@@ -101,18 +101,25 @@ public class Hotel implements HotelEventListener, Runnable {
 
                 // Create entity with factory
                 IEntity entity = EntityFactory.createEntity(type);
+//                IEntity entityRoom = EntityFactory.createEntity(classification);
+
                 entity.setPosition(y, x);
                 entity.setDimensions(width, height);
 
+//                entityRoom.setPosition(y, x);
+//                entityRoom.setDimensions(width, height);
+
                 // Add entity
                 this.register(entity);
+//                this.register(entityRoom);
+
             }
 
             // TODO: maak deze automatisch!
             // Create entity with factory
             IEntity entityStairs = EntityFactory.createEntity("Transport");
-            entityStairs.setPosition(9, 1);
-            entityStairs.setDimensions(1, 9);
+            entityStairs.setPosition(7, 1);
+            entityStairs.setDimensions(1, 7);
 
             // Add entity
             this.register(entityStairs);
@@ -120,8 +127,8 @@ public class Hotel implements HotelEventListener, Runnable {
             // TODO: maak deze automatisch!
             // Create entity with factory
             IEntity entityEscalator = EntityFactory.createEntity("Transport");
-            entityEscalator.setPosition(9, 8);
-            entityEscalator.setDimensions(1, 9);
+            entityEscalator.setPosition(7, 8);
+            entityEscalator.setDimensions(1, 7);
 
             // Add entity
             this.register(entityEscalator);
@@ -192,6 +199,8 @@ public class Hotel implements HotelEventListener, Runnable {
     public void Notify(HotelEvent event) {
         if (event.Type == HotelEventType.CHECK_IN) {
             IEntity actor = EntityFactory.createEntity("Guest");
+
+            // @ Miek : Gast op 0,6 binnen laten lopen???
             actor.setPosition(1, 1);
 
             register(actor);
@@ -200,18 +209,18 @@ public class Hotel implements HotelEventListener, Runnable {
 
     @Override
     public void run() {
-        // Draw every frame
-        new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                for (int i = 0; i < Clock.getClockspeed(); i++) {
-                    for (IEntity entity : entities) {
-                        entity.Notify();
-                    }
-                }
-
-                hotelCanvas.setDrawableEntities(entities);
-            }
-        }).start();
+//        // Draw every frame
+//        new Timer(1000, new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                for (int i = 0; i < Clock.getClockspeed(); i++) {
+//                    for (IEntity entity : entities) {
+//                        entity.Notify();
+//                    }
+//                }
+//
+//                //hotelCanvas.setDrawableEntities(entities);
+//            }
+//        }).start();
     }
 }

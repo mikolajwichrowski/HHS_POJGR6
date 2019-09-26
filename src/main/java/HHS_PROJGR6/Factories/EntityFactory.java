@@ -1,8 +1,7 @@
 package HHS_PROJGR6.Factories;
 
-import HHS_PROJGR6.Interfaces.IEntity;
 import HHS_PROJGR6.Entities.*;
-import HHS_PROJGR6.Enums.EntityType;
+import HHS_PROJGR6.Interfaces.IEntity;
 
 import java.awt.*;
 
@@ -27,13 +26,16 @@ public class EntityFactory {
         // Creating entity based on requested type
         switch (type) {
         case "Restaurant":
-            return new EntityRoom(Color.BLUE);
+            return new EntityDiner();
+
+//            case"Room":
+//                return new EntityRoom(Color.green);
+
         case "Fitness":
-            return new EntityRoom(Color.RED);
+            return new EntityFitness();
+
         case "Cinema":
-            return new EntityRoom(Color.ORANGE);
-        case "Room":
-            return new EntityRoom(Color.GREEN);
+            return new EntityCinema();
 
         case "Guest":
             return new EntityGuest();
@@ -48,4 +50,19 @@ public class EntityFactory {
             return new Entity();
         }
     }
+
+    public static IEntity createEntityRoom (String classification) {
+        // Creating entity based on requested type
+        switch (classification) {
+            case "1 Star":
+            return new EntityRoom(Color.green);
+
+            case "2 Star":
+                return new EntityRoom(Color.blue);
+
+            default:
+                return new Entity();
+        }
+    }
+
 }

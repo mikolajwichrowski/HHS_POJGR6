@@ -23,7 +23,9 @@ public class EntityRoom extends Entity implements IEntity {
         g.fillRect(x * 60, (y - (height - 1)) * 60, width * 60, height * 60);
 
         g.setColor(Color.BLACK);
-        g.drawString("R", (x * 60) + (width * 60 / 2), (y * 60) + (width * 60 / 2));
+        g.drawString("R", (x * 60) + (width * 60 / 2), (y * 60) + (height * 60 / 2));
+
+
     }
 
     // Action to execute when triggered
