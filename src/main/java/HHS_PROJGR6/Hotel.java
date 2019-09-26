@@ -157,7 +157,6 @@ public class Hotel implements HotelEventListener, Runnable {
      */
     private int[] getHighest(JSONArray array, String value) {
         // TODO: make this a better algol !!!!!!!!!!!!
-
         Iterator i = array.iterator();
         int[] highes = new int[2];
         highes[0] = 0;
@@ -203,11 +202,8 @@ public class Hotel implements HotelEventListener, Runnable {
     public void Notify(HotelEvent event) {
         if (event.Type == HotelEventType.CHECK_IN) {
             IEntity actor = EntityFactory.createEntity("Guest");
-
-            // @ Miek : Gast op 0,6 binnen laten lopen???
             actor.setPosition(3, 3);
-
-            register(actor);
+            this.register(actor);
         }
     }
 
