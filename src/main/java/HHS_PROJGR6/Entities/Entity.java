@@ -29,11 +29,7 @@ public class Entity implements IEntity {
      * 
      */
     public void Notify() {
-        // Logic for entity.
-        // Make sure to implement features by OOSE principles
-        // NOT TO DO : hier komen de algoritmes, afblijven HAHA
 
-        // I verander aan de hand van waar ik ben
     }
 
     /**

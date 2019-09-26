@@ -28,14 +28,14 @@ public class EntityFactory {
         case "Restaurant":
             return new EntityDiner();
 
-//            case"Room":
-//                return new EntityRoom(Color.green);
+        case "Room":
+            return new EntityRoom(Color.green);
 
         case "Fitness":
-            return new EntityFitness();
+            return new EntityRoom(Color.red);
 
         case "Cinema":
-            return new EntityCinema();
+            return new EntityRoom(Color.blue);
 
         case "Guest":
             return new EntityGuest();
@@ -51,17 +51,17 @@ public class EntityFactory {
         }
     }
 
-    public static IEntity createEntityRoom (String classification) {
+    public static IEntity createEntityRoom(String classification) {
         // Creating entity based on requested type
         switch (classification) {
-            case "1 Star":
+        case "1 Star":
             return new EntityRoom(Color.green);
 
-            case "2 Star":
-                return new EntityRoom(Color.blue);
+        case "2 Star":
+            return new EntityRoom(Color.blue);
 
-            default:
-                return new Entity();
+        default:
+            return new Entity();
         }
     }
 
