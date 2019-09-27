@@ -29,13 +29,13 @@ public class EntityFactory {
             return new EntityDiner();
 
         case "Room":
-            return new EntityRoom(Color.green);
+            return new EntityRoom(Color.white);
 
         case "Fitness":
             return new EntityRoom(Color.red);
 
         case "Cinema":
-            return new EntityRoom(Color.blue);
+            return new EntityRoom(new Color(255, 0, 255));
 
         case "Guest":
             return new EntityGuest();

@@ -24,21 +24,27 @@ public class EntityRoom extends Entity implements IEntity {
         super.drawEntity(g);
         g.setColor(roomColor);
         switch (this.classification) {
+
         case 1:
-            g.setColor(new Color(12, 255, 20));
-            break;
-        case 2:
-            g.setColor(new Color(40, 255, 50));
-            break;
-        case 3:
-            g.setColor(Color.PINK);
-            break;
-        case 4:
-            g.setColor(new Color(20, 255, 120));
+            g.setColor(new Color(0, 64, 255));
             break;
 
+        case 2:
+            g.setColor(new Color(255, 255, 0));
+            break;
+        case 3:
+            g.setColor(new Color(255, 0, 128));
+            break;
+        case 4:
+            g.setColor(new Color(0, 255, 0));
+            break;
+
+            case 5:
+                g.setColor(new Color(0, 255, 191));
+                break;
+
         default:
-            g.setColor(new Color(0, 255, 255));
+           // g.setColor(new Color(255, 255, 255));
             break;
         }
         g.fillRect(x * 60, (y - (height - 1)) * 60, width * 60, height * 60);

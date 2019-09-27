@@ -42,4 +42,3 @@ public class EntityGuest extends Entity implements IEntity {
         g.fillRect(x * 60, y * 60, 60, 60);
     }
 }
-x
