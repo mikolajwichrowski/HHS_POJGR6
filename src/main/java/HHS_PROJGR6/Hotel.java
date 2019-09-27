@@ -125,16 +125,22 @@ public class Hotel implements HotelEventListener, Runnable {
 
             // TODO: maak deze dynamisch (dimensions en position)!
             // Create entity with factory
-            entity = EntityFactory.createEntity("Transport");
+            entity = EntityFactory.createEntity("Elevator");
             entity.setPosition(7, 1);
             entity.setDimensions(1, 7);
             this.register(entity);
 
             // TODO: maak deze dynamisch (dimensions en position)!
             // Create entity with factory
-            entity = EntityFactory.createEntity("Transport");
+            entity = EntityFactory.createEntity("Stairs");
             entity.setPosition(7, 8);
             entity.setDimensions(1, 7);
+            this.register(entity);
+
+            entity = EntityFactory.createEntity("Default");
+            entity.setPosition(7, 2);
+            entity.setDimensions(6, 1);
+            
             this.register(entity);
 
             // Draw only the nessecary grid size
@@ -202,7 +208,7 @@ public class Hotel implements HotelEventListener, Runnable {
     public void Notify(HotelEvent event) {
         if (event.Type == HotelEventType.CHECK_IN) {
             IEntity actor = EntityFactory.createEntity("Guest");
-            actor.setPosition(3, 3);
+            actor.setPosition(7, 2);
             this.register(actor);
         }
     }

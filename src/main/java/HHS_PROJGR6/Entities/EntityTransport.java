@@ -13,8 +13,8 @@ import java.awt.*;
 public class EntityTransport extends Entity implements IEntity {
 
     // Constructor
-    public EntityTransport() {
-
+    public EntityTransport(Color entityColor) {
+        super(entityColor);
     }
 
     // Action to execute when triggered
@@ -25,7 +25,7 @@ public class EntityTransport extends Entity implements IEntity {
 
     public void drawEntity(Graphics g) {
         super.drawEntity(g);
-        g.setColor(Color.LIGHT_GRAY);
+        //g.setColor(Color.LIGHT_GRAY);
         g.fillRect(x * 60, (y - (height - 1)) * 60, width * 60, height * 60);
     }
 }

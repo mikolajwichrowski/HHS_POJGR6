@@ -6,8 +6,8 @@ import java.awt.*;
 
 public class EntityCinema extends Entity implements IEntity {
 
-    public EntityCinema() {
-
+    public EntityCinema(Color entityColor) {
+    super(entityColor);
     }
 
 
@@ -21,8 +21,8 @@ public class EntityCinema extends Entity implements IEntity {
         g.setColor(Color.CYAN);
         g.fillRect(x * 60, (y - (height - 1)) * 60, width * 60, height * 60);
 
-        g.setColor(Color.BLACK);
-        g.drawString("C", (x * 60) + (width * 60 / 2), (y * 60) + (height * 60 / 2));
+        //g.setColor(Color.BLACK);
+        //g.drawString("C", (x * 60) + (width * 60 / 2), (y * 60) + (height * 60 / 2));
 
     }
 }
