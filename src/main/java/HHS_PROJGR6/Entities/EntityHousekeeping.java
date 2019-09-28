@@ -12,7 +12,8 @@ import java.awt.*;
 public class EntityHousekeeping extends Entity implements IEntity {
 
     // Constructor
-    public EntityHousekeeping() {
+    public EntityHousekeeping(Color entityColor) {
+        super(entityColor);
     }
 
     // Action to execute when triggered
@@ -31,7 +32,7 @@ public class EntityHousekeeping extends Entity implements IEntity {
 
     public void drawEntity(Graphics g) {
         super.drawEntity(g);
-        g.setColor(Color.PINK);
+        //g.setColor(Color.PINK);
         g.fillRect(x * 60, y * 60, width * 60, height * 60);
     }
 

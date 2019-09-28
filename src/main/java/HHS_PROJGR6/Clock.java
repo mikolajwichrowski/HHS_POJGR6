@@ -1,9 +1,5 @@
 package HHS_PROJGR6;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 
 
@@ -12,7 +8,7 @@ import java.time.LocalDateTime;
  * bron: https://www.youtube.com/watch?v=wznbvBuf8ys TODO: oplossen met een
  * normaal object en een singleton
  */
-public class Clock extends JPanel {
+public class Clock {
 
     /**
      *

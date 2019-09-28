@@ -11,25 +11,37 @@ import java.awt.*;
 */
 
 public class EntityDiner extends Entity implements IEntity {
+    private int capacity;
+    private int guests;
 
     // Constructor
-    public EntityDiner() {
-
+    public EntityDiner(Color entityColor) {
+        super(entityColor);
+        this.capacity = 0;
+        this.guests = 0;
     }
 
     // Action to execute when triggered
     public void Notify() {
         // Logic for Diner entity.
         // Make sure to implement features by OOSE principles
+        if (false) {
+            // Als er een guest bij komt
+            this.guests++;
+        }
     }
 
     public void drawEntity(Graphics g) {
         super.drawEntity(g);
-        g.setColor(Color.ORANGE);
+        //g.setColor(new Color(255, 128, 0));
         g.fillRect(x * 60, (y - (height - 1)) * 60, width * 60, height * 60);
+    }
 
-        g.setColor(Color.BLACK);
-        g.drawString("D", (x * 60) + (width * 60 / 2), (y * 60) + (height * 60 / 2));
+    public void setCapacity(String capacity) {
+        this.capacity = Integer.parseInt(capacity.replaceAll("[^0-9]+", ""));
+    }
 
+    public boolean getCapacity() {
+        return capacity >= guests;
     }
 }

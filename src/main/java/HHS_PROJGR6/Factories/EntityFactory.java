@@ -26,43 +26,49 @@ public class EntityFactory {
         // Creating entity based on requested type
         switch (type) {
         case "Restaurant":
-            return new EntityDiner();
+            return new EntityDiner(new Color(255, 128, 0));
 
-//            case"Room":
-//                return new EntityRoom(Color.green);
+        case "Room":
+            return new EntityRoom(Color.white);
 
         case "Fitness":
-            return new EntityFitness();
+            return new EntityFitness(Color.red);
 
         case "Cinema":
-            return new EntityCinema();
+            return new EntityCinema(new Color(255, 0, 255));
 
         case "Guest":
-            return new EntityGuest();
+            return new EntityGuest(Color.black);
 
         case "Housekeeping":
-            return new EntityHousekeeping();
+            return new EntityHousekeeping(Color.cyan);
 
-        case "Transport":
-            return new EntityTransport();
+        case "Elevator":
+            return new EntityTransport(Color.darkGray);
+
+            case "Stairs":
+                return new EntityTransport(Color.lightGray);
+
+            case "Default":
+                return new EntityTransport(Color.white);
 
         default:
-            return new Entity();
+            return new Entity(Color.white);
         }
     }
 
-    public static IEntity createEntityRoom (String classification) {
-        // Creating entity based on requested type
-        switch (classification) {
-            case "1 Star":
-            return new EntityRoom(Color.green);
-
-            case "2 Star":
-                return new EntityRoom(Color.blue);
-
-            default:
-                return new Entity();
-        }
-    }
+//    public static IEntity createEntityRoom(String classification) {
+//        // Creating entity based on requested type
+//        switch (classification) {
+//        case "1 Star":
+//            return new EntityRoom(Color.green);
+//
+//        case "2 Star":
+//            return new EntityRoom(Color.blue);
+//
+//        default:
+//            return new Entity();
+//        }
+//    }
 
 }
