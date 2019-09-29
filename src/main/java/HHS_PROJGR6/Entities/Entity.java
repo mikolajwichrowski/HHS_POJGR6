@@ -3,6 +3,7 @@ package HHS_PROJGR6.Entities;
 import HHS_PROJGR6.Interfaces.IEntity;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /*
 * Entity class
@@ -30,7 +31,7 @@ public class Entity implements IEntity {
      * 
      * 
      */
-    public void Notify() {
+    public void Notify(ArrayList<IEntity> entities) {
 
     }
 
@@ -38,7 +39,7 @@ public class Entity implements IEntity {
      * 
      */
     public void drawEntity(Graphics g) {
-        g.setColor(entityColor);
+        g.setColor(Color.black);
         g.drawRect(x * 60, (y - (height - 1)) * 60, width * 60, height * 60);
     }
 

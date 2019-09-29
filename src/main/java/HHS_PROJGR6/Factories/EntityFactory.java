@@ -32,10 +32,10 @@ public class EntityFactory {
             return new EntityRoom(Color.white);
 
         case "Fitness":
-            return new EntityFitness(Color.red);
+            return new EntityLeasure(Color.red, type);
 
         case "Cinema":
-            return new EntityCinema(new Color(255, 0, 255));
+            return new EntityLeasure(new Color(255, 0, 255), type);
 
         case "Guest":
             return new EntityGuest(Color.black);

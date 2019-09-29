@@ -3,6 +3,7 @@ package HHS_PROJGR6.Entities;
 import HHS_PROJGR6.Interfaces.IEntity;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /*
 * Housekeeping class
@@ -17,7 +18,7 @@ public class EntityHousekeeping extends Entity implements IEntity {
     }
 
     // Action to execute when triggered
-    public void Notify() {
+    public void Notify(ArrayList<IEntity> entities) {
         // Logic for Housekeeping entity.
         // Make sure to implement features by OOSE principles
     }

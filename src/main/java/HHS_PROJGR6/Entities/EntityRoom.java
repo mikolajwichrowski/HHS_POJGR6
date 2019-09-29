@@ -3,6 +3,7 @@ package HHS_PROJGR6.Entities;
 import HHS_PROJGR6.Interfaces.IEntity;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /*
 * Room class
@@ -22,7 +23,7 @@ public class EntityRoom extends Entity implements IEntity {
 
     @Override
     public void drawEntity(Graphics g) {
-        super.drawEntity(g);
+
         g.setColor(entityColor);
         switch (this.classification) {
 
@@ -47,10 +48,11 @@ public class EntityRoom extends Entity implements IEntity {
             break;
         }
         g.fillRect(x * 60, (y - (height - 1)) * 60, width * 60, height * 60);
+        super.drawEntity(g);
     }
 
     // Action to execute when triggered
-    public void Notify() {
+    public void Notify(ArrayList<IEntity> entities) {
         // Logic for Room entity.
         // Make sure to implement features by OOSE principles
     }
