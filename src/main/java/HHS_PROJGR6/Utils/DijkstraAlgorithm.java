@@ -5,83 +5,72 @@ import HHS_PROJGR6.Interfaces.IEntity;
 import java.util.*;
 
 public class DijkstraAlgorithm {
-    private int distance[];
-    private Set<Integer> settled;
-    private PriorityQueue<Node> priorityQueue;
-    private int vertices; // Number of vertices
-    List<List<Node>> adjacent;
+    public int nodeCounter;
 
-    public DijkstraAlgorithm(int vertices) {
-        this.vertices = vertices;
-        distance = new int[vertices];
-        settled = new HashSet<Integer>();
-        priorityQueue = new PriorityQueue<Node>(vertices, new Node(null, null));
+    public DijkstraAlgorithm() {
+
     }
 
-    public List<List<Node>> possibilities(ArrayList<IEntity> entities, List<List<Node>> history, int[] yxSource, int[] yxDestination) {
-        // Op basis van alle transport kijken welke routes er zijn.
-        List<List<Node>> currentRoutes = history;
-        // source is 7,2
-        // destin is 5,5 de fittnes
+    public Node getPossibilities() {
+        // Set counter
+        nodeCounter = 0;
 
-        //w hile (yxSource[0] ) {
+        // Get all possibilities
+        Node possibleRoutes = new Node(1, 10);
+        possibleRoutes.x = 2;
+        possibleRoutes.y = 7;
 
-        // }
+        Node destination = new Node(1, 10);
+        destination.x = 5;
+        destination.y = 5;
 
-
-
-        return null;
-    }
-
-    // Function for Dijkstra's Algorithm
-    public void calculate(List<List<Node>> adjacent, int source) {
-        this.adjacent = adjacent;
-
-        for (int i = 0; i < vertices; i++) {
-            distance[i] = Integer.MAX_VALUE;
+        if (possibleRoutes.y > possibleRoutes.y) {
+            // Omhoog
+            possibleRoutes.children.add(getPossibilitiesTree(possibleRoutes, destination, "LEFT,UP".split(",")));
+            possibleRoutes.children.add(getPossibilitiesTree(possibleRoutes, destination, "RIGHT,UP".split(",")));
+        } else {
+            // Omlaag
+            possibleRoutes.children.add(getPossibilitiesTree(possibleRoutes, destination, "LEFT,DOWN".split(",")));
+            possibleRoutes.children.add(getPossibilitiesTree(possibleRoutes, destination, "RIGHT,DOWN".split(",")));
         }
 
-        // Add source node to the priority queue
-        priorityQueue.add(new Node(source, 0));
-
-        // Distance to the source is 0
-        distance[source] = 0;
-        while (settled.size() != vertices) {
-
-            // remove the minimum distance node
-            // from the priority queue
-            int u = priorityQueue.remove().node;
-
-            // adding the node whose distance is
-            // finalized
-            settled.add(u);
-
-            neighbour(u);
-        }
+        // Return tree of nodes
+        return possibleRoutes;
     }
 
-    // Function to process all the neighbours
-    // of the passed node
-    private void neighbour(int u) {
-        int edgeDistance = -1;
-        int newDistance = -1;
+    public Node getPossibilitiesTree(Node current, Node destination, String[] direction) {
+        nodeCounter++;
+        Node sourceNode = current;
+        sourceNode.node = nodeCounter;
 
-        // All the neighbors of v
-        for (int i = 0; i < adjacent.get(u).size(); i++) {
-            Node v = adjacent.get(u).get(i);
+        if (current.x != destination.x && current.y != destination.y) {
+            // Als naar links kan
+            if (current.x >= 8 && (direction[0] == "LEFT" || current.y == destination.y)) {
+                current.x--;
+                sourceNode.children.add(getPossibilitiesTree(sourceNode, destination, direction));
+            } else if (current.x <= 1 && (direction[0] == "RIGHT" || current.y == destination.y)) {
+                current.x++;
+                sourceNode.children.add(getPossibilitiesTree(sourceNode, destination, direction));
+            }
 
-            // If current node hasn't already been processed
-            if (!settled.contains(v.node)) {
-                edgeDistance = v.cost;
-                newDistance = distance[u] + edgeDistance;
-
-                // If new distance is cheaper in cost
-                if (newDistance < distance[v.node]) {
-                    distance[v.node] = newDistance;
+            // Als op transport
+            if (current.x == 1 || current.x == 8) {
+                // Als omhoog kan
+                if (current.y >= destination.y && direction[1] == "UP") {
+                    current.y--;
+                    sourceNode.children.add(getPossibilitiesTree(sourceNode, destination, direction));
+                } else if (current.y <= destination.y && direction[1] == "DOWN") {
+                    current.y++;
+                    sourceNode.children.add(getPossibilitiesTree(sourceNode, destination, direction));
                 }
-
-                priorityQueue.add(new Node(v.node, distance[v.node]));
             }
         }
+
+        return sourceNode;
+    }
+
+    public void findPath() {
+        // De kortste route naar destination
+        Node routes = getPossibilities();
     }
 }

@@ -137,10 +137,10 @@ public class Hotel implements HotelEventListener, Runnable {
             entity.setDimensions(1, 7);
             this.register(entity);
 
-            entity = EntityFactory.createEntity("Default");
+            entity = EntityFactory.createEntity("Lift");
             entity.setPosition(7, 2);
             entity.setDimensions(6, 1);
-            
+
             this.register(entity);
 
             // Draw only the nessecary grid size
@@ -185,6 +185,7 @@ public class Hotel implements HotelEventListener, Runnable {
             // TODO: better exception handling
             throw e;
         }
+
         return highes;
     }
 
@@ -206,11 +207,18 @@ public class Hotel implements HotelEventListener, Runnable {
      * 
      */
     public void Notify(HotelEvent event) {
-        if (event.Type == HotelEventType.CHECK_IN) {
-            EntityGuest actor = (EntityGuest)EntityFactory.createEntity("Guest");
+        // TODO: alle events
+        switch (event.Type) {
+        case CHECK_IN:
+            EntityGuest actor = (EntityGuest) EntityFactory.createEntity("Guest");
             actor.setPosition(7, 2);
             actor.setPreference("1");
             this.register(actor);
+            break;
+        // ETC.
+
+        default:
+            break;
         }
     }
 
