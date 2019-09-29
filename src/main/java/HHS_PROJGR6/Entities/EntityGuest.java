@@ -3,7 +3,8 @@ package HHS_PROJGR6.Entities;
 import HHS_PROJGR6.Interfaces.IEntity;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
 * Guest class
@@ -13,6 +14,7 @@ import java.util.*;
 public class EntityGuest extends Entity implements IEntity {
     private int preference;
     private List<int[]> nodeMapping;
+    private String guestID;
 
     public int getPreference() {
         return preference;
@@ -47,9 +49,9 @@ public class EntityGuest extends Entity implements IEntity {
     }
 
     public void drawEntity(Graphics g) {
-        super.drawEntity(g);
         // g.setColor(Color.BLACK);
         g.fillRect(x * 60, y * 60, 60, 60);
+        super.drawEntity(g);
     }
 
     private int[] nextStep() {
