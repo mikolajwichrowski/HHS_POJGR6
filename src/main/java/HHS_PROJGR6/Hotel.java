@@ -208,16 +208,36 @@ public class Hotel implements HotelEventListener, Runnable {
     public void Notify(HotelEvent event) {
         // TODO: alle events
         switch (event.Type) {
-        case CHECK_IN:
-            EntityGuest actor = (EntityGuest) EntityFactory.createEntity("Guest");
-            actor.setPosition(7, 2);
-            actor.setPreference("1");
-            this.register(actor);
-            break;
-        // ETC.
+            case CHECK_IN:
+                EntityGuest actor = (EntityGuest) EntityFactory.createEntity("Guest");
+                actor.setPosition(7, 2);
+                actor.setPreference("1");
+                this.register(actor);
+                break;
+            case CHECK_OUT:
+                break;
+            case CLEANING_EMERGENCY:
+                System.out.println("HEY");
+                break;
+            case EVACUATE:
+                break;
+            case GODZILLA:
+                // Hotel gaat deud
+                break;
+            case NEED_FOOD:
+                break;
+            case GOTO_CINEMA:
+                break;
+            case GOTO_FITNESS:
+                // Gast moet naar fitness GASTID + HTE
+                break;
+            case START_CINEMA:
+                // GastID
+                break;
 
-        default:
-            break;
+            default:
+            case NONE:
+                break;
         }
     }
 

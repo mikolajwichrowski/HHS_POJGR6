@@ -1,9 +1,10 @@
 package HHS_PROJGR6.Entities;
 
+import HHS_PROJGR6.External.HotelEventManager;
 import HHS_PROJGR6.Interfaces.IEntity;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 
 /*
@@ -12,9 +13,9 @@ import java.util.List;
 */
 
 public class EntityGuest extends Entity implements IEntity {
+    private int guestID = 0;
     private int preference;
     private List<int[]> nodeMapping;
-    private String guestID;
 
     public int getPreference() {
         return preference;
@@ -29,7 +30,7 @@ public class EntityGuest extends Entity implements IEntity {
         super(entityColor);
     }
 
-    // Action to execute when triggered
+/*    // Action to execute when triggered
     public void Notify(ArrayList<IEntity> entities) {
         // Logic for Guest entity.
         // Make sure to implement features by OOSE principles
@@ -46,14 +47,16 @@ public class EntityGuest extends Entity implements IEntity {
         int[] nextPosition = nextStep();
         setPosition(nextPosition[0], nextPosition[1]);
 
-    }
+    }*/
 
     public void drawEntity(Graphics g) {
+        super.drawEntity(g);
         // g.setColor(Color.BLACK);
         g.fillRect(x * 60, y * 60, 60, 60);
-        super.drawEntity(g);
     }
+}
 
+/*
     private int[] nextStep() {
         int[] yx = new int[2];
         yx[0] = getYPosition();
@@ -61,4 +64,5 @@ public class EntityGuest extends Entity implements IEntity {
 
         return yx;
     }
-}
+*/
+
