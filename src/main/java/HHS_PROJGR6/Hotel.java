@@ -1,6 +1,9 @@
 package HHS_PROJGR6;
 
 // imports from project
+import HHS_PROJGR6.Entities.EntityDiner;
+import HHS_PROJGR6.Entities.EntityGuest;
+import HHS_PROJGR6.Entities.EntityRoom;
 import HHS_PROJGR6.External.HotelEvent;
 import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.External.HotelEventManager;
@@ -8,9 +11,6 @@ import HHS_PROJGR6.External.HotelEventType;
 import HHS_PROJGR6.Factories.EntityFactory;
 import HHS_PROJGR6.Interfaces.IEntity;
 import HHS_PROJGR6.Utils.JsonReader;
-import HHS_PROJGR6.Entities.EntityDiner;
-import HHS_PROJGR6.Entities.EntityRoom;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -207,8 +207,9 @@ public class Hotel implements HotelEventListener, Runnable {
      */
     public void Notify(HotelEvent event) {
         if (event.Type == HotelEventType.CHECK_IN) {
-            IEntity actor = EntityFactory.createEntity("Guest");
+            EntityGuest actor = (EntityGuest)EntityFactory.createEntity("Guest");
             actor.setPosition(7, 2);
+            actor.setPreference("1");
             this.register(actor);
         }
     }
@@ -221,7 +222,7 @@ public class Hotel implements HotelEventListener, Runnable {
             public void actionPerformed(ActionEvent e) {
                 for (int i = 0; i < Clock.getClockspeed(); i++) {
                     for (IEntity entity : entities) {
-                        entity.Notify();
+                        entity.Notify(entities);
                     }
                 }
 

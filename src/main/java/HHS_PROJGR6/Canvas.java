@@ -122,6 +122,6 @@ public class Canvas extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         drawableEntity(g);
-        drawGrid(g);
+        // drawGrid(g);
     }
 }

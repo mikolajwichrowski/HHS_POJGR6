@@ -24,8 +24,8 @@ public class EntityTransport extends Entity implements IEntity {
     }
 
     public void drawEntity(Graphics g) {
-        super.drawEntity(g);
-        //g.setColor(Color.LIGHT_GRAY);
+        g.setColor(entityColor);
         g.fillRect(x * 60, (y - (height - 1)) * 60, width * 60, height * 60);
+        super.drawEntity(g);
     }
 }

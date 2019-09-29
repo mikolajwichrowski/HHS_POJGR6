@@ -1,10 +1,11 @@
 package HHS_PROJGR6.Interfaces;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public interface IEntity {
 
-    void Notify();
+    void Notify(ArrayList<IEntity> entities);
 
     void drawEntity(Graphics g);
 
