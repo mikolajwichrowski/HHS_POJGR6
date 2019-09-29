@@ -10,35 +10,40 @@ import java.awt.*;
 */
 
 public class EntityRoom extends Entity implements IEntity {
-    public Color roomColor;
+
 
     private int classification;
 
-    public EntityRoom(Color roomColor) {
-        this.roomColor = roomColor;
+    public EntityRoom(Color entityColor) {
+        super(entityColor);
+
         this.classification = 0;
     }
 
     @Override
     public void drawEntity(Graphics g) {
         super.drawEntity(g);
-        g.setColor(roomColor);
+        g.setColor(entityColor);
         switch (this.classification) {
+
         case 1:
-            g.setColor(new Color(12, 255, 20));
+            g.setColor(new Color(0, 191, 255));
             break;
         case 2:
-            g.setColor(new Color(40, 255, 50));
+            g.setColor(new Color(255, 255, 0));
             break;
         case 3:
-            g.setColor(Color.PINK);
+            g.setColor(new Color(0, 129, 0));
             break;
         case 4:
-            g.setColor(new Color(20, 255, 120));
+            g.setColor(new Color(0, 255, 0));
             break;
+            case 5:
+                g.setColor(new Color(0, 64, 255));
+                break;
 
         default:
-            g.setColor(new Color(0, 255, 255));
+           // g.setColor(new Color(255, 255, 255));
             break;
         }
         g.fillRect(x * 60, (y - (height - 1)) * 60, width * 60, height * 60);

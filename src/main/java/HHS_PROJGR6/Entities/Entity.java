@@ -14,13 +14,15 @@ public class Entity implements IEntity {
     public int y;
     public int width;
     public int height;
+    public Color entityColor;
 
     /**
      * 
      */
-    public Entity() {
+    public Entity(Color entityColor) {
         this.x = 0;
         this.y = 0;
+        this.entityColor = entityColor;
     }
 
     /**
@@ -36,7 +38,7 @@ public class Entity implements IEntity {
      * 
      */
     public void drawEntity(Graphics g) {
-        g.setColor(Color.BLACK);
+        g.setColor(entityColor);
         g.drawRect(x * 60, (y - (height - 1)) * 60, width * 60, height * 60);
     }
 

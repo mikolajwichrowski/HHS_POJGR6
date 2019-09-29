@@ -15,7 +15,8 @@ public class EntityDiner extends Entity implements IEntity {
     private int guests;
 
     // Constructor
-    public EntityDiner() {
+    public EntityDiner(Color entityColor) {
+        super(entityColor);
         this.capacity = 0;
         this.guests = 0;
     }
@@ -32,7 +33,7 @@ public class EntityDiner extends Entity implements IEntity {
 
     public void drawEntity(Graphics g) {
         super.drawEntity(g);
-        g.setColor(Color.ORANGE);
+        //g.setColor(new Color(255, 128, 0));
         g.fillRect(x * 60, (y - (height - 1)) * 60, width * 60, height * 60);
     }
 
