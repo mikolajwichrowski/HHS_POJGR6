@@ -1,6 +1,9 @@
 package HHS_PROJGR6;
 
 // imports from project
+import HHS_PROJGR6.Entities.EntityDiner;
+import HHS_PROJGR6.Entities.EntityGuest;
+import HHS_PROJGR6.Entities.EntityRoom;
 import HHS_PROJGR6.External.HotelEvent;
 import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.External.HotelEventManager;
@@ -8,9 +11,6 @@ import HHS_PROJGR6.External.HotelEventType;
 import HHS_PROJGR6.Factories.EntityFactory;
 import HHS_PROJGR6.Interfaces.IEntity;
 import HHS_PROJGR6.Utils.JsonReader;
-import HHS_PROJGR6.Entities.EntityDiner;
-import HHS_PROJGR6.Entities.EntityRoom;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -137,10 +137,10 @@ public class Hotel implements HotelEventListener, Runnable {
             entity.setDimensions(1, 7);
             this.register(entity);
 
-            entity = EntityFactory.createEntity("Default");
+            entity = EntityFactory.createEntity("Lift");
             entity.setPosition(7, 2);
             entity.setDimensions(6, 1);
-            
+
             this.register(entity);
 
             // Draw only the nessecary grid size
@@ -185,6 +185,7 @@ public class Hotel implements HotelEventListener, Runnable {
             // TODO: better exception handling
             throw e;
         }
+
         return highes;
     }
 
@@ -206,10 +207,18 @@ public class Hotel implements HotelEventListener, Runnable {
      * 
      */
     public void Notify(HotelEvent event) {
-        if (event.Type == HotelEventType.CHECK_IN) {
-            IEntity actor = EntityFactory.createEntity("Guest");
+        // TODO: alle events
+        switch (event.Type) {
+        case CHECK_IN:
+            EntityGuest actor = (EntityGuest) EntityFactory.createEntity("Guest");
             actor.setPosition(7, 2);
+            actor.setPreference("1");
             this.register(actor);
+            break;
+        // ETC.
+
+        default:
+            break;
         }
     }
 
@@ -221,7 +230,7 @@ public class Hotel implements HotelEventListener, Runnable {
             public void actionPerformed(ActionEvent e) {
                 for (int i = 0; i < Clock.getClockspeed(); i++) {
                     for (IEntity entity : entities) {
-                        entity.Notify();
+                        entity.Notify(entities);
                     }
                 }
 

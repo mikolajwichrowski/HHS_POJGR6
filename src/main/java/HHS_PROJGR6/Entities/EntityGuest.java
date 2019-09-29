@@ -3,6 +3,7 @@ package HHS_PROJGR6.Entities;
 import HHS_PROJGR6.Interfaces.IEntity;
 
 import java.awt.*;
+import java.util.*;
 
 /*
 * Guest class
@@ -10,38 +11,52 @@ import java.awt.*;
 */
 
 public class EntityGuest extends Entity implements IEntity {
+    private int preference;
+    private List<int[]> nodeMapping;
+
+    public int getPreference() {
+        return preference;
+    }
+
+    public void setPreference(String preference) {
+        this.preference = Integer.parseInt(preference.replaceAll("[^0-9]+", ""));
+    }
 
     // Constructor
     public EntityGuest(Color entityColor) {
         super(entityColor);
     }
+
     // Action to execute when triggered
-    public void Notify() {
+    public void Notify(ArrayList<IEntity> entities) {
         // Logic for Guest entity.
         // Make sure to implement features by OOSE principles
 
-        if (getXPosition() == 2) {
-            setPosition(7, 3);
-        } else if (getXPosition() == 3) {
-            setPosition(7, 4);
-        } else if (getXPosition() == 4) {
-            setPosition(7, 5);
-        } else if (getXPosition() == 5) {
-            setPosition(7, 6);
-        } else if (getXPosition() == 6) {
-            setPosition(7, 7);
-        } else if (getXPosition() == 7) {
-            setPosition(7, 8);
-        } else if (getYPosition() == 7) {
-            setPosition(6, 8);
-        } else if (getXPosition() == 8) {
-            setPosition(6, 7);
+        for (IEntity entity : entities) {
+            // Welke kamer ga ik naar toe?
+            // Is de kamer al bezet?
+            // als er een kamer is ga ik daar naartoe
+            // Als er geen kamer is dan ga ik weg! en ik wil de manager spreken.
+            // TODO: zoek lege kamer als niet al in kamer
+            // TODO:
         }
+
+        int[] nextPosition = nextStep();
+        setPosition(nextPosition[0], nextPosition[1]);
+
     }
 
     public void drawEntity(Graphics g) {
         super.drawEntity(g);
-        //g.setColor(Color.BLACK);
+        // g.setColor(Color.BLACK);
         g.fillRect(x * 60, y * 60, 60, 60);
+    }
+
+    private int[] nextStep() {
+        int[] yx = new int[2];
+        yx[0] = getYPosition();
+        yx[1] = getXPosition();
+
+        return yx;
     }
 }
