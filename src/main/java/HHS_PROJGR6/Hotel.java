@@ -10,7 +10,9 @@ import HHS_PROJGR6.External.HotelEventManager;
 import HHS_PROJGR6.External.HotelEventType;
 import HHS_PROJGR6.Factories.EntityFactory;
 import HHS_PROJGR6.Interfaces.IEntity;
+import HHS_PROJGR6.Utils.DijkstraAlgorithm;
 import HHS_PROJGR6.Utils.JsonReader;
+import HHS_PROJGR6.Utils.Node;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -51,10 +53,17 @@ public class Hotel implements HotelEventListener, Runnable {
         this.entities = new ArrayList<IEntity>();
 
         // Run events
-        HotelEventManager eventManager = new HotelEventManager();
-        eventManager.register(this);
-        eventManager.changeSpeed(2);
-        eventManager.start();
+        // HotelEventManager eventManager = new HotelEventManager();
+        // eventManager.register(this);
+        // eventManager.changeSpeed(2);
+        // eventManager.start();
+
+        DijkstraAlgorithm da = new DijkstraAlgorithm();
+
+        // System.out.println("the path is " + da.findPath().size() + " steps long");
+        for (Node step : da.findPath()) {
+            System.out.println(step.x + " " + step.y);
+        }
     }
 
     /**

@@ -12,7 +12,6 @@ import java.util.*;
 
 public class EntityGuest extends Entity implements IEntity {
     private int preference;
-    private List<int[]> nodeMapping;
 
     public int getPreference() {
         return preference;
@@ -32,14 +31,14 @@ public class EntityGuest extends Entity implements IEntity {
         // Logic for Guest entity.
         // Make sure to implement features by OOSE principles
 
-        for (IEntity entity : entities) {
-            // Welke kamer ga ik naar toe?
-            // Is de kamer al bezet?
-            // als er een kamer is ga ik daar naartoe
-            // Als er geen kamer is dan ga ik weg! en ik wil de manager spreken.
-            // TODO: zoek lege kamer als niet al in kamer
-            // TODO:
-        }
+        // for (IEntity entity : entities) {
+        // Welke kamer ga ik naar toe?
+        // Is de kamer al bezet?
+        // als er een kamer is ga ik daar naartoe
+        // Als er geen kamer is dan ga ik weg! en ik wil de manager spreken.
+        // TODO: zoek lege kamer als niet al in kamer
+        // TODO:
+        // }
 
         int[] nextPosition = nextStep();
         setPosition(nextPosition[0], nextPosition[1]);
