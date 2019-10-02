@@ -10,7 +10,9 @@ import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.External.HotelEventManager;
 import HHS_PROJGR6.Factories.EntityFactory;
 import HHS_PROJGR6.Interfaces.IEntity;
+import HHS_PROJGR6.Utils.DijkstraAlgorithm;
 import HHS_PROJGR6.Utils.JsonReader;
+import HHS_PROJGR6.Utils.Node;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -56,6 +58,18 @@ public class Hotel implements HotelEventListener, Runnable {
         eventManager.register(this);
         eventManager.changeSpeed(2);
         eventManager.start();
+
+        // DijkstraAlgorithm da = new DijkstraAlgorithm();
+
+        // System.out.println("the path is " + da.findPath().size() + " steps long");
+        // System.out.println("ELEMEMTS");
+        // for (Node step : da.findPath()) {
+        // System.out.println(step.getX() + " " + step.getY());
+        // for (Node neighbour : step.getNeighbours()) {
+        // System.out.println(" + " + neighbour.getX() + " " + neighbour.getY());
+        // }
+        // }
+        // System.out.println("DONE");
     }
 
     /**
@@ -208,27 +222,13 @@ public class Hotel implements HotelEventListener, Runnable {
      * 
      */
     public void Notify(HotelEvent event) {
+        System.out.println(event.Data);
         // TODO: alle events
 
 
         switch (event.Type) {
             case CHECK_IN:
                 // TODO: maak gasten aan
-
-        EntityGuest test = (EntityGuest) EntityFactory.createEntity("Guest");
-                test.setPosition(7, 2);
-                test.setPreference("1");
-                this.register(test);
-
-//                for (int E = 0; E < event.toString().length(); E++) {
-//                    System.out.println(E);
-//                }
-
-                for (String eventType : event.Data.keySet()){
-                    System.out.println(eventType + " : " + event.Data.get(eventType));
-                }
-
-
 
                 break;
             case CHECK_OUT:

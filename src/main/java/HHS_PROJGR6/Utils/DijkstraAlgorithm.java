@@ -6,71 +6,101 @@ import java.util.*;
 
 public class DijkstraAlgorithm {
     public int nodeCounter;
+    private Node start;
+    private Node destination;
 
+    // TODO: start -> stop
     public DijkstraAlgorithm() {
 
     }
 
-    public Node getPossibilities() {
-        // Set counter
-        nodeCounter = 0;
+    public List<Node> getGraph(Integer width, Integer height) {
+        List<Node> nodes = new ArrayList<Node>();
 
-        // Get all possibilities
-        Node possibleRoutes = new Node(1, 10);
-        possibleRoutes.x = 2;
-        possibleRoutes.y = 7;
+        // Transport points
+        for (int x = 1; x <= width; x++) {
+            for (int y = 1; y <= height; y++) {
+                if (x == width || x == 1) {
+                    Node node = new Node();
+                    node.setPosition(x, y);
 
-        Node destination = new Node(1, 10);
-        destination.x = 5;
-        destination.y = 5;
+                    if (y != height) {
+                        Node below = new Node();
+                        below.setPosition(node.getX(), node.getY() + 1);
+                        below.setCost(x == 1 ? 5 : 3); // right stairs are easier
+                        node.addNeighbour(below);
+                    }
 
-        if (possibleRoutes.y > possibleRoutes.y) {
-            // Omhoog
-            possibleRoutes.children.add(getPossibilitiesTree(possibleRoutes, destination, "LEFT,UP".split(",")));
-            possibleRoutes.children.add(getPossibilitiesTree(possibleRoutes, destination, "RIGHT,UP".split(",")));
-        } else {
-            // Omlaag
-            possibleRoutes.children.add(getPossibilitiesTree(possibleRoutes, destination, "LEFT,DOWN".split(",")));
-            possibleRoutes.children.add(getPossibilitiesTree(possibleRoutes, destination, "RIGHT,DOWN".split(",")));
-        }
+                    if (y != 1) {
+                        Node below = new Node();
+                        below.setPosition(node.getX(), node.getY() - 1);
+                        below.setCost(x == 1 ? 5 : 3); // right stairs are easier
+                        node.addNeighbour(below);
+                    }
 
-        // Return tree of nodes
-        return possibleRoutes;
-    }
+                    if (x == width) {
+                        Node left = new Node();
+                        left.setPosition(node.getX() - 1, node.getY());
+                        node.addNeighbour(left);
+                    }
 
-    public Node getPossibilitiesTree(Node current, Node destination, String[] direction) {
-        nodeCounter++;
-        Node sourceNode = current;
-        sourceNode.node = nodeCounter;
-
-        if (current.x != destination.x && current.y != destination.y) {
-            // Als naar links kan
-            if (current.x >= 8 && (direction[0] == "LEFT" || current.y == destination.y)) {
-                current.x--;
-                sourceNode.children.add(getPossibilitiesTree(sourceNode, destination, direction));
-            } else if (current.x <= 1 && (direction[0] == "RIGHT" || current.y == destination.y)) {
-                current.x++;
-                sourceNode.children.add(getPossibilitiesTree(sourceNode, destination, direction));
-            }
-
-            // Als op transport
-            if (current.x == 1 || current.x == 8) {
-                // Als omhoog kan
-                if (current.y >= destination.y && direction[1] == "UP") {
-                    current.y--;
-                    sourceNode.children.add(getPossibilitiesTree(sourceNode, destination, direction));
-                } else if (current.y <= destination.y && direction[1] == "DOWN") {
-                    current.y++;
-                    sourceNode.children.add(getPossibilitiesTree(sourceNode, destination, direction));
+                    if (x == 1) {
+                        Node right = new Node();
+                        right.setPosition(node.getX() + 1, node.getY());
+                        node.addNeighbour(right);
+                    }
+                    nodes.add(node);
                 }
+
             }
         }
 
-        return sourceNode;
+        // Path points
+        for (int x = 2; x <= width - 1; x++) {
+            for (int y = 1; y <= height; y++) {
+                Node node = new Node();
+                node.setPosition(x, y);
+
+                Node left = new Node();
+                left.setPosition(node.getX() - 1, node.getY());
+                node.addNeighbour(left);
+
+                Node right = new Node();
+                right.setPosition(node.getX() + 1, node.getY());
+                node.addNeighbour(right);
+
+                nodes.add(node);
+            }
+        }
+
+        return nodes;
     }
 
-    public void findPath() {
-        // De kortste route naar destination
-        Node routes = getPossibilities();
+    public List<Node> findPath(Node source, Node destination, List<Node> graph) {
+        // Dictionary<Node, Node> visited = new Dictionary<Node, Node>();
+        // List<Node> unvisited = graph;
+        // Node inspecting = unvisited.get(unvisited.indexOf(source));
+        // inspecting.setCostToParent(0);
+        // visited.add(inspecting);
+
+        // while (unvisited.size() > 0) {
+        // inspecting.neighbours.stream().forEach(node -> {
+        // Node tracking = unvisited.get(unvisited.indexOf(node));
+        // tracking.setCostToParent(inspecting.getCostToParent() + tracking.getCost());
+        // if (visited.get(tracking).getCostToParent() > tracking.getCostToParent()) {
+        // visited.put(tracking, inspecting);
+        // }
+
+        // });
+        // visited.add(inspecting, null);
+        // unvisited.remove(inspecting);
+        // }
+        return null;
+        // TODO: zucht...
+    }
+
+    public Node getNodeFromLocation(Integer locationX, Integer locationY, List<Node> graph) {
+        return null; // graph.stream().filter(node -> node.getX() == locationX && node.getY() ==
+                     // locationY).toArray()[0];
     }
 }
