@@ -15,6 +15,7 @@ import java.time.format.FormatStyle;
  * it from an object.
  */
 public class App extends JFrame {
+
     /**
      * Generated serial id
      */
@@ -38,9 +39,6 @@ public class App extends JFrame {
         // Set canvas and add width for gui elements
         myHotel.setHotelCanvas(canvas);
         d.width += 500;
-        d.
-
-
 
         // Set button plus and functionality
         buttonPlus = new JButton("Hotel TijdsEenheid +");
@@ -96,11 +94,8 @@ public class App extends JFrame {
             }
         }).start();
 
-        // Add to current panel
 
-        /*
-        Adding components to the JFrame
-         */
+        // Adding components to the JFrame
         add(myHotel.getHotelCanvas());
         add(timeDisplay);
         add(timeFactor);
@@ -124,7 +119,7 @@ public class App extends JFrame {
     }
 
     /**
-     * Main runs the application
+     * Main runs the application.
      */
     public static void main(String[] args) {
         new App();
