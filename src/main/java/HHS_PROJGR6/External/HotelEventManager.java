@@ -45,7 +45,6 @@ public class HotelEventManager implements Runnable {
      */
     private double fireEventFactor;
 
-
     public HotelEventManager() {
         listeners = new ArrayList<HotelEventListener>();
         events = new ArrayList<HotelEvent>();
@@ -473,12 +472,10 @@ public class HotelEventManager implements Runnable {
                     }
                 }
             }
-            //stop = true;
+            // stop = true;
         }
         System.out.println(threadName + " has stopped");
     }
-
-
 
     private boolean fireEvent() {
 
@@ -488,31 +485,31 @@ public class HotelEventManager implements Runnable {
 
         HotelEvent event = events.get(0);
 
-            // check if that event is suppose to be fired at that moment
-            if (event.Time == counterHTE) {
-                System.out.println(event.toString());
+        // check if that event is suppose to be fired at that moment
+        if (event.Time == counterHTE) {
+            System.out.println(event.toString());
 
-                // notify all listeners of event
-                for (HotelEventListener listener : listeners) {
-                    listener.Notify(event);
-                }
-
-                // event is fired, thus useless. Remove from event lists
-                events.remove(0);
-
-                // Recursion to check if there are multiple events at the same time
-                fireEvent();
-
-                return true;
-
-            } else if (event.Time > counterHTE) {
-                // No event right now, but in the future
-                return true;
-            } else {
-                return false;
-
+            // notify all listeners of event
+            for (HotelEventListener listener : listeners) {
+                listener.Notify(event);
             }
+
+            // event is fired, thus useless. Remove from event lists
+            events.remove(0);
+
+            // Recursion to check if there are multiple events at the same time
+            fireEvent();
+
+            return true;
+
+        } else if (event.Time > counterHTE) {
+            // No event right now, but in the future
+            return true;
+        } else {
+            return false;
+
         }
+    }
 
     /**
      * Helper to get the current time in one place, instead of 3 or more
