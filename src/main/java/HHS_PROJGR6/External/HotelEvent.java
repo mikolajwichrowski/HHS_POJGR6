@@ -6,9 +6,7 @@ import java.util.Map;
 //Event that is passed on to the listeners
 public class HotelEvent {
     public HotelEventType Type;
-
     public String Message;
-
     public int Time;
 
     // Data is GuestID + General type data such as Number of Stars

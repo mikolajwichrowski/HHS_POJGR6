@@ -38,7 +38,7 @@ public class EntityFactory {
             return new EntityLeasure(new Color(255, 0, 255), type);
 
         case "Guest":
-            return new EntityGuest(Color.black);
+                return new EntityGuest(Color.black);
 
         case "Housekeeping":
             return new EntityHousekeeping(Color.cyan);
