@@ -53,17 +53,22 @@ public class Hotel implements HotelEventListener, Runnable {
         this.entities = new ArrayList<IEntity>();
 
         // Run events
-        // HotelEventManager eventManager = new HotelEventManager();
-        // eventManager.register(this);
-        // eventManager.changeSpeed(2);
-        // eventManager.start();
+        HotelEventManager eventManager = new HotelEventManager();
+        eventManager.register(this);
+        eventManager.changeSpeed(2);
+        eventManager.start();
 
-        DijkstraAlgorithm da = new DijkstraAlgorithm();
+        // DijkstraAlgorithm da = new DijkstraAlgorithm();
 
         // System.out.println("the path is " + da.findPath().size() + " steps long");
-        for (Node step : da.findPath()) {
-            System.out.println(step.x + " " + step.y);
-        }
+        // System.out.println("ELEMEMTS");
+        // for (Node step : da.findPath()) {
+        // System.out.println(step.getX() + " " + step.getY());
+        // for (Node neighbour : step.getNeighbours()) {
+        // System.out.println(" + " + neighbour.getX() + " " + neighbour.getY());
+        // }
+        // }
+        // System.out.println("DONE");
     }
 
     /**
@@ -216,17 +221,41 @@ public class Hotel implements HotelEventListener, Runnable {
      * 
      */
     public void Notify(HotelEvent event) {
+        System.out.println(event.Data);
         // TODO: alle events
         switch (event.Type) {
         case CHECK_IN:
-            EntityGuest actor = (EntityGuest) EntityFactory.createEntity("Guest");
-            actor.setPosition(7, 2);
-            actor.setPreference("1");
-            this.register(actor);
+            // TODO: maak gasten aan
+
             break;
-        // ETC.
+        case CHECK_OUT:
+
+            // TODO: gast status uitchecken
+            break;
+        case CLEANING_EMERGENCY:
+            // TODO: Gast maakt kamer fies. Schoonmaker gaat er naartoe
+            break;
+        case EVACUATE:
+            // TODO:
+            break;
+        case GODZILLA:
+            // TODO Hotel gaat deud iedeereen er aan
+            break;
+        case NEED_FOOD:
+            // TODO haal food
+            break;
+        case GOTO_CINEMA:
+            // TO DO GO TO INEMA
+            break;
+        case GOTO_FITNESS:
+            // Gast moet naar fitness GASTID + HTE
+            break;
+        case START_CINEMA:
+            // GastID
+            break;
 
         default:
+        case NONE:
             break;
         }
     }
