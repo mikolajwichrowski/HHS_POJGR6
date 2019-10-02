@@ -1,6 +1,7 @@
 package HHS_PROJGR6;
 
 // imports from project
+
 import HHS_PROJGR6.Entities.EntityDiner;
 import HHS_PROJGR6.Entities.EntityGuest;
 import HHS_PROJGR6.Entities.EntityRoom;
@@ -34,6 +35,7 @@ public class Hotel implements HotelEventListener, Runnable {
      * 
      */
     private ArrayList<IEntity> entities;
+
 
     /**
      * Hotel class
@@ -207,26 +209,46 @@ public class Hotel implements HotelEventListener, Runnable {
      */
     public void Notify(HotelEvent event) {
         // TODO: alle events
+
+
         switch (event.Type) {
             case CHECK_IN:
-                EntityGuest actor = (EntityGuest) EntityFactory.createEntity("Guest");
-                actor.setPosition(7, 2);
-                actor.setPreference("1");
-                this.register(actor);
+                // TODO: maak gasten aan
+
+        EntityGuest test = (EntityGuest) EntityFactory.createEntity("Guest");
+                test.setPosition(7, 2);
+                test.setPreference("1");
+                this.register(test);
+
+//                for (int E = 0; E < event.toString().length(); E++) {
+//                    System.out.println(E);
+//                }
+
+                for (String eventType : event.Data.keySet()){
+                    System.out.println(eventType + " : " + event.Data.get(eventType));
+                }
+
+
+
                 break;
             case CHECK_OUT:
+
+                // TODO: gast status uitchecken
                 break;
             case CLEANING_EMERGENCY:
-                System.out.println("HEY");
+                // TODO: Gast maakt kamer fies. Schoonmaker gaat er naartoe
                 break;
             case EVACUATE:
+                // TODO:
                 break;
             case GODZILLA:
-                // Hotel gaat deud
+                // TODO Hotel gaat deud iedeereen er aan
                 break;
             case NEED_FOOD:
+                // TODO haal food
                 break;
             case GOTO_CINEMA:
+                // TO DO GO TO INEMA
                 break;
             case GOTO_FITNESS:
                 // Gast moet naar fitness GASTID + HTE

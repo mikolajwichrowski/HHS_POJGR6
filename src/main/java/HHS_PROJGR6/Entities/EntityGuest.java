@@ -1,10 +1,8 @@
 package HHS_PROJGR6.Entities;
 
-import HHS_PROJGR6.External.HotelEventManager;
 import HHS_PROJGR6.Interfaces.IEntity;
 
 import java.awt.*;
-import java.util.*;
 import java.util.List;
 
 /*
@@ -13,22 +11,16 @@ import java.util.List;
 */
 
 public class EntityGuest extends Entity implements IEntity {
-    private int guestID = 0;
+    public String guestID;
     private int preference;
     private List<int[]> nodeMapping;
-
-    public int getPreference() {
-        return preference;
-    }
-
-    public void setPreference(String preference) {
-        this.preference = Integer.parseInt(preference.replaceAll("[^0-9]+", ""));
-    }
 
     // Constructor
     public EntityGuest(Color entityColor) {
         super(entityColor);
+        this.guestID="";
     }
+
 
 /*    // Action to execute when triggered
     public void Notify(ArrayList<IEntity> entities) {
@@ -53,6 +45,14 @@ public class EntityGuest extends Entity implements IEntity {
         super.drawEntity(g);
         // g.setColor(Color.BLACK);
         g.fillRect(x * 60, y * 60, 60, 60);
+    }
+
+    public int getPreference() {
+        return preference;
+    }
+
+    public void setPreference(String preference) {
+        this.preference = Integer.parseInt(preference.replaceAll("[^0-9]+", ""));
     }
 }
 
