@@ -59,12 +59,9 @@ public class App extends JFrame {
         buttonPlus.setBounds(850, 50, 175, 80);
         buttonPlus.setBackground(Color.GREEN);
         buttonPlus.setForeground(Color.BLACK);
-        buttonPlus.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Clock.addClockspeed();
-                timeFactor.setText("HTE: " + Clock.getClockspeed());
-            }
+        buttonPlus.addActionListener(e -> {
+            Clock.addClockspeed();
+            timeFactor.setText("HTE: " + Clock.getClockspeed());
         });
 
         // Set button minus and functionality
@@ -72,12 +69,9 @@ public class App extends JFrame {
         buttonMinus.setBounds(850, 150, 175, 80);
         buttonMinus.setBackground(Color.RED);
         buttonMinus.setForeground(Color.BLACK);
-        buttonMinus.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Clock.reduceClockspeed();
-                timeFactor.setText("HTE: " + Clock.getClockspeed());
-            }
+        buttonMinus.addActionListener(e -> {
+            Clock.reduceClockspeed();
+            timeFactor.setText("HTE: " + Clock.getClockspeed());
         });
 
         // Set time display
@@ -86,7 +80,6 @@ public class App extends JFrame {
         timeDisplay.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         timeDisplay.setHorizontalAlignment(SwingConstants.CENTER);
         timeDisplay.setBounds(850, 250, 175, 80);
-        timeDisplay.setText(Clock.datetime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)));
 
         // Set factor display
         timeFactor = new JTextField(5);
@@ -96,28 +89,19 @@ public class App extends JFrame {
         timeFactor.setBounds(850, 350, 175, 80);
         timeFactor.setText("HTE: " + Clock.getClockspeed());
 
-        // Set timer for hotel clock
-        new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Set the visible time
-                Clock.datetime = Clock.datetime.plusSeconds(Clock.getClockspeed());
-
-                // Format time and display
-                timeDisplay.setText(Clock.datetime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)));
-            }
-        }).start();
+        // Set timer for hotel clock Format time and display
+        new Timer(1000, e -> timeDisplay.setText(Clock.datetime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)))).start();
 
         // Adding components to the JFrame
         add(myHotel.getHotelCanvas());
+
         add(timeDisplay);
         add(timeFactor);
         add(buttonPlus);
         add(buttonMinus);
 
-        // Run hotel
+        // Init hotel rooms
         myHotel.initRooms();
-        new Thread(myHotel, "HotelThread").start();
 
         // Options for the JFrame
         setTitle("HotelSimulatie GR6");

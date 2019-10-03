@@ -12,7 +12,7 @@ public class HotelEvent {
     // Data is GuestID + General type data such as Number of Stars
     public Map<String, String> Data;
 
-    HotelEvent(HotelEventType _type, String _message, int _time, HashMap<String, String> _data) {
+    public HotelEvent(HotelEventType _type, String _message, int _time, HashMap<String, String> _data) {
         Type = _type;
         Message = _message;
         Time = _time;
