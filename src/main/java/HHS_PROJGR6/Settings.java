@@ -7,8 +7,8 @@ public class Settings {
     private static int pixelResolution = 12;
     private static int filthTime = 10;
     private static int leasureTime = 10;
-    private static int stairCost = 5;
-    private static int elevatorCost 2;
+    private static int stairCost = 2;
+    private static int elevatorCost = 5;
 
     /**
      * @return the pixelResolution
@@ -23,15 +23,15 @@ public class Settings {
      */
     public static void setPixelResolution(int pixelResolution) {
         switch (pixelResolution) {
-        case "12x12":
-        case "24x24":
-        case "32x32":
-        case "48x48":
-            this.pixelResolution = pixelResolution;
+        case 12:
+        case 24:
+        case 32:
+        case 48:
+            pixelResolution = pixelResolution;
             break;
 
         default:
-            throw new Exception("Wrong pixel resolution");
+            // TODO: verander naar default en geef melding aan gebruiker
             break;
         }
     }
@@ -48,7 +48,7 @@ public class Settings {
      *                      the filthTime to set
      */
     public static void setFilthTime(int filthTime) {
-        this.filthTime = filthTime;
+        filthTime = filthTime;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Settings {
      *                        the leasureTime to set
      */
     public static void setLeasureTime(int leasureTime) {
-        this.leasureTime = leasureTime;
+        leasureTime = leasureTime;
     }
 
     /**
@@ -78,7 +78,7 @@ public class Settings {
      *                      the stairCost to set
      */
     public static void setStairCost(int stairCost) {
-        this.stairCost = stairCost;
+        stairCost = stairCost;
     }
 
     /**
@@ -93,6 +93,6 @@ public class Settings {
      *                         the elevatorCost to set
      */
     public static void setElevatorCost(int elevatorCost) {
-        this.elevatorCost = elevatorCost;
+        elevatorCost = elevatorCost;
     }
 }

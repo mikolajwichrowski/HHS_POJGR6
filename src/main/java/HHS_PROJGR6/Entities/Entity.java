@@ -5,6 +5,7 @@ import HHS_PROJGR6.External.*;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /*
 * Entity class
@@ -24,12 +25,12 @@ public class Entity implements IEntity, HotelEventListener {
     /**
      * 
      */
-    private int width;
+    public int width;
 
     /**
      * 
      */
-    private int height;
+    public int height;
 
     /**
      * 
@@ -120,8 +121,10 @@ public class Entity implements IEntity, HotelEventListener {
      * @return
      */
     public static List<IEntity> getOnPosition(int x, int y, List<IEntity> entities) {
-        return entities.stream().filter(e -> {
-            return e.getXPosition() == x && e.getXPosition() + e.getWidth() <= x && e.getYPosition() == y && e.getYPosition() - e.getHeight() <= y;
-        });
+        // return entities.stream().filter(e -> {
+        // return e.getXPosition() == x && e.getXPosition() + e.getWidth() <= x &&
+        // e.getYPosition() == y && e.getYPosition() - e.getHeight() <= y;
+        // }).toArray(IEntity);
+        return null;
     }
 }
