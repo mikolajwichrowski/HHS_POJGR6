@@ -1,6 +1,7 @@
 package HHS_PROJGR6.External;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -404,8 +405,7 @@ public class HotelEventManager implements Runnable {
             }
         }));
 
-        // TODO: fix issue
-        // events.sort(Comparator.comparingInt(x -> x.Time));
+        events.sort(Comparator.comparingInt(x -> x.Time));
 
     }
 
@@ -441,7 +441,6 @@ public class HotelEventManager implements Runnable {
 
     @Override
     public void run() {
-
         System.out.println(threadName + " is running its thread");
 
         boolean cont;
@@ -465,14 +464,13 @@ public class HotelEventManager implements Runnable {
 
                         cont = fireEvent();
 
-                        // Reset the start time, so the check will have to fail untill the right
-                        // amount
+                        // Reset the start time, so the check will have to fail untill the right amount
                         // of time has passed
                         startTime = getCurrentTime();
                     }
                 }
             }
-            // stop = true;
+            stop = true;
         }
         System.out.println(threadName + " has stopped");
     }
@@ -483,6 +481,7 @@ public class HotelEventManager implements Runnable {
             return false;
         }
 
+        // get the first event from the list
         HotelEvent event = events.get(0);
 
         // check if that event is suppose to be fired at that moment
@@ -501,13 +500,11 @@ public class HotelEventManager implements Runnable {
             fireEvent();
 
             return true;
-
         } else if (event.Time > counterHTE) {
             // No event right now, but in the future
             return true;
         } else {
             return false;
-
         }
     }
 

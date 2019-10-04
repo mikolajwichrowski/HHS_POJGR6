@@ -2,32 +2,29 @@ package HHS_PROJGR6;
 
 // imports from project
 
-import HHS_PROJGR6.Entities.EntityDiner;
-import HHS_PROJGR6.Entities.EntityGuest;
-import HHS_PROJGR6.Entities.EntityRoom;
-import HHS_PROJGR6.External.HotelEvent;
-import HHS_PROJGR6.External.HotelEventListener;
-import HHS_PROJGR6.External.HotelEventManager;
+import HHS_PROJGR6.Entities.*;
+import HHS_PROJGR6.External.*;
 import HHS_PROJGR6.Factories.EntityFactory;
 import HHS_PROJGR6.Interfaces.IEntity;
-import HHS_PROJGR6.Utils.DijkstraAlgorithm;
-import HHS_PROJGR6.Utils.JsonReader;
-import HHS_PROJGR6.Utils.Node;
+import HHS_PROJGR6.Utils.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.HashMap;
+import java.util.Map;
 
 // External imports
 
 /**
  * 
  */
-public class Hotel implements HotelEventListener, Runnable {
+public class Hotel implements HotelEventListener {
     /**
      * 
      */
@@ -38,6 +35,10 @@ public class Hotel implements HotelEventListener, Runnable {
      */
     private ArrayList<IEntity> entities;
 
+    /**
+     * 
+     */
+    private HotelEventManager eventManager;
 
     /**
      * Hotel class
@@ -54,9 +55,8 @@ public class Hotel implements HotelEventListener, Runnable {
         this.entities = new ArrayList<IEntity>();
 
         // Run events
-        HotelEventManager eventManager = new HotelEventManager();
+        eventManager = new HotelEventManager();
         eventManager.register(this);
-        eventManager.changeSpeed(2);
         eventManager.start();
 
         // DijkstraAlgorithm da = new DijkstraAlgorithm();
@@ -72,6 +72,43 @@ public class Hotel implements HotelEventListener, Runnable {
         // System.out.println("DONE");
     }
 
+    public void frame() {
+        // Wait for clockspeed
+        LocalDateTime start = LocalDateTime.now();
+        long hteInNano = 1000000000 / Clock.getClockspeed();
+        LocalDateTime end = LocalDateTime.now().plusNanos(hteInNano);
+
+        // TODO: fix change speed
+        // Change hte based on clock speed from clock singleton
+        // eventManager.changeSpeed(1.00 / Clock.getClockspeed());
+
+        // While the hte has not yet ticked. Keep checking
+        while (start.isBefore(end)) {
+            start = LocalDateTime.now();
+        }
+
+        // Remove checked out guests
+        ArrayList<IEntity> removeEntities = new ArrayList<IEntity>();
+        entities.stream().filter(entity -> {
+            // Filter guests
+            return entity instanceof EntityGuest;
+        }).forEach(entity -> {
+            // If guest don
+            if (!((EntityGuest) entity).getActive()) {
+                // Remove guest from hotel
+                removeEntities.add(entity);
+            }
+        });
+
+        removeEntities.stream().forEach(e -> this.deregister(e));
+
+        // Notify all entities that they have to do something
+        this.Notify(new HotelEvent(HotelEventType.NONE, "", 0, new HashMap<String, String>()));
+
+        // Recursion to keep loop going
+        this.frame();
+    }
+
     /**
      * 
      * @param actor
@@ -81,13 +118,16 @@ public class Hotel implements HotelEventListener, Runnable {
         if (hotelCanvas != null) {
             hotelCanvas.setDrawableEntities(entities);
         }
-
     }
 
-    // private void deregister(IEntity actor) {
-    // entities.remove(actor);
-    // hotelCanvas.setDrawableEntities(entities);
-    // }
+    /**
+     * 
+     * @param actor
+     */
+    private void deregister(IEntity actor) {
+        entities.remove(actor);
+        hotelCanvas.setDrawableEntities(entities);
+    }
 
     /**
      * 
@@ -152,9 +192,9 @@ public class Hotel implements HotelEventListener, Runnable {
             entity.setDimensions(1, 7);
             this.register(entity);
 
-            entity = EntityFactory.createEntity("Lift");
-            entity.setPosition(7, 2);
-            entity.setDimensions(6, 1);
+            // entity = EntityFactory.createEntity("Lift");
+            // entity.setPosition(7, 2);
+            // entity.setDimensions(6, 1);
 
             this.register(entity);
 
@@ -222,61 +262,65 @@ public class Hotel implements HotelEventListener, Runnable {
      * 
      */
     public void Notify(HotelEvent event) {
+        // Set the time for every HTE
+        Clock.datetime = Clock.datetime.plusSeconds(Clock.getClockspeed());
+
+        // TODO: data
         System.out.println(event.Data);
-        // TODO: alle events
 
-
+        // Which event is fired
         switch (event.Type) {
-            case CHECK_IN:
-                // TODO: maak gasten aan
+        case CHECK_IN:
+            // TODO: maak gasten aan
+            EntityGuest guest = (EntityGuest) EntityFactory.createEntity("Guest");
+            guest.setPosition(7, 2);
+            String guestKey = event.Data.keySet().iterator().next();
+            guest.setID(guestKey);
+            guest.setPreference(event.Data.get(guestKey));
+            register(guest);
 
-                break;
-            case CHECK_OUT:
+            break;
+        case CLEANING_EMERGENCY:
+            // Standaard zijn er 2
+            // EntityHousekeeping housekeeping = (EntityHousekeeping)
+            // EntityFactory.createEntity("Housekeeping");
+            // TODO: Gast maakt kamer vies. Schoonmaker gaat er naartoe
+            break;
+        case EVACUATE:
+            // TODO: Notify alle gasten dat ze naar de deur moeten
+            entities.stream().filter(entity -> {
+                return entity instanceof EntityGuest || entity instanceof EntityHousekeeping;
+            }).forEach(entity -> {
+                ((HotelEventListener) entity).Notify(new HotelEvent(HotelEventType.CHECK_OUT, "", 0, new HashMap<String, String>()));
+            });
+            break;
+        case GODZILLA:
+            // TODO Hotel gaat deud iedeereen er aan ... Alle kamers zijn vies en alle
+            // gasten gaan per direct dood
+            this.Notify(new HotelEvent(HotelEventType.EVACUATE, "", 0, new HashMap<String, String>()));
+            // TODO: Teken afbeelding van godzilla (Erwinzilla?)
+            break;
+        case START_CINEMA:
+            entities.stream().filter(entity -> {
+                // TODO: filter de entity waar het om gaat op basis van de data = entity.xy
+                return entity instanceof EntityLeasure || false;
+            }).forEach(entity -> {
+                ((HotelEventListener) entity).Notify(event);
+            });
+            break;
+        case NONE:
+            entities.stream().forEach(entity -> {
+                ((HotelEventListener) entity).Notify(event);
+            });
+            break;
+        default:
+            entities.stream().filter(entity -> {
+                return entity instanceof EntityGuest || entity instanceof EntityHousekeeping;
+            }).forEach(entity -> {
+                ((HotelEventListener) entity).Notify(event);
+            });
+            break;
 
-                // TODO: gast status uitchecken
-                break;
-            case CLEANING_EMERGENCY:
-                // TODO: Gast maakt kamer fies. Schoonmaker gaat er naartoe
-                break;
-            case EVACUATE:
-                // TODO:
-                break;
-            case GODZILLA:
-                // TODO Hotel gaat deud iedeereen er aan
-                break;
-            case NEED_FOOD:
-                // TODO haal food
-                break;
-            case GOTO_CINEMA:
-                // TO DO GO TO INEMA
-                break;
-            case GOTO_FITNESS:
-                // Gast moet naar fitness GASTID + HTE
-                break;
-            case START_CINEMA:
-                // GastID
-                break;
-
-            default:
-            case NONE:
-                break;
         }
-    }
-
-    @Override
-    public void run() {
-        // Draw every frame
-        new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                for (int i = 0; i < Clock.getClockspeed(); i++) {
-                    for (IEntity entity : entities) {
-                        entity.Notify(entities);
-                    }
-                }
-
-                hotelCanvas.setDrawableEntities(entities);
-            }
-        }).start();
     }
 }

@@ -38,7 +38,7 @@ public class EntityFactory {
             return new EntityLeasure(new Color(255, 0, 255), type);
 
         case "Guest":
-                return new EntityGuest(Color.black);
+            return new EntityGuest(Color.black);
 
         case "Housekeeping":
             return new EntityHousekeeping(Color.cyan);
@@ -46,29 +46,14 @@ public class EntityFactory {
         case "Elevator":
             return new EntityTransport(Color.darkGray);
 
-            case "Stairs":
-                return new EntityTransport(Color.lightGray);
+        case "Stairs":
+            return new EntityTransport(Color.lightGray);
 
-            case "Default":
-                return new EntityTransport(Color.white);
+        case "Default":
+            return new EntityTransport(Color.white);
 
         default:
             return new Entity(Color.white);
         }
     }
-
-//    public static IEntity createEntityRoom(String classification) {
-//        // Creating entity based on requested type
-//        switch (classification) {
-//        case "1 Star":
-//            return new EntityRoom(Color.green);
-//
-//        case "2 Star":
-//            return new EntityRoom(Color.blue);
-//
-//        default:
-//            return new Entity();
-//        }
-//    }
-
 }

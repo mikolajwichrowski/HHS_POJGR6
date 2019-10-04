@@ -1,6 +1,7 @@
 package HHS_PROJGR6.Entities;
 
 import HHS_PROJGR6.Interfaces.IEntity;
+import HHS_PROJGR6.External.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,8 +11,7 @@ import java.util.ArrayList;
 * Inherits from Entity
 */
 
-public class EntityRoom extends Entity implements IEntity {
-
+public class EntityRoom extends Entity implements IEntity, HotelEventListener {
 
     private int classification;
 
@@ -39,12 +39,12 @@ public class EntityRoom extends Entity implements IEntity {
         case 4:
             g.setColor(new Color(0, 255, 0));
             break;
-            case 5:
-                g.setColor(new Color(0, 64, 255));
-                break;
+        case 5:
+            g.setColor(new Color(0, 64, 255));
+            break;
 
         default:
-           // g.setColor(new Color(255, 255, 255));
+            // g.setColor(new Color(255, 255, 255));
             break;
         }
         g.fillRect(x * 60, (y - (height - 1)) * 60, width * 60, height * 60);
@@ -52,15 +52,26 @@ public class EntityRoom extends Entity implements IEntity {
     }
 
     // Action to execute when triggered
-    public void Notify(ArrayList<IEntity> entities) {
+    public void Notify(HotelEvent event) {
         // Logic for Room entity.
         // Make sure to implement features by OOSE principles
+        // TODO: na 10x is deze vies bv
     }
 
+    /**
+     * 
+     * @param classification
+     */
     public void setClassification(String classification) {
+        // TODO: verplaatsen naar een util
         this.classification = Integer.parseInt(classification.replaceAll("[^0-9]+", ""));
     }
 
+    /**
+     * 
+     * @param classification
+     * @return
+     */
     public boolean getClassification(int classification) {
         return this.classification == classification;
     }
