@@ -320,6 +320,36 @@ public class Hotel implements HotelEventListener {
         }).forEach(entity -> {
             ((EntityGuest) entity).;
         });
+    }
+
+    private void goToCinema(HotelEvent event){
+        // TODO: Desbetreffende EntityGuest gaat naar Cinema
+        entities.stream().filter(entity -> {
+            String guestKey = event.Data.keySet().iterator().next();
+            int guestID = EntityGuest.parseInt(guestKey);
+            return entity instanceof EntityGuest && ((EntityGuest) entity).getID() == guestID;
+        }).forEach(entity -> {
+            ((EntityGuest) entity).goToCinema();
+        });
+    }
+
+    private void goToFitness(HotelEvent event){
+        entities.stream().filter(entity -> {
+
+
+            return entity instanceof EntityGuest;
+        }).forEach(entity -> {
+            ((EntityGuest) entity).goToFitness();
+        });
+    }
+
+    private void goToRestaurant(HotelEvent event){
+        entities.stream().filter(entity -> {
+
+            return entity instanceof EntityGuest;
+        }).forEach(entity -> {
+            ((EntityGuest) entity).goToRestaurant();
+        });
 
     }
 
@@ -358,12 +388,19 @@ public class Hotel implements HotelEventListener {
 
             case CHECK_OUT:
                 this.checkout(event);
+                break;
 
-            case NEED_FOOD:
-                this.needFood();
+            case GOTO_RESTAURANT:
+                this.goToRestaurant(event);
+                break;
 
             case GOTO_FITNESS:
-                this.goWorkout();
+                this.goToFitness(event);
+                break;
+
+            case GOTO_CINEMA:
+                this.goToCinema(event);
+                break;
 
             case NONE:
                 break;

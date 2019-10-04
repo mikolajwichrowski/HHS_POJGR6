@@ -12,7 +12,7 @@ import java.util.ArrayList;
 * Inherits from Entity
 */
 
-public class EntityGuest extends Entity implements IEntity {
+public class EntityGuest extends Entity implements IEntity, HotelEventListener {
     /**
      * Guest number
      */
@@ -32,6 +32,52 @@ public class EntityGuest extends Entity implements IEntity {
     public EntityGuest(Color entityColor) {
         super(entityColor);
     }
+
+//    // Action to execute when triggered
+//    public void Notify(HotelEvent event) {
+//        // int[] nextPosition = nextStep();
+//        // setPosition(nextPosition[0], nextPosition[1]);
+//        switch (event.Type) {
+//        case CHECK_IN:
+//            // Set guest id for check in guest
+//            // TODO: vraag pathfinding algoritme aan en zet in instructies
+//            break;
+//        case CHECK_OUT:
+//            // guest does not exist anymore
+//            this.guestId = 0;
+//            // TODO: vraag pathfinding naar deur aan
+//            break;
+//        case NEED_FOOD:
+//            // TODO haal food
+//            break;
+//        case GOTO_CINEMA:
+//            // TO DO GO TO INEMA
+//            break;
+//        case GOTO_FITNESS:
+//            // Gast moet naar fitness GASTID + HTE
+//            break;
+//        default:
+//            // Gewoon doorgaan met de set van instructies die hij moet doen
+//            // Node currentInstruction = instructions.get(0);
+//            // setPosition(instructions.getY(), instructions.getX());
+//            // instructions.remove(0);
+//            break;
+//        }
+//    }
+
+    public void goToRestaurant(){
+
+    }
+
+    public void goToCinema(){
+
+
+    }
+
+     public void goToFitness(){
+
+
+     }
 
     public void checkout(){
         // Loop naar xyEntityLobby
@@ -70,7 +116,7 @@ public class EntityGuest extends Entity implements IEntity {
         return this.guestId != 0 && this.instructions.size() > 0;
     }
 
-    private static Integer parseInt(String someText) {
+    public static Integer parseInt(String someText) {
         return Integer.parseInt(someText.replaceAll("[^0-9]+", ""));
     }
 }

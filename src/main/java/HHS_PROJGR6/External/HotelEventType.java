@@ -7,7 +7,7 @@ public enum HotelEventType {
     CLEANING_EMERGENCY, // kamerID, tijd in HTE
     EVACUATE, // .
     GODZILLA, // .
-    NEED_FOOD, // gastID
+    GOTO_RESTAURANT, // gastID
     GOTO_CINEMA, // gastID
     GOTO_FITNESS, // gastID, HTE
     START_CINEMA // cinemaID
