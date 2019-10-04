@@ -1,20 +1,40 @@
 package HHS_PROJGR6.Entities;
 
 import HHS_PROJGR6.Interfaces.IEntity;
+import HHS_PROJGR6.External.*;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /*
 * Entity class
 */
 
-public class Entity implements IEntity {
-    // TODO: dit is belangrijk
+public class Entity implements IEntity, HotelEventListener {
+    /**
+     * 
+     */
     public int x;
+
+    /**
+     * 
+     */
     public int y;
+
+    /**
+     * 
+     */
     public int width;
+
+    /**
+     * 
+     */
     public int height;
+
+    /**
+     * 
+     */
     public Color entityColor;
 
     /**
@@ -29,9 +49,8 @@ public class Entity implements IEntity {
     /**
      * Action to execute when triggered
      * 
-     * 
      */
-    public void Notify(ArrayList<IEntity> entities) {
+    public void Notify(HotelEvent entities) {
 
     }
 
@@ -70,6 +89,20 @@ public class Entity implements IEntity {
     }
 
     /**
+     * @return the width
+     */
+    public int getWidth() {
+        return width;
+    }
+
+    /**
+     * @return the height
+     */
+    public int getHeight() {
+        return height;
+    }
+
+    /**
      * 
      * @param y
      * @param x
@@ -79,4 +112,19 @@ public class Entity implements IEntity {
         this.height = height;
     }
 
+    /**
+     * Util to get entity on position
+     * 
+     * @param x
+     * @param y
+     * @param entities
+     * @return
+     */
+    public static List<IEntity> getOnPosition(int x, int y, List<IEntity> entities) {
+        // return entities.stream().filter(e -> {
+        // return e.getXPosition() == x && e.getXPosition() + e.getWidth() <= x &&
+        // e.getYPosition() == y && e.getYPosition() - e.getHeight() <= y;
+        // }).toArray(IEntity);
+        return null;
+    }
 }

@@ -2,6 +2,7 @@
 package HHS_PROJGR6.Entities;
 
 import HHS_PROJGR6.Interfaces.IEntity;
+import HHS_PROJGR6.External.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 * Inherits from Entity
 */
 
-public class EntityDiner extends Entity implements IEntity {
+public class EntityDiner extends Entity implements IEntity, HotelEventListener {
     private int capacity;
     private int guests;
 
@@ -23,7 +24,7 @@ public class EntityDiner extends Entity implements IEntity {
     }
 
     // Action to execute when triggered
-    public void Notify(ArrayList<IEntity> entities) {
+    public void Notify(HotelEvent event) {
         // Logic for Diner entity.
         // Make sure to implement features by OOSE principles
         if (false) {
