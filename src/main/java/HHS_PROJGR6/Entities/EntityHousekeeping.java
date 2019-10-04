@@ -1,11 +1,12 @@
 package HHS_PROJGR6.Entities;
 
+import HHS_PROJGR6.External.HotelEvent;
+import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.Interfaces.IEntity;
-import HHS_PROJGR6.External.*;
-import HHS_PROJGR6.Utils.Node;
 
 import java.awt.*;
-import java.util.ArrayList;
+
+import static HHS_PROJGR6.Settings.getPixelResolution;
 
 /*
 * Housekeeping class
@@ -36,7 +37,7 @@ public class EntityHousekeeping extends Entity implements IEntity, HotelEventLis
     public void drawEntity(Graphics g) {
         super.drawEntity(g);
         // g.setColor(Color.PINK);
-        g.fillRect(x * 60, y * 60, width * 60, height * 60);
+        g.fillRect(x * getPixelResolution(), y * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
     }
 
 }

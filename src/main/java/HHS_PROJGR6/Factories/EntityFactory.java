@@ -29,25 +29,25 @@ public class EntityFactory {
             return new EntityDiner(new Color(255, 128, 0));
 
         case "Room":
-            return new EntityRoom(Color.white);
+            return new EntityRoom(new Color(255, 255, 255));
 
         case "Fitness":
-            return new EntityLeasure(Color.red, type);
+            return new EntityLeasure(new Color(255, 0, 0), type);
 
         case "Cinema":
             return new EntityLeasure(new Color(255, 0, 255), type);
 
         case "Guest":
-            return new EntityGuest(Color.black);
+            return new EntityGuest(new Color(0, 0, 0));
 
         case "Housekeeping":
-            return new EntityHousekeeping(Color.cyan);
+            return new EntityHousekeeping(new Color(0, 255, 255));
 
         case "Elevator":
-            return new EntityTransport(Color.darkGray);
+            return new EntityTransport(new Color(138, 138, 92));
 
         case "Stairs":
-            return new EntityTransport(Color.lightGray);
+            return new EntityTransport(new Color(214, 214, 194));
 
         case "Default":
             return new EntityTransport(Color.white);

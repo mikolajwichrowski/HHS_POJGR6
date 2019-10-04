@@ -7,6 +7,8 @@ import HHS_PROJGR6.Utils.Node;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static HHS_PROJGR6.Settings.getPixelResolution;
+
 /*
 * Guest class
 * Inherits from Entity
@@ -31,6 +33,7 @@ public class EntityGuest extends Entity implements IEntity, HotelEventListener {
     // Constructor
     public EntityGuest(Color entityColor) {
         super(entityColor);
+        this.instructions = new ArrayList<Node>();
     }
 
     // Action to execute when triggered
@@ -68,7 +71,7 @@ public class EntityGuest extends Entity implements IEntity, HotelEventListener {
     public void drawEntity(Graphics g) {
         super.drawEntity(g);
         // g.setColor(Color.BLACK);
-        g.fillRect(x * 60, y * 60, 60, 60);
+        g.fillRect(x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution());
     }
 
     public int getPreference() {

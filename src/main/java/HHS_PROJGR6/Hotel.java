@@ -3,21 +3,20 @@ package HHS_PROJGR6;
 // imports from project
 
 import HHS_PROJGR6.Entities.*;
-import HHS_PROJGR6.External.*;
+import HHS_PROJGR6.External.HotelEvent;
+import HHS_PROJGR6.External.HotelEventListener;
+import HHS_PROJGR6.External.HotelEventManager;
+import HHS_PROJGR6.External.HotelEventType;
 import HHS_PROJGR6.Factories.EntityFactory;
 import HHS_PROJGR6.Interfaces.IEntity;
-import HHS_PROJGR6.Utils.*;
+import HHS_PROJGR6.Utils.JsonReader;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.Iterator;
 
 // External imports
 
@@ -29,6 +28,11 @@ public class Hotel implements HotelEventListener {
      * 
      */
     private Canvas hotelCanvas;
+
+    /**
+     *
+     */
+    private int[] highestPositions;
 
     /**
      * 
@@ -135,9 +139,9 @@ public class Hotel implements HotelEventListener {
     public void initRooms() {
         try {
             // Read hotel and get highest position values
-            JSONArray jsonArray = (JSONArray) new JsonReader("hotel(3).layout").getJsonObject();
+            JSONArray jsonArray = (JSONArray) new JsonReader("hotel(4).layout").getJsonObject();
             Iterator i = jsonArray.iterator();
-            int[] highestPositions = getHighest(jsonArray, "Position");
+            this.highestPositions = getHighest(jsonArray, "Position");
             IEntity entity = null;
 
             // Loop trough json array
@@ -153,7 +157,7 @@ public class Hotel implements HotelEventListener {
 
                 // Reverse the grid layout
                 int x = Integer.parseInt(position[0].trim()) + 1;
-                int y = highestPositions[1] - Integer.parseInt(position[1].trim()) + 1;
+                int y = this.highestPositions[1] - Integer.parseInt(position[1].trim()) + 1;
 
                 // Entity size
                 int width = Integer.parseInt(dimension[0].trim());
@@ -181,15 +185,15 @@ public class Hotel implements HotelEventListener {
             // TODO: maak deze dynamisch (dimensions en position)!
             // Create entity with factory
             entity = EntityFactory.createEntity("Elevator");
-            entity.setPosition(7, 1);
-            entity.setDimensions(1, 7);
+            entity.setPosition(this.highestPositions[1] + 1, 1);
+            entity.setDimensions(1, this.highestPositions[1]+ 1);
             this.register(entity);
 
             // TODO: maak deze dynamisch (dimensions en position)!
             // Create entity with factory
             entity = EntityFactory.createEntity("Stairs");
-            entity.setPosition(7, 8);
-            entity.setDimensions(1, 7);
+            entity.setPosition(this.highestPositions[1] + 1, 8);
+            entity.setDimensions(1, this.highestPositions[1]+ 1);
             this.register(entity);
 
             // entity = EntityFactory.createEntity("Lift");
@@ -197,13 +201,6 @@ public class Hotel implements HotelEventListener {
             // entity.setDimensions(6, 1);
 
             this.register(entity);
-
-            // Draw only the nessecary grid size
-            hotelCanvas.setGridHeight(highestPositions[1] + 1);
-            hotelCanvas.setGridWidth(highestPositions[0] + 2);
-
-            // Draw entities
-            hotelCanvas.setDrawableEntities(entities);
         } catch (Exception e) {
             // TODO: better exception handling
             throw e;
@@ -233,7 +230,7 @@ public class Hotel implements HotelEventListener {
                 }
 
                 if (Integer.parseInt(compare[1].trim()) > highes[1]) {
-                    highes[1] = Integer.parseInt(compare[1].trim());
+                    highes[1] = Integer.parseInt(compare[1].trim()) + 1;
                 }
             }
         } catch (Exception e) {
@@ -256,6 +253,13 @@ public class Hotel implements HotelEventListener {
      */
     public void setHotelCanvas(Canvas hotelCanvas) {
         this.hotelCanvas = hotelCanvas;
+
+        // Draw only the nessecary grid size
+        hotelCanvas.setGridHeight(this.highestPositions[1] + 1);
+        hotelCanvas.setGridWidth(this.highestPositions[0] + 2);
+
+        // Draw entities
+        hotelCanvas.setDrawableEntities(entities);
     }
 
     /**
@@ -273,7 +277,7 @@ public class Hotel implements HotelEventListener {
         case CHECK_IN:
             // TODO: maak gasten aan
             EntityGuest guest = (EntityGuest) EntityFactory.createEntity("Guest");
-            guest.setPosition(7, 2);
+            guest.setPosition(this.highestPositions[1] + 1, 2);
             String guestKey = event.Data.keySet().iterator().next();
             guest.setID(guestKey);
             guest.setPreference(event.Data.get(guestKey));
@@ -322,5 +326,11 @@ public class Hotel implements HotelEventListener {
             break;
 
         }
+    }
+    /*
+    *
+     */
+    public int[] getHighestPositions() {
+        return highestPositions;
     }
 }

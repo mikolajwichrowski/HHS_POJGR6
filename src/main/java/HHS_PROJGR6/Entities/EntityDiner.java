@@ -1,11 +1,13 @@
 
 package HHS_PROJGR6.Entities;
 
+import HHS_PROJGR6.External.HotelEvent;
+import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.Interfaces.IEntity;
-import HHS_PROJGR6.External.*;
 
 import java.awt.*;
-import java.util.ArrayList;
+
+import static HHS_PROJGR6.Settings.getPixelResolution;
 
 /*
 * Diner class
@@ -34,9 +36,8 @@ public class EntityDiner extends Entity implements IEntity, HotelEventListener {
     }
 
     public void drawEntity(Graphics g) {
-
         g.setColor(entityColor);
-        g.fillRect(x * 60, (y - (height - 1)) * 60, width * 60, height * 60);
+        g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
         super.drawEntity(g);
     }
 
