@@ -40,7 +40,6 @@ public class EntityGuest extends Entity implements IEntity, HotelEventListener {
         switch (event.Type) {
         case CHECK_IN:
             // Set guest id for check in guest
-            this.setID("huppeldepup 1");
             // TODO: vraag pathfinding algoritme aan en zet in instructies
             break;
         case CHECK_OUT:

@@ -36,6 +36,11 @@ public class Hotel implements HotelEventListener {
     private ArrayList<IEntity> entities;
 
     /**
+     * 
+     */
+    private HotelEventManager eventManager;
+
+    /**
      * Hotel class
      * 
      * The object derived from this class must contain all the entities. All the
@@ -50,9 +55,8 @@ public class Hotel implements HotelEventListener {
         this.entities = new ArrayList<IEntity>();
 
         // Run events
-        HotelEventManager eventManager = new HotelEventManager();
+        eventManager = new HotelEventManager();
         eventManager.register(this);
-        eventManager.changeSpeed(2);
         eventManager.start();
 
         // DijkstraAlgorithm da = new DijkstraAlgorithm();
@@ -66,34 +70,43 @@ public class Hotel implements HotelEventListener {
         // }
         // }
         // System.out.println("DONE");
-
-        // Start frames
-        frame();
     }
 
-    private void frame() {
+    public void frame() {
         // Wait for clockspeed
         LocalDateTime start = LocalDateTime.now();
-        while (TODO) {
+        long hteInNano = 1000000000 / Clock.getClockspeed();
+        LocalDateTime end = LocalDateTime.now().plusNanos(hteInNano);
+
+        // TODO: fix change speed
+        // Change hte based on clock speed from clock singleton
+        // eventManager.changeSpeed(1.00 / Clock.getClockspeed());
+
+        // While the hte has not yet ticked. Keep checking
+        while (start.isBefore(end)) {
+            start = LocalDateTime.now();
         }
 
         // Remove checked out guests
+        ArrayList<IEntity> removeEntities = new ArrayList<IEntity>();
         entities.stream().filter(entity -> {
             // Filter guests
             return entity instanceof EntityGuest;
         }).forEach(entity -> {
-            // If guest done
+            // If guest don
             if (!((EntityGuest) entity).getActive()) {
                 // Remove guest from hotel
-                deregister(entity);
+                removeEntities.add(entity);
             }
         });
 
+        removeEntities.stream().forEach(e -> this.deregister(e));
+
         // Notify all entities that they have to do something
-        entities.stream().forEach(entity -> ((HotelEventListener) entity).Notify(new HotelEvent(HotelEventType.NONE, "", 0, new HashMap<String, String>())));
+        this.Notify(new HotelEvent(HotelEventType.NONE, "", 0, new HashMap<String, String>()));
 
         // Recursion to keep loop going
-        frame();
+        this.frame();
     }
 
     /**
@@ -179,9 +192,9 @@ public class Hotel implements HotelEventListener {
             entity.setDimensions(1, 7);
             this.register(entity);
 
-            entity = EntityFactory.createEntity("Lift");
-            entity.setPosition(7, 2);
-            entity.setDimensions(6, 1);
+            // entity = EntityFactory.createEntity("Lift");
+            // entity.setPosition(7, 2);
+            // entity.setDimensions(6, 1);
 
             this.register(entity);
 
@@ -260,10 +273,17 @@ public class Hotel implements HotelEventListener {
         case CHECK_IN:
             // TODO: maak gasten aan
             EntityGuest guest = (EntityGuest) EntityFactory.createEntity("Guest");
+            guest.setPosition(7, 2);
+            String guestKey = event.Data.keySet().iterator().next();
+            guest.setID(guestKey);
+            guest.setPreference(event.Data.get(guestKey));
+            register(guest);
 
             break;
         case CLEANING_EMERGENCY:
-            EntityHousekeeping housekeeping = (EntityHousekeeping) EntityFactory.createEntity("Housekeeping");
+            // Standaard zijn er 2
+            // EntityHousekeeping housekeeping = (EntityHousekeeping)
+            // EntityFactory.createEntity("Housekeeping");
             // TODO: Gast maakt kamer vies. Schoonmaker gaat er naartoe
             break;
         case EVACUATE:
@@ -275,7 +295,8 @@ public class Hotel implements HotelEventListener {
             });
             break;
         case GODZILLA:
-            // TODO Hotel gaat deud iedeereen er aan
+            // TODO Hotel gaat deud iedeereen er aan ... Alle kamers zijn vies en alle
+            // gasten gaan per direct dood
             this.Notify(new HotelEvent(HotelEventType.EVACUATE, "", 0, new HashMap<String, String>()));
             // TODO: Teken afbeelding van godzilla (Erwinzilla?)
             break;
@@ -284,6 +305,11 @@ public class Hotel implements HotelEventListener {
                 // TODO: filter de entity waar het om gaat op basis van de data = entity.xy
                 return entity instanceof EntityLeasure || false;
             }).forEach(entity -> {
+                ((HotelEventListener) entity).Notify(event);
+            });
+            break;
+        case NONE:
+            entities.stream().forEach(entity -> {
                 ((HotelEventListener) entity).Notify(event);
             });
             break;

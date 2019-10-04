@@ -56,7 +56,7 @@ public class App extends JFrame {
 
         // Set button plus and functionality
         buttonPlus = new JButton("Hotel TijdsEenheid +");
-        buttonPlus.setBounds(850, 50, 175, 80);
+        buttonPlus.setBounds(1250, 50, 175, 80);
         buttonPlus.setBackground(Color.GREEN);
         buttonPlus.setForeground(Color.BLACK);
         buttonPlus.addActionListener(e -> {
@@ -66,7 +66,7 @@ public class App extends JFrame {
 
         // Set button minus and functionality
         buttonMinus = new JButton("Hotel TijdsEenheid -");
-        buttonMinus.setBounds(850, 150, 175, 80);
+        buttonMinus.setBounds(1250, 150, 175, 80);
         buttonMinus.setBackground(Color.RED);
         buttonMinus.setForeground(Color.BLACK);
         buttonMinus.addActionListener(e -> {
@@ -79,14 +79,14 @@ public class App extends JFrame {
         timeDisplay.setFont(new Font("Consolas", Font.PLAIN, 32));
         timeDisplay.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         timeDisplay.setHorizontalAlignment(SwingConstants.CENTER);
-        timeDisplay.setBounds(850, 250, 175, 80);
+        timeDisplay.setBounds(1250, 250, 175, 80);
 
         // Set factor display
         timeFactor = new JTextField(5);
         timeFactor.setFont(new Font("Consolas", Font.PLAIN, 32));
         timeFactor.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         timeFactor.setHorizontalAlignment(SwingConstants.CENTER);
-        timeFactor.setBounds(850, 350, 175, 80);
+        timeFactor.setBounds(1250, 350, 175, 80);
         timeFactor.setText("HTE: " + Clock.getClockspeed());
 
         // Set timer for hotel clock Format time and display
@@ -112,6 +112,9 @@ public class App extends JFrame {
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
+
+        // Start frames
+        myHotel.frame();
 
     }
 

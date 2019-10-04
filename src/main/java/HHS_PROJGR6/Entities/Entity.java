@@ -24,12 +24,12 @@ public class Entity implements IEntity, HotelEventListener {
     /**
      * 
      */
-    public int width;
+    private int width;
 
     /**
      * 
      */
-    public int height;
+    private int height;
 
     /**
      * 
@@ -88,6 +88,20 @@ public class Entity implements IEntity, HotelEventListener {
     }
 
     /**
+     * @return the width
+     */
+    public int getWidth() {
+        return width;
+    }
+
+    /**
+     * @return the height
+     */
+    public int getHeight() {
+        return height;
+    }
+
+    /**
      * 
      * @param y
      * @param x
@@ -97,4 +111,17 @@ public class Entity implements IEntity, HotelEventListener {
         this.height = height;
     }
 
+    /**
+     * Util to get entity on position
+     * 
+     * @param x
+     * @param y
+     * @param entities
+     * @return
+     */
+    public static List<IEntity> getOnPosition(int x, int y, List<IEntity> entities) {
+        return entities.stream().filter(e -> {
+            return e.getXPosition() == x && e.getXPosition() + e.getWidth() <= x && e.getYPosition() == y && e.getYPosition() - e.getHeight() <= y;
+        });
+    }
 }

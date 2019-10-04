@@ -2,8 +2,6 @@ package HHS_PROJGR6;
 
 import java.time.LocalDateTime;
 
-
-
 /**
  * bron: https://www.youtube.com/watch?v=wznbvBuf8ys TODO: oplossen met een
  * normaal object en een singleton
