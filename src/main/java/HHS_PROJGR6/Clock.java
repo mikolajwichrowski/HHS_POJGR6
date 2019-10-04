@@ -33,7 +33,7 @@ public class Clock {
     }
 
     /**
-     * 
+     * Method to reduce the clockspeed
      */
     public static void reduceClockspeed() {
         Clock.clockspeed--;
