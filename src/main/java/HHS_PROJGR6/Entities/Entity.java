@@ -9,10 +9,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/*
-* Entity class
-*/
-
+/**
+ * 
+ */
 public class Entity implements IEntity, HotelEventListener {
     /**
      * 
@@ -126,7 +125,7 @@ public class Entity implements IEntity, HotelEventListener {
         return entities.stream().filter(e -> {
             boolean position = e.getXPosition() == x && e.getYPosition() == y;
             boolean positionWithOffset = e.getXPosition() + e.getWidth() <= x && e.getYPosition() - e.getHeight() <= y;
-            return true;// position && positionWithOffset;
+            return position && positionWithOffset;
         }).collect(Collectors.toList());
     }
 }

@@ -33,52 +33,32 @@ public class EntityGuest extends Entity implements IEntity, HotelEventListener {
         super(entityColor);
     }
 
-    public void checkIn() {
-
+    public void goToRestaurant() {
+        // TODO: get path to restaurant
     }
 
-    public void checkOut() {
+    public void goToCinema() {
+        // TODO: get path to cinema
+    }
+
+    public void goToFitness() {
+        // TODO: get path to fittness
+    }
+
+    public void checkout() {
         this.guestId = 0;
+        // TODO: get path to exit
     }
 
-    // Action to execute when triggered
-    public void Notify(HotelEvent event) {
-        // int[] nextPosition = nextStep();
-        // setPosition(nextPosition[0], nextPosition[1]);
-        switch (event.Type) {
-        case CHECK_IN:
-            // Set guest id for check in guest
-            // TODO: vraag pathfinding algoritme aan en zet in instructies
-            checkIn();
-            break;
-        case CHECK_OUT:
-            // guest does not exist anymor
-
-            // TODO: vraag pathfinding naar deur aan
-            checkOut();
-            break;
-        case NEED_FOOD:
-            // TODO haal food
-            break;
-        case GOTO_CINEMA:
-            // TO DO GO TO INEMA
-            break;
-        case GOTO_FITNESS:
-            // Gast moet naar fitness GASTID + HTE
-            break;
-        default:
-            // Gewoon doorgaan met de set van instructies die hij moet doen
-            // Node currentInstruction = instructions.get(0);
-            // setPosition(instructions.getY(), instructions.getX());
-            // instructions.remove(0);
-            break;
-        }
+    public void panic() {
+        // Gast sterft, verander image van gast naar dode gast? || Stop tekenen van
+        // guest?
     }
 
     public void drawEntity(Graphics g) {
-        super.drawEntity(g);
-        // g.setColor(Color.BLACK);
+        g.setColor(entityColor);
         g.fillRect(x * 60, y * 60, 60, 60);
+        super.drawEntity(g);
     }
 
     public int getPreference() {

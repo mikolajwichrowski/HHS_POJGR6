@@ -177,20 +177,36 @@ public class Hotel implements HotelEventListener {
                 this.register(entity);
             }
 
-            // TODO: maak deze dynamisch (dimensions en position)!
-            // Create entity with factory
+            // Create entity elevator with factory
+            // TODO: dynamic position and sizes
             entity = EntityFactory.createEntity("Elevator");
             entity.setPosition(7, 1);
             entity.setDimensions(1, 7);
             this.register(entity);
 
-            // TODO: maak deze dynamisch (dimensions en position)!
-            // Create entity with factory
+            // Create stairs entity with factory
+            // TODO: dynamic position and sizes
             entity = EntityFactory.createEntity("Stairs");
             entity.setPosition(7, 8);
             entity.setDimensions(1, 7);
             this.register(entity);
 
+            // Create lobby entity with factory
+            entity = EntityFactory.createEntity("Lobby");
+            entity.setPosition(7, 4);
+            entity.setDimensions(2, 7);
+            this.register(entity);
+
+            // Create housekeeping with factory
+            // TODO: with loop
+            entity = EntityFactory.createEntity("Housekeeping");
+            entity.setPosition(7, 6);
+            entity.setDimensions(1, 1);
+            this.register(entity);
+
+            entity = EntityFactory.createEntity("Housekeeping");
+            entity.setPosition(7, 3);
+            entity.setDimensions(1, 1);
             this.register(entity);
 
             // Draw only the nessecary grid size
@@ -256,17 +272,97 @@ public class Hotel implements HotelEventListener {
         this.hotelCanvas = hotelCanvas;
     }
 
-    public void checkInGuest(HotelEvent event) {
+    private void evacuateEvent(HotelEvent event) {
+        // entities.stream().filter(entity -> {
+        // return entity instanceof EntityHousekeeping && entity instanceof EntityGuest;
+        // }).forEach(entity -> {
+        // ((HotelEventListener) entity).checkout(event);
+        // });
+    }
+
+    private void checkInEvent(HotelEvent event) {
+        // TODO: maak gasten aan
         EntityGuest guest = (EntityGuest) EntityFactory.createEntity("Guest");
         guest.setPosition(7, 2);
         String guestKey = event.Data.keySet().iterator().next();
         guest.setID(guestKey);
         guest.setPreference(event.Data.get(guestKey));
         register(guest);
+
+    }
+
+    private void checkOutEvent(HotelEvent event) {
+        System.out.println(event.Data);
+        entities.stream().filter(entity -> {
+            String guestKey = event.Data.keySet().iterator().next();
+            return entity instanceof EntityGuest;
+        }).forEach(entity -> {
+            ((EntityGuest) entity).checkout();
+        });
+    }
+
+    private void cleaningEmergencyEvent(HotelEvent event) {
+        entities.stream().filter(entity -> {
+            return entity instanceof EntityHousekeeping;
+        }).forEach(entity -> {
+            ((EntityHousekeeping) entity).cleanRoom();
+        });
+        // TODO: Gast maakt kamer vies. Schoonmaker gaat er naartoe
+    }
+
+    private void godzillaEvent(HotelEvent event) {
+        // TODO Hotel gaat deud iedeereen er aan ... Alle kamers zijn vies en alle
+        entities.stream().filter(entity -> {
+            return entity instanceof EntityHousekeeping && entity instanceof EntityGuest && entity instanceof EntityRoom;
+        }).forEach(entity -> {
+            ((IStressable) entity).Panic();
+        });
+        // TODO: Teken afbeelding van godzilla (Erwinzilla?)
+
+    }
+
+    private void startCinemaEvent(HotelEvent event) {
+        entities.stream().filter(entity -> {
+            // TODO: filter de entity waar het om gaat op basis van de data = entity.xy
+            String guestKey = event.Data.keySet().iterator().next();
+            return entity instanceof EntityLeasure || false;
+        }).forEach(entity -> {
+            ((EntityGuest) entity).;
+        });
+    }
+
+    private void goToCinemaEvent(HotelEvent event) {
+        // TODO: Desbetreffende EntityGuest gaat naar Cinema
+        entities.stream().filter(entity -> {
+            String guestKey = event.Data.keySet().iterator().next();
+            int guestID = EntityGuest.parseInt(guestKey);
+            return entity instanceof EntityGuest && ((EntityGuest) entity).getID() == guestID;
+        }).forEach(entity -> {
+            ((EntityGuest) entity).goToCinema();
+        });
+    }
+
+    private void goToFitnessEvent(HotelEvent event) {
+        entities.stream().filter(entity -> {
+
+            return entity instanceof EntityGuest;
+        }).forEach(entity -> {
+            ((EntityGuest) entity).goToFitness();
+        });
+    }
+
+    private void goToRestaurantEvent(HotelEvent event) {
+        entities.stream().filter(entity -> {
+
+            return entity instanceof EntityGuest;
+        }).forEach(entity -> {
+            ((EntityGuest) entity).goToRestaurant();
+        });
+
     }
 
     /**
-     * 
+     *
      */
     public void Notify(HotelEvent event) {
         // Set the time for every HTE
@@ -278,49 +374,47 @@ public class Hotel implements HotelEventListener {
         // Which event is fired
         switch (event.Type) {
         case CHECK_IN:
-            checkInGuest(event);
+            this.checkInEvent(event);
             break;
+
         case CLEANING_EMERGENCY:
-            // Standaard zijn er 2
-            // EntityHousekeeping housekeeping = (EntityHousekeeping)
-            // EntityFactory.createEntity("Housekeeping");
-            // TODO: Gast maakt kamer vies. Schoonmaker gaat er naartoe
+            this.cleaningEmergencyEvent(event);
             break;
+
         case EVACUATE:
-            // TODO: Notify alle gasten dat ze naar de deur moeten
-            entities.stream().filter(entity -> {
-                return entity instanceof EntityGuest;
-            }).forEach(entity -> {
-                ((EntityGuest) entity).checkOut();
-            });
+            this.evacuateEvent(event);
             break;
+
         case GODZILLA:
-            // TODO Hotel gaat deud iedeereen er aan ... Alle kamers zijn vies en alle
-            // gasten gaan per direct dood
-            this.Notify(new HotelEvent(HotelEventType.EVACUATE, "", 0, new HashMap<String, String>()));
-            // TODO: Teken afbeelding van godzilla (Erwinzilla?)
+            this.godzillaEvent(event);
             break;
+
         case START_CINEMA:
-            entities.stream().filter(entity -> {
-                // TODO: filter de entity waar het om gaat op basis van de data = entity.xy
-                return entity instanceof EntityLeasure || false;
-            }).forEach(entity -> {
-                ((HotelEventListener) entity).Notify(event);
-            });
+            this.startCinemaEvent(event);
             break;
+
+        case CHECK_OUT:
+            this.checkOutEvent(event);
+            break;
+
+        case GOTO_RESTAURANT:
+            this.goToRestaurantEvent(event);
+            break;
+
+        case GOTO_FITNESS:
+            this.goToFitnessEvent(event);
+            break;
+
+        case GOTO_CINEMA:
+            this.goToCinemaEvent(event);
+            break;
+
         case NONE:
-            entities.stream().forEach(entity -> {
-                ((HotelEventListener) entity).Notify(event);
-            });
-            break;
         default:
-            entities.stream().filter(entity -> {
-                return entity instanceof EntityGuest || entity instanceof EntityHousekeeping;
-            }).forEach(entity -> {
-                ((HotelEventListener) entity).Notify(event);
-            });
+            // No event happends here
             break;
 
         }
     }
+
 }
