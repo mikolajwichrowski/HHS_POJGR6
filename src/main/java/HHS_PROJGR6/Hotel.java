@@ -43,7 +43,7 @@ public class Hotel implements HotelEventListener {
 
     /**
      * Hotel class
-     * <p>
+     * 
      * The object derived from this class must contain all the entities. All the
      * enties will live and act here. Every event is triggered in the object derived
      * from this class. The canvas is aggregated in this class to make sure that
@@ -61,6 +61,9 @@ public class Hotel implements HotelEventListener {
         frame();
     }
 
+    /**
+     * 
+     */
     public void frame() {
         // Wait for clockspeed
         LocalDateTime start = LocalDateTime.now();
@@ -97,6 +100,9 @@ public class Hotel implements HotelEventListener {
         this.frame();
     }
 
+    /**
+     * 
+     */
     private void pathFinder() {
         DijkstraAlgorithm da = new DijkstraAlgorithm();
 
@@ -288,43 +294,53 @@ public class Hotel implements HotelEventListener {
     }
 
     private void checkOutEvent(HotelEvent event) {
-        System.out.println(event.Data);
         entities.stream().filter(entity -> {
+            // Get guest that has to check out
             String guestKey = event.Data.keySet().iterator().next();
-            return entity instanceof EntityGuest;
+            int guestID = EntityGuest.parseInt(guestKey);
+            return entity instanceof EntityGuest && ((EntityGuest) entity).getID() == guestID;
         }).forEach(entity -> {
+            // Make guest checkout
             ((EntityGuest) entity).checkout();
         });
     }
 
     private void cleaningEmergencyEvent(HotelEvent event) {
-        entities.stream().filter(entity -> {
-            return entity instanceof EntityHousekeeping;
-        }).forEach(entity -> {
-            ((EntityHousekeeping) entity).cleanRoom();
-        });
         // TODO: Gast maakt kamer vies. Schoonmaker gaat er naartoe
+        entities.stream().filter(entity -> {
+            // Get guest that has to check out
+            String guestKey = event.Data.keySet().iterator().next();
+            int guestID = EntityGuest.parseInt(guestKey);
+            return entity instanceof EntityGuest && ((EntityGuest) entity).getID() == guestID;
+        }).forEach(entity -> {
+            // Make guest make the room filthy
+            // TODO: ((EntityGuest) entity).filthy();
+        });
+
+        // TODO: pass pathfinding
+        ((EntityHousekeeping) entities.stream().filter(entity -> {
+            // Get housekeeping that is not cleaning
+            return entity instanceof EntityHousekeeping;
+        }).collect(Colletors.toList()).get(0)).cleanRoom();
+
     }
 
     private void godzillaEvent(HotelEvent event) {
         // TODO Hotel gaat deud iedeereen er aan ... Alle kamers zijn vies en alle
         entities.stream().filter(entity -> {
+            // Get all living entities
             return entity instanceof EntityHousekeeping && entity instanceof EntityGuest && entity instanceof EntityRoom;
         }).forEach(entity -> {
-            ((IStressable) entity).Panic();
+            // Make them panic
+            ((IStressable) entity).panic();
         });
-        // TODO: Teken afbeelding van godzilla (Erwinzilla?)
 
+        // TODO: Teken afbeelding van godzilla (Erwinzilla?)
     }
 
     private void startCinemaEvent(HotelEvent event) {
-        entities.stream().filter(entity -> {
-            // TODO: filter de entity waar het om gaat op basis van de data = entity.xy
-            String guestKey = event.Data.keySet().iterator().next();
-            return entity instanceof EntityLeasure || false;
-        }).forEach(entity -> {
-            ((EntityGuest) entity).;
-        });
+        // TODO zoek cinema waar het over gaat en start hier de film
+
     }
 
     private void goToCinemaEvent(HotelEvent event) {
@@ -334,15 +350,18 @@ public class Hotel implements HotelEventListener {
             int guestID = EntityGuest.parseInt(guestKey);
             return entity instanceof EntityGuest && ((EntityGuest) entity).getID() == guestID;
         }).forEach(entity -> {
+            // TODO: pass pathfinding
             ((EntityGuest) entity).goToCinema();
         });
     }
 
     private void goToFitnessEvent(HotelEvent event) {
         entities.stream().filter(entity -> {
-
-            return entity instanceof EntityGuest;
+            String guestKey = event.Data.keySet().iterator().next();
+            int guestID = EntityGuest.parseInt(guestKey);
+            return entity instanceof EntityGuest && ((EntityGuest) entity).getID() == guestID;
         }).forEach(entity -> {
+            // TODO: pass pathfinding
             ((EntityGuest) entity).goToFitness();
         });
     }

@@ -18,4 +18,5 @@ public interface IEntity {
 
     int getHeight();
 
+    void frame();
 }

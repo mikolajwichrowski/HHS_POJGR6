@@ -19,22 +19,15 @@ public class EntityHousekeeping extends Entity implements IEntity, HotelEventLis
         super(entityColor);
     }
 
-    // Action to execute when triggered
-    public void Notify(HotelEvent event) {
-        // Logic for Housekeeping entity.
-        // Make sure to implement features by OOSE principles
-    }
-
     public void cleanRoom() {
         // v ---- > room niet als property nemen :D dat is onnzinige agregatie (Probeer
         // hier de algoritme het werk te laten doen ;) tip: if(Hotel.whatsHere(x, y) ==
         // kamer && !Hotel.whatsHere(x, y).isClean())
         // code schrijven voor maak kamer schoon.
         // TODO: Iterate door alle rooms, als room vies is, ga erheen.
-
     }
 
-    public void Panic(){
+    public void Panic() {
         cleanRoom();
     }
 
@@ -44,4 +37,17 @@ public class EntityHousekeeping extends Entity implements IEntity, HotelEventLis
         super.drawEntity(g);
     }
 
+    /**
+     * 
+     */
+    public void frame() {
+        // TODO: If has instructions
+        Node instruction = instructions.get(0);
+        setPosition(instruction.getY(), instruction.getX());
+        instructions.remove(0);
+        // TODO: else clean room
+
+        // TODO: if clean room and no instructions
+        // Look for filthy room and set instructions
+    }
 }

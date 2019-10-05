@@ -47,4 +47,8 @@ public class EntityDiner extends Entity implements IEntity, HotelEventListener {
     public boolean getCapacity() {
         return capacity >= guests;
     }
+
+    public void frame() {
+
+    }
 }

@@ -128,4 +128,8 @@ public class Entity implements IEntity, HotelEventListener {
             return position && positionWithOffset;
         }).collect(Collectors.toList());
     }
+
+    public void frame() {
+
+    }
 }

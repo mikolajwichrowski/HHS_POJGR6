@@ -84,4 +84,20 @@ public class EntityGuest extends Entity implements IEntity, HotelEventListener {
     public static Integer parseInt(String someText) {
         return Integer.parseInt(someText.replaceAll("[^0-9]+", ""));
     }
+
+    /**
+     * 
+     */
+    public void frame() {
+        // TODO: if has instructions
+        Node instruction = instructions.get(0);
+        setPosition(instruction.getY(), instruction.getX());
+        instructions.remove(0);
+
+        // TODO: if on room
+        // make dirty
+
+        // TODO: if no instructions and no movie playing
+        // Go back to room
+    }
 }
