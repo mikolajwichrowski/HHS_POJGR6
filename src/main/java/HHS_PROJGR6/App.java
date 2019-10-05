@@ -11,7 +11,7 @@ import java.time.format.FormatStyle;
  * App class
  * 
  * Used as the application entry class. This class is part of the main only its
- * a bit neater because insteat of running the application from a method we run
+ * a bit neater because instead of running the application from a method we run
  * it from an object.
  */
 public class App extends JFrame {
