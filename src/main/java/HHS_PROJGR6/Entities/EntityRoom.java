@@ -11,7 +11,7 @@ import java.util.ArrayList;
 * Inherits from Entity
 */
 
-public class EntityRoom extends Entity implements IEntity, HotelEventListener {
+public class EntityRoom extends Entity implements IEntity {
 
     private int classification;
     private boolean dirty = false;
@@ -59,7 +59,7 @@ public class EntityRoom extends Entity implements IEntity, HotelEventListener {
         // TODO: na 10x is deze vies bv
     }
 
-    public void Panic(){
+    public void Panic() {
         this.dirty = true;
     }
 
@@ -87,5 +87,12 @@ public class EntityRoom extends Entity implements IEntity, HotelEventListener {
 
     public void setDirty(boolean dirty) {
         this.dirty = dirty;
+    }
+
+    /**
+     * 
+     */
+    public void frame() {
+        // TODO: make room dirty after x ticks
     }
 }

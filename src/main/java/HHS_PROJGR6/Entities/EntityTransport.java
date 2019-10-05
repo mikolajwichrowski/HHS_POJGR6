@@ -11,7 +11,7 @@ import java.awt.*;
 * Inherits from Entity
 */
 
-public class EntityTransport extends Entity implements IEntity, HotelEventListener {
+public class EntityTransport extends Entity implements IEntity {
 
     /**
      * 

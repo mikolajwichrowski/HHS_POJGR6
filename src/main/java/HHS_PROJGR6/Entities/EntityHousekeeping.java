@@ -1,6 +1,7 @@
 package HHS_PROJGR6.Entities;
 
 import HHS_PROJGR6.Interfaces.IEntity;
+import HHS_PROJGR6.Interfaces.IStressable;
 import HHS_PROJGR6.External.*;
 import HHS_PROJGR6.Utils.Node;
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 * Inherits from Entity
 */
 
-public class EntityHousekeeping extends Entity implements IEntity, HotelEventListener {
+public class EntityHousekeeping extends Entity implements IEntity, IStressable {
 
     // Constructor
     public EntityHousekeeping(Color entityColor) {

@@ -130,6 +130,6 @@ public class Entity implements IEntity, HotelEventListener {
     }
 
     public void frame() {
-
+        // TODO: Niks wss
     }
 }
