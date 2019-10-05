@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 // External imports
 
@@ -43,7 +45,7 @@ public class Hotel implements HotelEventListener {
 
     /**
      * Hotel class
-     * <p>
+     * 
      * The object derived from this class must contain all the entities. All the
      * enties will live and act here. Every event is triggered in the object derived
      * from this class. The canvas is aggregated in this class to make sure that
@@ -57,20 +59,11 @@ public class Hotel implements HotelEventListener {
         eventManager = new HotelEventManager();
         eventManager.register(this);
         eventManager.start();
-
-        // DijkstraAlgorithm da = new DijkstraAlgorithm();
-
-        // System.out.println("the path is " + da.findPath().size() + " steps long");
-        // System.out.println("ELEMEMTS");
-        // for (Node step : da.findPath()) {
-        // System.out.println(step.getX() + " " + step.getY());
-        // for (Node neighbour : step.getNeighbours()) {
-        // System.out.println(" + " + neighbour.getX() + " " + neighbour.getY());
-        // }
-        // }
-        // System.out.println("DONE");
     }
 
+    /**
+     * 
+     */
     public void frame() {
         // Wait for clockspeed
         LocalDateTime start = LocalDateTime.now();
@@ -92,20 +85,37 @@ public class Hotel implements HotelEventListener {
             // Filter guests
             return entity instanceof EntityGuest;
         }).forEach(entity -> {
-            // If guest don
+            // If guest is not a guest
             if (!((EntityGuest) entity).getActive()) {
                 // Remove guest from hotel
                 removeEntities.add(entity);
             }
         });
-
         removeEntities.stream().forEach(e -> this.deregister(e));
 
-        // Notify all entities that they have to do something
-        //this.Notify(new HotelEvent(HotelEventType.NONE, "", 0, new HashMap<String, String>()));
+        // TODO: Notify all entities that they have to do something
+        entities.stream().forEach(entity -> entity.frame());
 
         // Recursion to keep loop going
         this.frame();
+    }
+
+    /**
+     * 
+     */
+    private void pathFinder() {
+        // TODO: dit moet globaal zijn
+        // Van/Tot: DijkstraAlgorithm.createLocationNode(1, 4)
+        // Graph maken: da.getGraph(4, 4, entities)
+        // da.findPath(van, tot, graph): instructies maken van de kortste route
+
+        // Zo werkt het dijkstra algoritme
+        DijkstraAlgorithm da = new DijkstraAlgorithm();
+
+        da.findPath(DijkstraAlgorithm.createLocationNode(1, 4), DijkstraAlgorithm.createLocationNode(4, 1), da.getGraph(4, 4, entities)).stream().forEach(step -> {
+            // Elke stap moet als instructie worden meegegeven
+            System.out.println(step.getX() + " " + step.getY() + " " + step.getCostToParent());
+        });
     }
 
     /**
@@ -175,25 +185,28 @@ public class Hotel implements HotelEventListener {
                 this.register(entity);
             }
 
-            // TODO: maak deze dynamisch (dimensions en position)!
-            // Create entity with factory
+            // Create entity elevator with factory
+            // TODO: dynamic position and sizes
             entity = EntityFactory.createEntity("Elevator");
             entity.setPosition(7, 1);
             entity.setDimensions(1, 7);
             this.register(entity);
 
-            // TODO: maak deze dynamisch (dimensions en position)!
-            // Create entity with factory
+            // Create stairs entity with factory
+            // TODO: dynamic position and sizes
             entity = EntityFactory.createEntity("Stairs");
             entity.setPosition(7, 8);
             entity.setDimensions(1, 7);
             this.register(entity);
 
+            // Create lobby entity with factory
             entity = EntityFactory.createEntity("Lobby");
             entity.setPosition(7, 4);
             entity.setDimensions(2, 7);
             this.register(entity);
 
+            // Create housekeeping with factory
+            // TODO: with loop
             entity = EntityFactory.createEntity("Housekeeping");
             entity.setPosition(7, 6);
             entity.setDimensions(1, 1);
@@ -210,6 +223,9 @@ public class Hotel implements HotelEventListener {
 
             // Draw entities
             hotelCanvas.setDrawableEntities(entities);
+
+            // Find paths
+            pathFinder();
         } catch (Exception e) {
             // TODO: better exception handling
             throw e;
@@ -263,15 +279,15 @@ public class Hotel implements HotelEventListener {
         this.hotelCanvas = hotelCanvas;
     }
 
-    private void Evacuate(HotelEvent event) {
-//        entities.stream().filter(entity -> {
-//            return entity instanceof EntityHousekeeping && entity instanceof EntityGuest;
-//        }).forEach(entity -> {
-//            ((HotelEventListener) entity).checkout(event);
-//        });
+    private void evacuateEvent(HotelEvent event) {
+        // entities.stream().filter(entity -> {
+        // return entity instanceof EntityHousekeeping && entity instanceof EntityGuest;
+        // }).forEach(entity -> {
+        // ((HotelEventListener) entity).checkout(event);
+        // });
     }
 
-    private void checkIn(HotelEvent event) {
+    private void checkInEvent(HotelEvent event) {
         // TODO: maak gasten aan
         EntityGuest guest = (EntityGuest) EntityFactory.createEntity("Guest");
         guest.setPosition(7, 2);
@@ -282,68 +298,80 @@ public class Hotel implements HotelEventListener {
 
     }
 
-    private void checkout(HotelEvent event) {
-        System.out.println(event.Data);
+    private void checkOutEvent(HotelEvent event) {
         entities.stream().filter(entity -> {
+            // Get guest that has to check out
             String guestKey = event.Data.keySet().iterator().next();
-            return entity instanceof EntityGuest;
+            int guestID = EntityGuest.parseInt(guestKey);
+            return entity instanceof EntityGuest && ((EntityGuest) entity).getID() == guestID;
         }).forEach(entity -> {
+            // Make guest checkout
             ((EntityGuest) entity).checkout();
         });
     }
 
-    private void cleaningEmergency(HotelEvent event) {
-        entities.stream().filter(entity -> {
-            return entity instanceof EntityHousekeeping;
-        }).forEach(entity -> {
-            ((EntityHousekeeping) entity).cleanRoom();
-        });
+    private void cleaningEmergencyEvent(HotelEvent event) {
         // TODO: Gast maakt kamer vies. Schoonmaker gaat er naartoe
+        entities.stream().filter(entity -> {
+            // Get guest that has to check out
+            String guestKey = event.Data.keySet().iterator().next();
+            int guestID = EntityGuest.parseInt(guestKey);
+            return entity instanceof EntityGuest && ((EntityGuest) entity).getID() == guestID;
+        }).forEach(entity -> {
+            // Make guest make the room filthy
+            // TODO: ((EntityGuest) entity).filthy();
+        });
+
+        // TODO: pass pathfinding
+        ((EntityHousekeeping) entities.stream().filter(entity -> {
+            // Get housekeeping that is not cleaning
+            return entity instanceof EntityHousekeeping;
+        }).collect(Collectors.toList()).get(0)).cleanRoom();
+
     }
 
-    private void Godzilla(HotelEvent event) {
+    private void godzillaEvent(HotelEvent event) {
         // TODO Hotel gaat deud iedeereen er aan ... Alle kamers zijn vies en alle
         entities.stream().filter(entity -> {
+            // Get all living entities
             return entity instanceof EntityHousekeeping && entity instanceof EntityGuest && entity instanceof EntityRoom;
         }).forEach(entity -> {
-            ((IStressable) entity).Panic();
+            // Make them panic
+            ((IStressable) entity).panic();
         });
+
         // TODO: Teken afbeelding van godzilla (Erwinzilla?)
+    }
+
+    private void startCinemaEvent(HotelEvent event) {
+        // TODO zoek cinema waar het over gaat en start hier de film
 
     }
 
-    private void startCinema(HotelEvent event) {
-        entities.stream().filter(entity -> {
-            // TODO: filter de entity waar het om gaat op basis van de data = entity.xy
-            String guestKey = event.Data.keySet().iterator().next();
-            return entity instanceof EntityLeasure || false;
-        }).forEach(entity -> {
-            ((EntityGuest) entity).;
-        });
-    }
-
-    private void goToCinema(HotelEvent event){
+    private void goToCinemaEvent(HotelEvent event) {
         // TODO: Desbetreffende EntityGuest gaat naar Cinema
         entities.stream().filter(entity -> {
             String guestKey = event.Data.keySet().iterator().next();
             int guestID = EntityGuest.parseInt(guestKey);
             return entity instanceof EntityGuest && ((EntityGuest) entity).getID() == guestID;
         }).forEach(entity -> {
+            // TODO: pass pathfinding
             ((EntityGuest) entity).goToCinema();
         });
     }
 
-    private void goToFitness(HotelEvent event){
+    private void goToFitnessEvent(HotelEvent event) {
         entities.stream().filter(entity -> {
-
-
-            return entity instanceof EntityGuest;
+            String guestKey = event.Data.keySet().iterator().next();
+            int guestID = EntityGuest.parseInt(guestKey);
+            return entity instanceof EntityGuest && ((EntityGuest) entity).getID() == guestID;
         }).forEach(entity -> {
+            // TODO: pass pathfinding
             ((EntityGuest) entity).goToFitness();
         });
     }
 
-    private void goToRestaurant(HotelEvent event){
+    private void goToRestaurantEvent(HotelEvent event) {
         entities.stream().filter(entity -> {
 
             return entity instanceof EntityGuest;
@@ -352,7 +380,6 @@ public class Hotel implements HotelEventListener {
         });
 
     }
-
 
     /**
      *
@@ -366,48 +393,48 @@ public class Hotel implements HotelEventListener {
 
         // Which event is fired
         switch (event.Type) {
-            case CHECK_IN:
-                this.checkIn(event);
-                break;
+        case CHECK_IN:
+            this.checkInEvent(event);
+            break;
 
-            case CLEANING_EMERGENCY:
-                this.cleaningEmergency(event);
-                break;
+        case CLEANING_EMERGENCY:
+            this.cleaningEmergencyEvent(event);
+            break;
 
-            case EVACUATE:
-                this.Evacuate(event);
-                break;
+        case EVACUATE:
+            this.evacuateEvent(event);
+            break;
 
-            case GODZILLA:
-                this.Godzilla(event);
-                break;
+        case GODZILLA:
+            this.godzillaEvent(event);
+            break;
 
-            case START_CINEMA:
-                this.startCinema(event);
-                break;
+        case START_CINEMA:
+            this.startCinemaEvent(event);
+            break;
 
-            case CHECK_OUT:
-                this.checkout(event);
-                break;
+        case CHECK_OUT:
+            this.checkOutEvent(event);
+            break;
 
-            case GOTO_RESTAURANT:
-                this.goToRestaurant(event);
-                break;
+        case GOTO_RESTAURANT:
+            this.goToRestaurantEvent(event);
+            break;
 
-            case GOTO_FITNESS:
-                this.goToFitness(event);
-                break;
+        case GOTO_FITNESS:
+            this.goToFitnessEvent(event);
+            break;
 
-            case GOTO_CINEMA:
-                this.goToCinema(event);
-                break;
+        case GOTO_CINEMA:
+            this.goToCinemaEvent(event);
+            break;
 
-            case NONE:
-                break;
-
-            default:
-                break;
+        case NONE:
+        default:
+            // No event happends here
+            break;
 
         }
     }
+
 }

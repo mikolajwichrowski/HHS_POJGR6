@@ -8,6 +8,11 @@ public class Node {
     /**
      * 
      */
+    private Node parent;
+
+    /**
+     * 
+     */
     private int costToParent;
 
     /**
@@ -55,6 +60,21 @@ public class Node {
      */
     public Integer getCostToParent() {
         return this.costToParent;
+    }
+
+    /**
+     * @param parent
+     *                   the parent to set
+     */
+    public void setParent(Node parent) {
+        this.parent = parent;
+    }
+
+    /**
+     * @return the parent
+     */
+    public Node getParent() {
+        return parent;
     }
 
     /**
@@ -113,5 +133,13 @@ public class Node {
      */
     public void addNeighbour(Node neighbour) {
         this.neighbours.add(neighbour);
+    }
+
+    /**
+     * 
+     * @param other
+     */
+    public boolean compare(Node other) {
+        return this.getX() == other.getX() && this.getY() == other.getY();
     }
 }

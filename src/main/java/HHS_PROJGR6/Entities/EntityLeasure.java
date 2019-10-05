@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import HHS_PROJGR6.External.*;
 
-public class EntityLeasure extends Entity implements IEntity, HotelEventListener {
+public class EntityLeasure extends Entity implements IEntity {
     /**
      * 
      */
@@ -45,5 +45,12 @@ public class EntityLeasure extends Entity implements IEntity, HotelEventListener
         g.setColor(entityColor);
         g.fillRect(x * 60, (y - (height - 1)) * 60, width * 60, height * 60);
         super.drawEntity(g);
+    }
+
+    /**
+     * 
+     */
+    public void frame() {
+        // TODO: ?
     }
 }

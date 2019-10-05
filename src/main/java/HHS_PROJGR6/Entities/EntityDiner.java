@@ -12,7 +12,7 @@ import java.util.ArrayList;
 * Inherits from Entity
 */
 
-public class EntityDiner extends Entity implements IEntity, HotelEventListener {
+public class EntityDiner extends Entity implements IEntity {
     private int capacity;
     private int guests;
 
@@ -46,5 +46,9 @@ public class EntityDiner extends Entity implements IEntity, HotelEventListener {
 
     public boolean getCapacity() {
         return capacity >= guests;
+    }
+
+    public void frame() {
+        // TODO: ?
     }
 }

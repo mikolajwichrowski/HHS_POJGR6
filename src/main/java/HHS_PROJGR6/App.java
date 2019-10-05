@@ -90,7 +90,7 @@ public class App extends JFrame {
         timeFactor.setText("HTE: " + Clock.getClockspeed());
 
         // Set timer for hotel clock Format time and display
-        new Timer(1000, e -> timeDisplay.setText(Clock.datetime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)))).start();
+        new Timer(1, e -> timeDisplay.setText(Clock.datetime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)))).start();
 
         // Adding components to the JFrame
         add(myHotel.getHotelCanvas());
@@ -115,7 +115,6 @@ public class App extends JFrame {
 
         // Start frames
         myHotel.frame();
-
     }
 
     /**
