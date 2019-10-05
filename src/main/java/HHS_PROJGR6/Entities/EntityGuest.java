@@ -33,6 +33,14 @@ public class EntityGuest extends Entity implements IEntity, HotelEventListener {
         super(entityColor);
     }
 
+    public void checkIn() {
+
+    }
+
+    public void checkOut() {
+        this.guestId = 0;
+    }
+
     // Action to execute when triggered
     public void Notify(HotelEvent event) {
         // int[] nextPosition = nextStep();
@@ -41,11 +49,13 @@ public class EntityGuest extends Entity implements IEntity, HotelEventListener {
         case CHECK_IN:
             // Set guest id for check in guest
             // TODO: vraag pathfinding algoritme aan en zet in instructies
+            checkIn();
             break;
         case CHECK_OUT:
             // guest does not exist anymor
-            this.guestId = 0;
+
             // TODO: vraag pathfinding naar deur aan
+            checkOut();
             break;
         case NEED_FOOD:
             // TODO haal food

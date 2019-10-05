@@ -55,21 +55,10 @@ public class Hotel implements HotelEventListener {
         this.entities = new ArrayList<IEntity>();
 
         // Run events
-        eventManager = new HotelEventManager();
-        eventManager.register(this);
-        eventManager.start();
+        // eventManager = new HotelEventManager();
+        // eventManager.register(this);
+        // eventManager.start();
 
-        // DijkstraAlgorithm da = new DijkstraAlgorithm();
-
-        // System.out.println("the path is " + da.findPath().size() + " steps long");
-        // System.out.println("ELEMEMTS");
-        // for (Node step : da.findPath()) {
-        // System.out.println(step.getX() + " " + step.getY());
-        // for (Node neighbour : step.getNeighbours()) {
-        // System.out.println(" + " + neighbour.getX() + " " + neighbour.getY());
-        // }
-        // }
-        // System.out.println("DONE");
     }
 
     public void frame() {
@@ -107,6 +96,16 @@ public class Hotel implements HotelEventListener {
 
         // Recursion to keep loop going
         this.frame();
+    }
+
+    private void pathFinder() {
+        DijkstraAlgorithm da = new DijkstraAlgorithm();
+
+        da.findPath(DijkstraAlgorithm.createLocationNode(2, 7), DijkstraAlgorithm.createLocationNode(5, 2), da.getGraph(10, 10, entities)).stream().forEach(step -> {
+            System.out.println(step.getX() + " " + step.getY());
+        });
+
+        System.out.println("DONE");
     }
 
     /**
@@ -192,10 +191,6 @@ public class Hotel implements HotelEventListener {
             entity.setDimensions(1, 7);
             this.register(entity);
 
-            // entity = EntityFactory.createEntity("Lift");
-            // entity.setPosition(7, 2);
-            // entity.setDimensions(6, 1);
-
             this.register(entity);
 
             // Draw only the nessecary grid size
@@ -204,6 +199,9 @@ public class Hotel implements HotelEventListener {
 
             // Draw entities
             hotelCanvas.setDrawableEntities(entities);
+
+            // Find paths
+            pathFinder();
         } catch (Exception e) {
             // TODO: better exception handling
             throw e;
@@ -258,6 +256,15 @@ public class Hotel implements HotelEventListener {
         this.hotelCanvas = hotelCanvas;
     }
 
+    public void checkInGuest(HotelEvent event) {
+        EntityGuest guest = (EntityGuest) EntityFactory.createEntity("Guest");
+        guest.setPosition(7, 2);
+        String guestKey = event.Data.keySet().iterator().next();
+        guest.setID(guestKey);
+        guest.setPreference(event.Data.get(guestKey));
+        register(guest);
+    }
+
     /**
      * 
      */
@@ -271,14 +278,7 @@ public class Hotel implements HotelEventListener {
         // Which event is fired
         switch (event.Type) {
         case CHECK_IN:
-            // TODO: maak gasten aan
-            EntityGuest guest = (EntityGuest) EntityFactory.createEntity("Guest");
-            guest.setPosition(7, 2);
-            String guestKey = event.Data.keySet().iterator().next();
-            guest.setID(guestKey);
-            guest.setPreference(event.Data.get(guestKey));
-            register(guest);
-
+            checkInGuest(event);
             break;
         case CLEANING_EMERGENCY:
             // Standaard zijn er 2
@@ -289,9 +289,9 @@ public class Hotel implements HotelEventListener {
         case EVACUATE:
             // TODO: Notify alle gasten dat ze naar de deur moeten
             entities.stream().filter(entity -> {
-                return entity instanceof EntityGuest || entity instanceof EntityHousekeeping;
+                return entity instanceof EntityGuest;
             }).forEach(entity -> {
-                ((HotelEventListener) entity).Notify(new HotelEvent(HotelEventType.CHECK_OUT, "", 0, new HashMap<String, String>()));
+                ((EntityGuest) entity).checkOut();
             });
             break;
         case GODZILLA:
