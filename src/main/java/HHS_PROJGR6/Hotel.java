@@ -6,6 +6,7 @@ import HHS_PROJGR6.Entities.*;
 import HHS_PROJGR6.External.*;
 import HHS_PROJGR6.Factories.EntityFactory;
 import HHS_PROJGR6.Interfaces.IEntity;
+import HHS_PROJGR6.Interfaces.IStressable;
 import HHS_PROJGR6.Utils.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -22,43 +23,42 @@ import java.util.Map;
 // External imports
 
 /**
- * 
+ *
  */
 public class Hotel implements HotelEventListener {
     /**
-     * 
+     *
      */
     private Canvas hotelCanvas;
 
     /**
-     * 
+     *
      */
     private ArrayList<IEntity> entities;
 
     /**
-     * 
+     *
      */
     private HotelEventManager eventManager;
 
     /**
      * Hotel class
-     * 
+     * <p>
      * The object derived from this class must contain all the entities. All the
      * enties will live and act here. Every event is triggered in the object derived
      * from this class. The canvas is aggregated in this class to make sure that
      * only elements from the hotel are drawn on the canvas.
-     * 
-     * @param hotelCanvas
      */
     public Hotel() {
         // Initilize entities
         this.entities = new ArrayList<IEntity>();
 
-        // Run events
-        // eventManager = new HotelEventManager();
-        // eventManager.register(this);
-        // eventManager.start();
+        Run events
+        eventManager = new HotelEventManager();
+        eventManager.register(this);
+        eventManager.start();
 
+        frame();
     }
 
     public void frame() {
@@ -82,17 +82,16 @@ public class Hotel implements HotelEventListener {
             // Filter guests
             return entity instanceof EntityGuest;
         }).forEach(entity -> {
-            // If guest don
+            // If guest is not a guest
             if (!((EntityGuest) entity).getActive()) {
                 // Remove guest from hotel
                 removeEntities.add(entity);
             }
         });
-
         removeEntities.stream().forEach(e -> this.deregister(e));
 
-        // Notify all entities that they have to do something
-        this.Notify(new HotelEvent(HotelEventType.NONE, "", 0, new HashMap<String, String>()));
+        // TODO: Notify all entities that they have to do something
+        entities.stream().forEach(entity -> entity.frame());
 
         // Recursion to keep loop going
         this.frame();
@@ -109,7 +108,6 @@ public class Hotel implements HotelEventListener {
     }
 
     /**
-     * 
      * @param actor
      */
     private void register(IEntity actor) {
@@ -120,7 +118,6 @@ public class Hotel implements HotelEventListener {
     }
 
     /**
-     * 
      * @param actor
      */
     private void deregister(IEntity actor) {
@@ -129,7 +126,7 @@ public class Hotel implements HotelEventListener {
     }
 
     /**
-     * 
+     *
      */
     public void initRooms() {
         try {
@@ -209,7 +206,7 @@ public class Hotel implements HotelEventListener {
             entity.setDimensions(1, 1);
             this.register(entity);
 
-            // Draw only the nessecary grid size
+            // Draw only the necessary grid size
             hotelCanvas.setGridHeight(highestPositions[1] + 1);
             hotelCanvas.setGridWidth(highestPositions[0] + 2);
 
@@ -225,29 +222,28 @@ public class Hotel implements HotelEventListener {
     }
 
     /**
-     * 
      * @param array
      * @param value
      * @return
      */
     private int[] getHighest(JSONArray array, String value) {
-        // TODO: make this a better algol !!!!!!!!!!!!
+        // TODO: make this a better algo !!!!!!!!!!!!
         Iterator i = array.iterator();
-        int[] highes = new int[2];
-        highes[0] = 0;
-        highes[1] = 0;
+        int[] highest = new int[2];
+        highest[0] = 0;
+        highest[1] = 0;
 
         try {
             while (i.hasNext()) {
                 JSONObject slide = (JSONObject) i.next();
                 String[] compare = ((String) slide.get(value)).split(",");
 
-                if (Integer.parseInt(compare[0].trim()) > highes[0]) {
-                    highes[0] = Integer.parseInt(compare[0].trim());
+                if (Integer.parseInt(compare[0].trim()) > highest[0]) {
+                    highest[0] = Integer.parseInt(compare[0].trim());
                 }
 
-                if (Integer.parseInt(compare[1].trim()) > highes[1]) {
-                    highes[1] = Integer.parseInt(compare[1].trim());
+                if (Integer.parseInt(compare[1].trim()) > highest[1]) {
+                    highest[1] = Integer.parseInt(compare[1].trim());
                 }
             }
         } catch (Exception e) {
@@ -255,18 +251,18 @@ public class Hotel implements HotelEventListener {
             throw e;
         }
 
-        return highes;
+        return highest;
     }
 
     /**
-     * 
+     *
      */
     public Canvas getHotelCanvas() {
         return hotelCanvas;
     }
 
     /**
-     * 
+     *
      */
     public void setHotelCanvas(Canvas hotelCanvas) {
         this.hotelCanvas = hotelCanvas;

@@ -81,7 +81,7 @@ public class EntityGuest extends Entity implements IEntity, HotelEventListener {
         return this.guestId != 0 && this.instructions.size() > 0;
     }
 
-    private static Integer parseInt(String someText) {
+    public static Integer parseInt(String someText) {
         return Integer.parseInt(someText.replaceAll("[^0-9]+", ""));
     }
 }

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class EntityRoom extends Entity implements IEntity, HotelEventListener {
 
     private int classification;
+    private boolean dirty = false;
 
     public EntityRoom(Color entityColor) {
         super(entityColor);
@@ -58,6 +59,10 @@ public class EntityRoom extends Entity implements IEntity, HotelEventListener {
         // TODO: na 10x is deze vies bv
     }
 
+    public void Panic(){
+        this.dirty = true;
+    }
+
     /**
      * 
      * @param classification
@@ -74,5 +79,13 @@ public class EntityRoom extends Entity implements IEntity, HotelEventListener {
      */
     public boolean getClassification(int classification) {
         return this.classification == classification;
+    }
+
+    public boolean isDirty() {
+        return dirty;
+    }
+
+    public void setDirty(boolean dirty) {
+        this.dirty = dirty;
     }
 }
