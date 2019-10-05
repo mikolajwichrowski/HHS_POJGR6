@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 // External imports
 
@@ -53,12 +55,10 @@ public class Hotel implements HotelEventListener {
         // Initilize entities
         this.entities = new ArrayList<IEntity>();
 
-        Run events
+        // Run events
         eventManager = new HotelEventManager();
         eventManager.register(this);
         eventManager.start();
-
-        frame();
     }
 
     /**
@@ -104,13 +104,18 @@ public class Hotel implements HotelEventListener {
      * 
      */
     private void pathFinder() {
+        // TODO: dit moet globaal zijn
+        // Van/Tot: DijkstraAlgorithm.createLocationNode(1, 4)
+        // Graph maken: da.getGraph(4, 4, entities)
+        // da.findPath(van, tot, graph): instructies maken van de kortste route
+
+        // Zo werkt het dijkstra algoritme
         DijkstraAlgorithm da = new DijkstraAlgorithm();
 
         da.findPath(DijkstraAlgorithm.createLocationNode(1, 4), DijkstraAlgorithm.createLocationNode(4, 1), da.getGraph(4, 4, entities)).stream().forEach(step -> {
+            // Elke stap moet als instructie worden meegegeven
             System.out.println(step.getX() + " " + step.getY() + " " + step.getCostToParent());
         });
-
-        System.out.println("DONE");
     }
 
     /**
@@ -321,7 +326,7 @@ public class Hotel implements HotelEventListener {
         ((EntityHousekeeping) entities.stream().filter(entity -> {
             // Get housekeeping that is not cleaning
             return entity instanceof EntityHousekeeping;
-        }).collect(Colletors.toList()).get(0)).cleanRoom();
+        }).collect(Collectors.toList()).get(0)).cleanRoom();
 
     }
 

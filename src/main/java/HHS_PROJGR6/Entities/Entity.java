@@ -122,10 +122,11 @@ public class Entity implements IEntity, HotelEventListener {
      * @return
      */
     public static List<IEntity> getOnPosition(int x, int y, List<IEntity> entities) {
+        // TODO: fix for graph generator
         return entities.stream().filter(e -> {
             boolean position = e.getXPosition() == x && e.getYPosition() == y;
             boolean positionWithOffset = e.getXPosition() + e.getWidth() <= x && e.getYPosition() - e.getHeight() <= y;
-            return position && positionWithOffset;
+            return true;// position && positionWithOffset;
         }).collect(Collectors.toList());
     }
 

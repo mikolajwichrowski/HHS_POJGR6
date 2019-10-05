@@ -28,7 +28,7 @@ public class EntityHousekeeping extends Entity implements IEntity, IStressable {
         // TODO: Iterate door alle rooms, als room vies is, ga erheen.
     }
 
-    public void Panic() {
+    public void panic() {
         cleanRoom();
     }
 
@@ -43,9 +43,9 @@ public class EntityHousekeeping extends Entity implements IEntity, IStressable {
      */
     public void frame() {
         // TODO: If has instructions
-        Node instruction = instructions.get(0);
-        setPosition(instruction.getY(), instruction.getX());
-        instructions.remove(0);
+        // // Node instruction = instructions.get(0);
+        // // setPosition(instruction.getY(), instruction.getX());
+        // // instructions.remove(0);
         // TODO: else clean room
 
         // TODO: if clean room and no instructions

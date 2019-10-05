@@ -10,5 +10,6 @@ public enum HotelEventType {
     GOTO_RESTAURANT, // gastID
     GOTO_CINEMA, // gastID
     GOTO_FITNESS, // gastID, HTE
-    START_CINEMA // cinemaID
+    START_CINEMA, // cinemaID
+    NEED_FOOD
 }
