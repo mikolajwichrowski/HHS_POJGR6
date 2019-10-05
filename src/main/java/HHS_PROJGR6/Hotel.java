@@ -101,8 +101,8 @@ public class Hotel implements HotelEventListener {
     private void pathFinder() {
         DijkstraAlgorithm da = new DijkstraAlgorithm();
 
-        da.findPath(DijkstraAlgorithm.createLocationNode(2, 7), DijkstraAlgorithm.createLocationNode(5, 2), da.getGraph(10, 10, entities)).stream().forEach(step -> {
-            System.out.println(step.getX() + " " + step.getY());
+        da.findPath(DijkstraAlgorithm.createLocationNode(1, 4), DijkstraAlgorithm.createLocationNode(4, 1), da.getGraph(4, 4, entities)).stream().forEach(step -> {
+            System.out.println(step.getX() + " " + step.getY() + " " + step.getCostToParent());
         });
 
         System.out.println("DONE");

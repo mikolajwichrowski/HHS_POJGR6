@@ -83,24 +83,32 @@ public class DijkstraAlgorithm {
         return nodes;
     }
 
-    public List<Node> findPath(Node source, Node destination, List<Node> graph) {
-        List<Node> visited = new ArrayList<Node>();
-        List<Node> unvisited = graph;
+    private List<Node> shiftTo(List<Node> graph, Node node) {
+        List<Node> shiftedNodes = graph;
         Node inspecting = null;
 
-        // Shift to source node
         boolean shifted = false;
         while (!shifted) {
-            if (unvisited.get(0).compare(source)) {
+            if (shiftedNodes.get(0).compare(node)) {
                 shifted = true;
             } else {
                 // Go to starting source position
-                inspecting = unvisited.get(0);
-                unvisited.remove(0);
-                unvisited.add(inspecting);
+                inspecting = shiftedNodes.get(0);
+                shiftedNodes.remove(0);
+                shiftedNodes.add(inspecting);
             }
         }
 
+        return shiftedNodes;
+    }
+
+    public List<Node> findPath(Node source, Node destination, List<Node> graph) {
+        // Keep trach of visited and unvisited
+        List<Node> visited = new ArrayList<Node>();
+        List<Node> unvisited = shiftTo(graph, source);
+        Node inspecting = unvisited.get(0);
+
+        // Set cost of head
         inspecting.setCostToParent(0);
         visited.add(inspecting);
 
@@ -134,41 +142,45 @@ public class DijkstraAlgorithm {
         Collections.reverse(visited);
 
         // Shift to destination node
-        shifted = false;
-        while (!shifted) {
-            if (visited.get(0).compare(destination)) {
-                shifted = true;
-            } else {
-                // Go to starting source position
-                inspecting = visited.get(0);
-                visited.remove(0);
-                visited.add(inspecting);
-            }
-        }
+        visited = shiftTo(visited, destination);
+        inspecting = visited.get(0);
 
+        // Create final map
         List<Node> finalPath = new ArrayList<Node>();
-
-        // Find destination and traverse in shortest route
-        Stream<Node> destinationNodes = visited.stream().filter(lookupElement -> {
-            return lookupElement.compare(destination);
-        });
-
-        Node destinationNode = (Node) destinationNodes.min(Comparator.comparing(Node::getCostToParent)).get();
-        finalPath.add(destinationNode);
+        finalPath.add(inspecting);
 
         // Traverse path (destination -> source)
-        boolean destinationFound = false;
-        while (!destinationFound) {
-            List<Node> nodes = visited.stream().filter(lookupElement -> {
-                return lookupElement.getParent() != null && lookupElement.getParent().compare(finalPath.get(finalPath.size() - 1));
-            }).collect(Collectors.toList());
+        boolean backToSource = false;
+        while (!backToSource) {
+            // Get lowest child from neighbours
+            List<Node> neighbours = new ArrayList<Node>();
+            for (Node node : visited) {
+                // Where inspeciting is in children
+                boolean foundInNeighbours = false;
+                for (Node child : node.neighbours) {
+                    foundInNeighbours = !foundInNeighbours ? child.compare(inspecting) : true;
+                }
 
-            Node bestNode = nodes.size() > 0 ? nodes.stream().min(Comparator.comparing(Node::getCostToParent)).get() : null;
-            if (bestNode != null) {
-                finalPath.add(bestNode);
-            } else {
-                destinationFound = true;
+                if (foundInNeighbours) {
+                    neighbours.add(node);
+                }
             }
+            Node lowestChildNode = neighbours.stream().min(Comparator.comparing(Node::getCostToParent)).get();
+
+            // Set current inspecting
+            inspecting = lowestChildNode;
+
+            // Add lowest child node
+            finalPath.add(lowestChildNode);
+
+            // If the parent is the source, we are done.
+            if (lowestChildNode.getParent().compare(source)) {
+                backToSource = true;
+                inspecting = source;
+                inspecting.setCostToParent(0);
+                finalPath.add(inspecting);
+            }
+
         }
 
         Collections.reverse(finalPath);
