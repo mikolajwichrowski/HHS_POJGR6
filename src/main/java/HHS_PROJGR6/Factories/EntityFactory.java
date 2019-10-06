@@ -24,6 +24,7 @@ public class EntityFactory {
      */
     public static IEntity createEntity(String type) {
         // Creating entity based on requested type
+        // TODO: replace color with image path
         switch (type) {
         case "Restaurant":
             return new EntityDiner(new Color(255, 128, 0));
@@ -44,13 +45,13 @@ public class EntityFactory {
             return new EntityHousekeeping(new Color(0, 255, 255));
 
         case "Elevator":
-            return new EntityTransport(new Color(138, 138, 92),type);
+            return new EntityTransport(new Color(138, 138, 92), type);
 
         case "Stairs":
             return new EntityTransport(new Color(214, 214, 194), type);
 
-        case "Default":
-            return new EntityTransport(new Color(255,255,255), type);
+        case "Lobby":
+            return new EntityLobby(new Color(255, 255, 255));
 
         default:
             return new Entity(Color.white);

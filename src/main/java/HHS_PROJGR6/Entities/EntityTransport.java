@@ -35,7 +35,7 @@ public class EntityTransport extends Entity implements IEntity {
      * 
      */
     public void drawEntity(Graphics g) {
-        g.setColor(entityColor);
+        g.setColor(new Color(84, 84, 84));
         g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
 
         switch (this.activityType) {

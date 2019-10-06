@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static HHS_PROJGR6.Settings.getPixelResolution;
+
 /**
  * 
  */
@@ -46,16 +48,10 @@ public class Entity implements IEntity, HotelEventListener {
 
     private JLabel label;
 
-    /**
-     * 
-     */
-    private int pixelResolution;
-
     public Entity(Color entityColor) {
         this.x = 0;
         this.y = 0;
         this.entityColor = entityColor;
-        this.pixelResolution = Settings.getPixelResolution();
     }
 
     /**
@@ -71,7 +67,7 @@ public class Entity implements IEntity, HotelEventListener {
      */
     public void drawEntity(Graphics g) {
         g.setColor(Color.black);
-        g.drawRect(x * pixelResolution, (y - (height - 1)) * pixelResolution, width * pixelResolution, height * pixelResolution);
+        g.drawRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
 
     }
 

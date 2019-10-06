@@ -26,49 +26,62 @@ public class EntityRoom extends Entity implements IEntity {
 
     @Override
     public void drawEntity(Graphics g) {
-        g.setColor(entityColor);
+        g.setColor(new Color(84, 84, 84));
+        g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
 
         switch (this.classification) {
         case 1:
-            g.setColor(new Color(0, 191, 255));
-            g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
+            // g.setColor(new Color(0, 191, 255));
+            // g.fillRect(x * getPixelResolution(), (y - (height - 1)) *
+            // getPixelResolution(), width * getPixelResolution(), height *
+            // getPixelResolution());
 
             Image img1 = Toolkit.getDefaultToolkit().getImage("Images/star1.png");
             g.drawImage(img1, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
             break;
         case 2:
-            g.setColor(new Color(255, 255, 0));
-            g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
+            // g.setColor(new Color(255, 255, 0));
+            // g.fillRect(x * getPixelResolution(), (y - (height - 1)) *
+            // getPixelResolution(), width * getPixelResolution(), height *
+            // getPixelResolution());
 
             Image img2 = Toolkit.getDefaultToolkit().getImage("Images/star2.png");
             g.drawImage(img2, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
             break;
         case 3:
-            g.setColor(new Color(0, 129, 0));
-            g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
+            // g.setColor(new Color(0, 129, 0));
+            // g.fillRect(x * getPixelResolution(), (y - (height - 1)) *
+            // getPixelResolution(), width * getPixelResolution(), height *
+            // getPixelResolution());
 
             Image img3 = Toolkit.getDefaultToolkit().getImage("Images/star3.png");
             g.drawImage(img3, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
             break;
         case 4:
-            g.setColor(new Color(0, 255, 0));
-            g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
+            // g.setColor(new Color(0, 255, 0));
+            // g.fillRect(x * getPixelResolution(), (y - (height - 1)) *
+            // getPixelResolution(), width * getPixelResolution(), height *
+            // getPixelResolution());
 
             Image img4 = Toolkit.getDefaultToolkit().getImage("Images/star4.png");
             g.drawImage(img4, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
 
             break;
         case 5:
-            g.setColor(new Color(0, 64, 255));
-            g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
+            // g.setColor(new Color(0, 64, 255));
+            // g.fillRect(x * getPixelResolution(), (y - (height - 1)) *
+            // getPixelResolution(), width * getPixelResolution(), height *
+            // getPixelResolution());
 
             Image img5 = Toolkit.getDefaultToolkit().getImage("Images/star5.png");
             g.drawImage(img5, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
             break;
 
         default:
-            g.setColor(new Color(255, 255, 255));
-            g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
+            // g.setColor(new Color(255, 255, 255));
+            // g.fillRect(x * getPixelResolution(), (y - (height - 1)) *
+            // getPixelResolution(), width * getPixelResolution(), height *
+            // getPixelResolution());
 
             Image img6 = Toolkit.getDefaultToolkit().getImage("Images/0star.png");
             g.drawImage(img6, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
