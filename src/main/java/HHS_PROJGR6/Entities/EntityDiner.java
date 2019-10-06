@@ -38,17 +38,29 @@ public class EntityDiner extends Entity implements IEntity {
     public void drawEntity(Graphics g) {
         g.setColor(entityColor);
         g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
+
+        Image img1 = Toolkit.getDefaultToolkit().getImage("Images/Diner.png");
+        g.drawImage(img1, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
         super.drawEntity(g);
     }
 
+    /**
+     * 
+     */
     public void setCapacity(String capacity) {
         this.capacity = Integer.parseInt(capacity.replaceAll("[^0-9]+", ""));
     }
 
+    /**
+     * 
+     */
     public boolean getCapacity() {
         return capacity >= guests;
     }
 
+    /**
+     * 
+     */
     public void frame() {
         // TODO: ?
     }
