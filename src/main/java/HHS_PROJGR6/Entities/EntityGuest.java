@@ -8,6 +8,8 @@ import HHS_PROJGR6.Utils.Node;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static HHS_PROJGR6.Settings.getPixelResolution;
+
 /*
 * Guest class
 * Inherits from Entity
@@ -32,6 +34,7 @@ public class EntityGuest extends Entity implements IEntity, IStressable {
     // Constructor
     public EntityGuest(Color entityColor) {
         super(entityColor);
+        this.instructions = new ArrayList<Node>();
     }
 
     public void goToRestaurant() {
@@ -57,9 +60,9 @@ public class EntityGuest extends Entity implements IEntity, IStressable {
     }
 
     public void drawEntity(Graphics g) {
-        g.setColor(entityColor);
-        g.fillRect(x * 60, y * 60, 60, 60);
         super.drawEntity(g);
+        // g.setColor(Color.BLACK);
+        g.fillRect(x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution());
     }
 
     public int getPreference() {
