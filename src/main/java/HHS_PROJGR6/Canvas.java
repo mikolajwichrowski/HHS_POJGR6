@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+import static HHS_PROJGR6.Settings.getPixelResolution;
+
 /**
  * Entity class
  */
@@ -52,7 +54,7 @@ public class Canvas extends JPanel {
         for (int i = 1; i <= this.gridWidth; i++) {
             for (int j = 1; j <= this.gridHeight; j++) {
                 g.setColor(Color.BLACK);
-                g.drawRect(60, 60, i * 60, j * 60);
+                g.drawRect(getPixelResolution(), getPixelResolution(), i * getPixelResolution(), j * getPixelResolution());
 
             }
         }

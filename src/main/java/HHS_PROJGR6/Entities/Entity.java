@@ -1,10 +1,11 @@
 package HHS_PROJGR6.Entities;
 
+import HHS_PROJGR6.External.HotelEvent;
+import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.Interfaces.IEntity;
-import HHS_PROJGR6.External.*;
+import HHS_PROJGR6.Settings;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -41,10 +42,14 @@ public class Entity implements IEntity, HotelEventListener {
     /**
      * 
      */
+
+    private int pixelResolution;
+
     public Entity(Color entityColor) {
         this.x = 0;
         this.y = 0;
         this.entityColor = entityColor;
+        this.pixelResolution = Settings.getPixelResolution();
     }
 
     /**
@@ -60,7 +65,7 @@ public class Entity implements IEntity, HotelEventListener {
      */
     public void drawEntity(Graphics g) {
         g.setColor(Color.black);
-        g.drawRect(x * 60, (y - (height - 1)) * 60, width * 60, height * 60);
+        g.drawRect(x * pixelResolution, (y - (height - 1)) * pixelResolution, width * pixelResolution, height * pixelResolution);
     }
 
     /**

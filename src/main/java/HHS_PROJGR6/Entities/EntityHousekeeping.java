@@ -1,12 +1,15 @@
 package HHS_PROJGR6.Entities;
 
+import HHS_PROJGR6.External.HotelEvent;
+import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.Interfaces.IEntity;
 import HHS_PROJGR6.Interfaces.IStressable;
 import HHS_PROJGR6.External.*;
 import HHS_PROJGR6.Utils.Node;
 
 import java.awt.*;
-import java.util.ArrayList;
+
+import static HHS_PROJGR6.Settings.getPixelResolution;
 
 /*
 * Housekeeping class
@@ -33,9 +36,9 @@ public class EntityHousekeeping extends Entity implements IEntity, IStressable {
     }
 
     public void drawEntity(Graphics g) {
-        g.setColor(entityColor);
-        g.fillRect(x * 60, y * 60, width * 60, height * 60);
         super.drawEntity(g);
+        // g.setColor(Color.PINK);
+        g.fillRect(x * getPixelResolution(), y * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
     }
 
     /**

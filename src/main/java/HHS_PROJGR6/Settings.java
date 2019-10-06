@@ -1,10 +1,10 @@
-package main.java.HHS_PROJGR6;
+package HHS_PROJGR6;
 
 /**
  * Settings
  */
 public class Settings {
-    private static int pixelResolution = 12;
+    private static int pixelResolution = 80;
     private static int filthTime = 10;
     private static int leasureTime = 10;
     private static int stairCost = 2;
