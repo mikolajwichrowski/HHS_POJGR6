@@ -210,8 +210,8 @@ public class Hotel implements HotelEventListener {
 
             // Create lobby entity with factory
             entity = EntityFactory.createEntity("Lobby");
-            entity.setPosition(7, 4);
-            entity.setDimensions(2, 7);
+            entity.setPosition(7, 3);
+            entity.setDimensions(5, 1);
             this.register(entity);
 
             // Create housekeeping with factory
