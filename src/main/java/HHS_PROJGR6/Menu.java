@@ -49,7 +49,7 @@ public class Menu extends JFrame {
         buttonPlus = new JButton("TijdsEenheid +");
         buttonPlus.setBounds(20, 40, 150, 40);
         buttonPlus.setBackground(new Color(112, 219, 112));
-        buttonPlus.setForeground(new Color(255, 255, 255));
+        // buttonPlus.setForeground(new Color(255, 255, 255));
         buttonPlus.addActionListener(e -> {
             Clock.addClockspeed();
             timeFactor.setText("HTE: " + Clock.getClockspeed());
@@ -65,7 +65,7 @@ public class Menu extends JFrame {
         buttonMinus = new JButton("TijdsEenheid -");
         buttonMinus.setBounds(278, 40, 150, 40);
         buttonMinus.setBackground(new Color(255, 77, 77));
-        buttonMinus.setForeground(new Color(255, 255, 255));
+        // buttonMinus.setForeground(new Color(255, 255, 255));
         buttonMinus.addActionListener(e -> {
             Clock.reduceClockspeed();
             timeFactor.setText("HTE: " + Clock.getClockspeed());
@@ -78,12 +78,12 @@ public class Menu extends JFrame {
         pixelPlus = new JButton("Resolutie +");
         pixelPlus.setBounds(20, 110, 150, 40);
         pixelPlus.setBackground(new Color(112, 219, 112));
-        pixelPlus.setForeground(new Color(255, 255, 255));
+        // pixelPlus.setForeground(new Color(255, 255, 255));
 
         pixelMin = new JButton("Resolutie -");
         pixelMin.setBounds(278, 110, 150, 40);
         pixelMin.setBackground(new Color(255, 77, 77));
-        pixelMin.setForeground(new Color(255, 255, 255));
+        // pixelMin.setForeground(new Color(255, 255, 255));
 
         pixelFactor = new JTextField();
         pixelFactor.setFont(new Font("Consolas", Font.BOLD, 20));
@@ -99,12 +99,12 @@ public class Menu extends JFrame {
         filthPlus = new JButton("Schoonmaak duur +");
         filthPlus.setBounds(20, 180, 150, 40);
         filthPlus.setBackground(new Color(112, 219, 112));
-        filthPlus.setForeground(new Color(255, 255, 255));
+        // filthPlus.setForeground(new Color(255, 255, 255));
 
         filthMin = new JButton("Schoonmaak duur -");
         filthMin.setBounds(278, 180, 150, 40);
         filthMin.setBackground(new Color(255, 77, 77));
-        filthMin.setForeground(new Color(255, 255, 255));
+        // filthMin.setForeground(new Color(255, 255, 255));
 
         filthFactor = new JTextField();
         filthFactor.setFont(new Font("Consolas", Font.BOLD, 20));
@@ -120,12 +120,12 @@ public class Menu extends JFrame {
         leasurePlus = new JButton("activiteiten +");
         leasurePlus.setBounds(20, 250, 150, 40);
         leasurePlus.setBackground(new Color(112, 219, 112));
-        leasurePlus.setForeground(new Color(255, 255, 255));
+        // leasurePlus.setForeground(new Color(255, 255, 255));
 
         leasureMin = new JButton("activiteiten -");
         leasureMin.setBounds(278, 250, 150, 40);
         leasureMin.setBackground(new Color(255, 77, 77));
-        leasureMin.setForeground(new Color(255, 255, 255));
+        // leasureMin.setForeground(new Color(255, 255, 255));
 
         leasureFactor = new JTextField();
         leasureFactor.setFont(new Font("Consolas", Font.BOLD, 20));
@@ -141,12 +141,12 @@ public class Menu extends JFrame {
         elevatorPlus = new JButton("Lift tijd +");
         elevatorPlus.setBounds(20, 320, 150, 40);
         elevatorPlus.setBackground(new Color(112, 219, 112));
-        elevatorPlus.setForeground(new Color(255, 255, 255));
+        // elevatorPlus.setForeground(new Color(255, 255, 255));
 
         elevatorMin = new JButton("Lift tijd -");
         elevatorMin.setBounds(278, 320, 150, 40);
         elevatorMin.setBackground(new Color(255, 77, 77));
-        elevatorMin.setForeground(new Color(255, 255, 255));
+        // elevatorMin.setForeground(new Color(255, 255, 255));
 
         elevatorFactor = new JTextField();
         elevatorFactor.setFont(new Font("Consolas", Font.BOLD, 20));
@@ -162,12 +162,12 @@ public class Menu extends JFrame {
         stairPlus = new JButton("Trap tijd +");
         stairPlus.setBounds(20, 390, 150, 40);
         stairPlus.setBackground(new Color(112, 219, 112));
-        stairPlus.setForeground(new Color(255, 255, 255));
+        // stairPlus.setForeground(new Color(255, 255, 255));
 
         stairMin = new JButton("Trap tijd -");
         stairMin.setBounds(278, 390, 150, 40);
         stairMin.setBackground(new Color(255, 77, 77));
-        stairMin.setForeground(new Color(255, 255, 255));
+        // stairMin.setForeground(new Color(255, 255, 255));
 
         stairFactor = new JTextField();
         stairFactor.setFont(new Font("Consolas", Font.BOLD, 20));
@@ -178,15 +178,15 @@ public class Menu extends JFrame {
 
         timeDisplay = new JTextField(5);
         timeDisplay.setFont(new Font("Consolas", Font.BOLD, 28));
-        //timeDisplay.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        // timeDisplay.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         timeDisplay.setHorizontalAlignment(SwingConstants.CENTER);
-        timeDisplay.setBackground(new Color(0, 0, 128));
+        // timeDisplay.setBackground(new Color(0, 0, 128));
         timeDisplay.setBorder(null);
-        timeDisplay.setForeground(new Color(255, 255, 255));
+        // timeDisplay.setForeground(new Color(255, 255, 255));
         timeDisplay.setBounds(20, 460, 150, 40);
 
         // Set timer for hotel clock Format time and display
-        new Timer(1000, e -> timeDisplay.setText(Clock.datetime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)))).start();
+        new Timer(1, e -> timeDisplay.setText(Clock.datetime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)))).start();
 
         timeLabel = new JLabel("Tijd HTE");
         timeLabel.setBounds(20, 430, 175, 40);

@@ -36,9 +36,9 @@ public class EntityHousekeeping extends Entity implements IEntity, IStressable {
     }
 
     public void drawEntity(Graphics g) {
-        super.drawEntity(g);
-        // g.setColor(Color.PINK);
+        g.setColor(entityColor);
         g.fillRect(x * getPixelResolution(), y * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
+        super.drawEntity(g);
     }
 
     /**

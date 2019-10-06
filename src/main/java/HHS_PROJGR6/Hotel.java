@@ -15,6 +15,7 @@ import HHS_PROJGR6.Utils.JsonReader;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.util.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +49,11 @@ public class Hotel implements HotelEventListener {
      *
      */
     private HotelEventManager eventManager;
+
+    /**
+     * 
+     */
+    private List<Node> nodeGraph;
 
     /**
      * Hotel class
@@ -85,6 +91,13 @@ public class Hotel implements HotelEventListener {
             start = LocalDateTime.now();
         }
 
+        removeCheckoutGuest();
+
+        // Recursion to keep loop going
+        this.frame();
+    }
+
+    private void removeCheckoutGuest() {
         // Remove checked out guests
         // TODO: fix
         // if (false) {
@@ -104,27 +117,14 @@ public class Hotel implements HotelEventListener {
         // // TODO: Notify all entities that they have to do something
         // entities.stream().forEach(entity -> entity.frame());
         // }
-
-        // Recursion to keep loop going
-        this.frame();
     }
 
     /**
      * 
      */
-    private void pathFinder() {
-        // TODO: dit moet globaal zijn
-        // Van/Tot: DijkstraAlgorithm.createLocationNode(1, 4)
-        // Graph maken: da.getGraph(4, 4, entities)
-        // da.findPath(van, tot, graph): instructies maken van de kortste route
-
-        // Zo werkt het dijkstra algoritme
+    private void initPathFinder() {
         DijkstraAlgorithm da = new DijkstraAlgorithm();
-
-        da.findPath(DijkstraAlgorithm.createLocationNode(1, 4), DijkstraAlgorithm.createLocationNode(4, 1), da.getGraph(4, 4, entities)).stream().forEach(step -> {
-            // Elke stap moet als instructie worden meegegeven
-            System.out.println(step.getX() + " " + step.getY() + " " + step.getCostToParent());
-        });
+        nodeGraph = da.getGraph(getHighestPositions()[0], getHighestPositions()[1], entities);
     }
 
     /**
@@ -302,18 +302,33 @@ public class Hotel implements HotelEventListener {
         guest.setPreference(event.Data.get(guestKey));
         register(guest);
 
+        // TODO: moet path lopen
+        // Van/Tot: DijkstraAlgorithm.createLocationNode(1, 4)
+        // Graph maken: da.getGraph(4, 4, entities)
+        // da.findPath(van, tot, graph): instructies maken van de kortste route
+        // da.findPath(DijkstraAlgorithm.createLocationNode(1, 4),
+        // DijkstraAlgorithm.createLocationNode(4, 1),
+        // da.getGraph(getHighestPositions()[0], getHighestPositions()[1],
+        // entities)).stream().forEach(step -> {
+        // Elke stap moet als instructie worden meegegeven
+        // System.out.println(step.getX() + " " + step.getY() + " " +
+        // step.getCostToParent());
+        // });
+
     }
 
     private void checkOutEvent(HotelEvent event) {
-        entities.stream().filter(entity -> {
-            // Get guest that has to check out
-            String guestKey = event.Data.keySet().iterator().next();
-            int guestID = EntityGuest.parseInt(guestKey);
-            return entity instanceof EntityGuest && ((EntityGuest) entity).getID() == guestID;
-        }).forEach(entity -> {
-            // Make guest checkout
-            ((EntityGuest) entity).checkout();
-        });
+        // TODO: fix
+        // entities.stream().filter(entity -> {
+        // // Get guest that has to check out
+        // String guestKey = event.Data.keySet().iterator().next();
+        // int guestID = EntityGuest.parseInt(guestKey);
+        // return entity instanceof EntityGuest && ((EntityGuest) entity).getID() ==
+        // guestID;
+        // }).forEach(entity -> {
+        // // Make guest checkout
+        // ((EntityGuest) entity).checkout();
+        // });
     }
 
     private void cleaningEmergencyEvent(HotelEvent event) {
@@ -340,13 +355,15 @@ public class Hotel implements HotelEventListener {
 
     private void godzillaEvent(HotelEvent event) {
         // TODO Hotel gaat deud iedeereen er aan ... Alle kamers zijn vies en alle
-        entities.stream().filter(entity -> {
-            // Get all living entities
-            return entity instanceof EntityHousekeeping && entity instanceof EntityGuest && entity instanceof EntityRoom;
-        }).forEach(entity -> {
-            // Make them panic
-            ((IStressable) entity).panic();
-        });
+        // TODO: fix
+        // entities.stream().filter(entity -> {
+        // // Get all living entities
+        // return entity instanceof EntityHousekeeping && entity instanceof EntityGuest
+        // && entity instanceof EntityRoom;
+        // }).forEach(entity -> {
+        // // Make them panic
+        // ((IStressable) entity).panic();
+        // });
 
         // TODO: Teken afbeelding van godzilla (Erwinzilla?)
     }
@@ -358,35 +375,39 @@ public class Hotel implements HotelEventListener {
 
     private void goToCinemaEvent(HotelEvent event) {
         // TODO: Desbetreffende EntityGuest gaat naar Cinema
-        entities.stream().filter(entity -> {
-            String guestKey = event.Data.keySet().iterator().next();
-            int guestID = EntityGuest.parseInt(guestKey);
-            return entity instanceof EntityGuest && ((EntityGuest) entity).getID() == guestID;
-        }).forEach(entity -> {
-            // TODO: pass pathfinding
-            ((EntityGuest) entity).goToCinema();
-        });
+        // TODO: fix
+        // entities.stream().filter(entity -> {
+        // String guestKey = event.Data.keySet().iterator().next();
+        // int guestID = EntityGuest.parseInt(guestKey);
+        // return entity instanceof EntityGuest && ((EntityGuest) entity).getID() ==
+        // guestID;
+        // }).forEach(entity -> {
+        // // TODO: pass pathfinding
+        // ((EntityGuest) entity).goToCinema();
+        // });
     }
 
     private void goToFitnessEvent(HotelEvent event) {
-        entities.stream().filter(entity -> {
-            String guestKey = event.Data.keySet().iterator().next();
-            int guestID = EntityGuest.parseInt(guestKey);
-            return entity instanceof EntityGuest && ((EntityGuest) entity).getID() == guestID;
-        }).forEach(entity -> {
-            // TODO: pass pathfinding
-            ((EntityGuest) entity).goToFitness();
-        });
+        // TODO: fix
+        // entities.stream().filter(entity -> {
+        // String guestKey = event.Data.keySet().iterator().next();
+        // int guestID = EntityGuest.parseInt(guestKey);
+        // return entity instanceof EntityGuest && ((EntityGuest) entity).getID() ==
+        // guestID;
+        // }).forEach(entity -> {
+        // // TODO: pass pathfinding
+        // ((EntityGuest) entity).goToFitness();
+        // });
     }
 
     private void goToRestaurantEvent(HotelEvent event) {
-        entities.stream().filter(entity -> {
+        // TODO: fix
+        // entities.stream().filter(entity -> {
 
-            return entity instanceof EntityGuest;
-        }).forEach(entity -> {
-            ((EntityGuest) entity).goToRestaurant();
-        });
-
+        // return entity instanceof EntityGuest;
+        // }).forEach(entity -> {
+        // ((EntityGuest) entity).goToRestaurant();
+        // });
     }
 
     /**
