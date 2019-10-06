@@ -3,7 +3,7 @@ package HHS_PROJGR6.Factories;
 import HHS_PROJGR6.Entities.*;
 import HHS_PROJGR6.Interfaces.IEntity;
 
-import java.awt.*;
+import javax.swing.*;
 
 /**
  * The sources below have been used to design the factory. Bron:
@@ -51,7 +51,7 @@ public class EntityFactory {
             return new EntityTransport("Images/Stair2.png", type);
 
         case "Lobby":
-            return new EntityLobby("Images/0star.png");
+            return new EntityLobby("Images/reception1.png");
 
         default:
             return new Entity("Images/0star.png");

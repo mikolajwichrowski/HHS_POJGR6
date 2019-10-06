@@ -1,7 +1,5 @@
 package HHS_PROJGR6;
 
-import HHS_PROJGR6.Utils.Statistics;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -26,12 +24,6 @@ public class App extends JFrame {
     public App() {
         // Set dimensions, create canvas and hotel
         Hotel myHotel = new Hotel();
-
-        Menu menu = new Menu();
-        menu.setVisible(true);
-
-        Statistics statistics = new Statistics();
-        statistics.setVisible(true);
 
         // Init hotel rooms
         myHotel.initRooms();

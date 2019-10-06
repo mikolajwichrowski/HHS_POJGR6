@@ -1,12 +1,10 @@
 package HHS_PROJGR6.Entities;
 
-import HHS_PROJGR6.External.HotelEvent;
-import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.Interfaces.IEntity;
 import HHS_PROJGR6.Interfaces.IStressable;
-import HHS_PROJGR6.External.*;
 import HHS_PROJGR6.Utils.Node;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -62,9 +60,6 @@ public class EntityGuest extends Entity implements IEntity, IStressable {
     }
 
     public void drawEntity(Graphics g) {
-        g.setColor(entityColor);
-        g.fillRect(x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution());
-
         super.drawEntity(g);
     }
 

@@ -3,13 +3,11 @@ package HHS_PROJGR6.Entities;
 import HHS_PROJGR6.External.HotelEvent;
 import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.Interfaces.IEntity;
-import HHS_PROJGR6.Settings;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static HHS_PROJGR6.Settings.getPixelResolution;
 
@@ -68,7 +66,6 @@ public class Entity implements IEntity, HotelEventListener {
     public void drawEntity(Graphics g) {
         Image img1 = Toolkit.getDefaultToolkit().getImage(entityImage);
         g.drawImage(img1, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
-
         g.setColor(Color.black);
         g.drawRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
     }
