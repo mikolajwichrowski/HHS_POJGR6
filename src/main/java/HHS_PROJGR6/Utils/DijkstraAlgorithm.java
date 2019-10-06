@@ -4,11 +4,11 @@ import HHS_PROJGR6.Entities.Entity;
 import HHS_PROJGR6.Interfaces.IEntity;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class DijkstraAlgorithm {
     public int nodeCounter;
-    private Node start;
-    private Node destination;
 
     // TODO: start -> stop
     public DijkstraAlgorithm() {
@@ -21,7 +21,7 @@ public class DijkstraAlgorithm {
         // Transport points
         for (int x = 1; x <= width; x++) {
             for (int y = 1; y <= height; y++) {
-                if (x == width || x == 1 && Entity.getOnPosition(x, y, entities).size() > 0) {
+                if ((x == width || x == 1) && Entity.getOnPosition(x, y, entities).size() > 0) {
                     Node node = new Node();
                     node.setPosition(x, y);
 
@@ -83,31 +83,114 @@ public class DijkstraAlgorithm {
         return nodes;
     }
 
-    public List<Node> findPath(Node source, Node destination, List<Node> graph) {
-        // Dictionary<Node, Node> visited = new Dictionary<Node, Node>();
-        // List<Node> unvisited = graph;
-        // Node inspecting = unvisited.get(unvisited.indexOf(source));
-        // inspecting.setCostToParent(0);
-        // visited.add(inspecting);
+    private List<Node> shiftTo(List<Node> graph, Node node) {
+        List<Node> shiftedNodes = graph;
+        Node inspecting = null;
 
-        // while (unvisited.size() > 0) {
-        // inspecting.neighbours.stream().forEach(node -> {
-        // Node tracking = unvisited.get(unvisited.indexOf(node));
-        // tracking.setCostToParent(inspecting.getCostToParent() + tracking.getCost());
-        // if (visited.get(tracking).getCostToParent() > tracking.getCostToParent()) {
-        // visited.put(tracking, inspecting);
-        // }
+        boolean shifted = false;
+        while (!shifted) {
+            if (shiftedNodes.get(0).compare(node)) {
+                shifted = true;
+            } else {
+                // Go to starting source position
+                inspecting = shiftedNodes.get(0);
+                shiftedNodes.remove(0);
+                shiftedNodes.add(inspecting);
+            }
+        }
 
-        // });
-        // visited.add(inspecting, null);
-        // unvisited.remove(inspecting);
-        // }
-        return null;
-        // TODO: zucht...
+        return shiftedNodes;
     }
 
-    public Node getNodeFromLocation(Integer locationX, Integer locationY, List<Node> graph) {
-        return null; // graph.stream().filter(node -> node.getX() == locationX && node.getY() ==
-                     // locationY).toArray()[0];
+    public List<Node> findPath(Node source, Node destination, List<Node> graph) {
+        // Keep trach of visited and unvisited
+        List<Node> visited = new ArrayList<Node>();
+        List<Node> unvisited = shiftTo(graph, source);
+        Node inspecting = unvisited.get(0);
+
+        // Set cost of head
+        inspecting.setCostToParent(0);
+        visited.add(inspecting);
+
+        // Check all nodes for weights
+        while (unvisited.size() > 0) {
+            // Check cost to each neighbour
+            for (Node node : inspecting.neighbours) {
+                Object[] neighbouring = unvisited.stream().filter(e -> node.compare(e)).toArray();
+
+                // Don't go back in path
+                if (neighbouring.length > 0) {
+                    Node tracking = (Node) neighbouring[0];
+                    tracking.setCostToParent(inspecting.getCostToParent() + tracking.getCost());
+                    tracking.setParent(inspecting);
+                    visited.add(tracking);
+                }
+            }
+
+            // Node already visited
+            unvisited.remove(inspecting);
+
+            // Only check children where cost to parent of parent calculated
+            Object[] inLine = unvisited.stream().filter(e -> {
+                return e.getParent() != null && e.getParent().getCostToParent() != Integer.MAX_VALUE;
+            }).toArray();
+
+            inspecting = inLine.length > 0 ? (Node) inLine[0] : null;
+        }
+
+        // Reverse to traverse path
+        Collections.reverse(visited);
+
+        // Shift to destination node
+        visited = shiftTo(visited, destination);
+        inspecting = visited.get(0);
+
+        // Create final map
+        List<Node> finalPath = new ArrayList<Node>();
+        finalPath.add(inspecting);
+
+        // Traverse path (destination -> source)
+        boolean backToSource = false;
+        while (!backToSource) {
+            // Get lowest child from neighbours
+            List<Node> neighbours = new ArrayList<Node>();
+            for (Node node : visited) {
+                // Where inspeciting is in children
+                boolean foundInNeighbours = false;
+                for (Node child : node.neighbours) {
+                    foundInNeighbours = !foundInNeighbours ? child.compare(inspecting) : true;
+                }
+
+                if (foundInNeighbours) {
+                    neighbours.add(node);
+                }
+            }
+            Node lowestChildNode = neighbours.stream().min(Comparator.comparing(Node::getCostToParent)).get();
+
+            // Set current inspecting
+            inspecting = lowestChildNode;
+
+            // Add lowest child node
+            finalPath.add(lowestChildNode);
+
+            // If the parent is the source, we are done.
+            if (lowestChildNode.getParent().compare(source)) {
+                backToSource = true;
+                inspecting = source;
+                inspecting.setCostToParent(0);
+                finalPath.add(inspecting);
+            }
+
+        }
+
+        Collections.reverse(finalPath);
+
+        return finalPath;
+    }
+
+    public static Node createLocationNode(Integer x, Integer y) {
+        Node location = new Node();
+        location.setPosition(x, y);
+        return location;
     }
 }

@@ -9,23 +9,29 @@ import HHS_PROJGR6.External.HotelEventManager;
 import HHS_PROJGR6.External.HotelEventType;
 import HHS_PROJGR6.Factories.EntityFactory;
 import HHS_PROJGR6.Interfaces.IEntity;
+import HHS_PROJGR6.Interfaces.IStressable;
+import HHS_PROJGR6.Utils.*;
 import HHS_PROJGR6.Utils.JsonReader;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.util.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.Iterator;
 
 // External imports
 
 /**
- * 
+ *
  */
 public class Hotel implements HotelEventListener {
     /**
-     * 
+     *
      */
     private Canvas hotelCanvas;
 
@@ -40,9 +46,14 @@ public class Hotel implements HotelEventListener {
     private ArrayList<IEntity> entities;
 
     /**
-     * 
+     *
      */
     private HotelEventManager eventManager;
+
+    /**
+     * 
+     */
+    private List<Node> nodeGraph;
 
     /**
      * Hotel class
@@ -51,8 +62,6 @@ public class Hotel implements HotelEventListener {
      * enties will live and act here. Every event is triggered in the object derived
      * from this class. The canvas is aggregated in this class to make sure that
      * only elements from the hotel are drawn on the canvas.
-     * 
-     * @param hotelCanvas
      */
     public Hotel() {
         // Initilize entities
@@ -62,20 +71,11 @@ public class Hotel implements HotelEventListener {
         eventManager = new HotelEventManager();
         eventManager.register(this);
         eventManager.start();
-
-        // DijkstraAlgorithm da = new DijkstraAlgorithm();
-
-        // System.out.println("the path is " + da.findPath().size() + " steps long");
-        // System.out.println("ELEMEMTS");
-        // for (Node step : da.findPath()) {
-        // System.out.println(step.getX() + " " + step.getY());
-        // for (Node neighbour : step.getNeighbours()) {
-        // System.out.println(" + " + neighbour.getX() + " " + neighbour.getY());
-        // }
-        // }
-        // System.out.println("DONE");
     }
 
+    /**
+     * 
+     */
     public void frame() {
         // Wait for clockspeed
         LocalDateTime start = LocalDateTime.now();
@@ -91,30 +91,43 @@ public class Hotel implements HotelEventListener {
             start = LocalDateTime.now();
         }
 
-        // Remove checked out guests
-        ArrayList<IEntity> removeEntities = new ArrayList<IEntity>();
-        entities.stream().filter(entity -> {
-            // Filter guests
-            return entity instanceof EntityGuest;
-        }).forEach(entity -> {
-            // If guest don
-            if (!((EntityGuest) entity).getActive()) {
-                // Remove guest from hotel
-                removeEntities.add(entity);
-            }
-        });
-
-        removeEntities.stream().forEach(e -> this.deregister(e));
-
-        // Notify all entities that they have to do something
-        this.Notify(new HotelEvent(HotelEventType.NONE, "", 0, new HashMap<String, String>()));
+        removeCheckoutGuest();
 
         // Recursion to keep loop going
         this.frame();
     }
 
+    private void removeCheckoutGuest() {
+        // Remove checked out guests
+        // TODO: fix
+        // if (false) {
+        // ArrayList<IEntity> removeEntities = new ArrayList<IEntity>();
+        // entities.stream().filter(entity -> {
+        // // Filter guests
+        // return entity instanceof EntityGuest;
+        // }).forEach(entity -> {
+        // // If guest is not a guest
+        // if (!((EntityGuest) entity).getActive()) {
+        // // Remove guest from hotel
+        // removeEntities.add(entity);
+        // }
+        // });
+        // removeEntities.stream().forEach(e -> this.deregister(e));
+
+        // // TODO: Notify all entities that they have to do something
+        // entities.stream().forEach(entity -> entity.frame());
+        // }
+    }
+
     /**
      * 
+     */
+    private void initPathFinder() {
+        DijkstraAlgorithm da = new DijkstraAlgorithm();
+        nodeGraph = da.getGraph(getHighestPositions()[0], getHighestPositions()[1], entities);
+    }
+
+    /**
      * @param actor
      */
     private void register(IEntity actor) {
@@ -125,7 +138,6 @@ public class Hotel implements HotelEventListener {
     }
 
     /**
-     * 
      * @param actor
      */
     private void deregister(IEntity actor) {
@@ -134,7 +146,7 @@ public class Hotel implements HotelEventListener {
     }
 
     /**
-     * 
+     *
      */
     public void initRooms() {
         try {
@@ -182,24 +194,36 @@ public class Hotel implements HotelEventListener {
                 this.register(entity);
             }
 
-            // TODO: maak deze dynamisch (dimensions en position)!
-            // Create entity with factory
+            // Create entity elevator with factory
+            // TODO: dynamic position and sizes
             entity = EntityFactory.createEntity("Elevator");
             entity.setPosition(this.highestPositions[1] + 1, 1);
-            entity.setDimensions(1, this.highestPositions[1]+ 1);
+            entity.setDimensions(1, this.highestPositions[1] + 1);
             this.register(entity);
 
-            // TODO: maak deze dynamisch (dimensions en position)!
-            // Create entity with factory
+            // Create stairs entity with factory
+            // TODO: dynamic position and sizes
             entity = EntityFactory.createEntity("Stairs");
             entity.setPosition(this.highestPositions[1] + 1, 8);
-            entity.setDimensions(1, this.highestPositions[1]+ 1);
+            entity.setDimensions(1, this.highestPositions[1] + 1);
             this.register(entity);
 
-            // entity = EntityFactory.createEntity("Lift");
-            // entity.setPosition(7, 2);
-            // entity.setDimensions(6, 1);
+            // Create lobby entity with factory
+            entity = EntityFactory.createEntity("Lobby");
+            entity.setPosition(7, 3);
+            entity.setDimensions(5, 1);
+            this.register(entity);
 
+            // Create housekeeping with factory
+            // TODO: with loop
+            entity = EntityFactory.createEntity("Housekeeping");
+            entity.setPosition(7, 6);
+            entity.setDimensions(1, 1);
+            this.register(entity);
+
+            entity = EntityFactory.createEntity("Housekeeping");
+            entity.setPosition(7, 3);
+            entity.setDimensions(1, 1);
             this.register(entity);
         } catch (Exception e) {
             // TODO: better exception handling
@@ -208,29 +232,28 @@ public class Hotel implements HotelEventListener {
     }
 
     /**
-     * 
      * @param array
      * @param value
      * @return
      */
     private int[] getHighest(JSONArray array, String value) {
-        // TODO: make this a better algol !!!!!!!!!!!!
+        // TODO: make this a better algo !!!!!!!!!!!!
         Iterator i = array.iterator();
-        int[] highes = new int[2];
-        highes[0] = 0;
-        highes[1] = 0;
+        int[] highest = new int[2];
+        highest[0] = 0;
+        highest[1] = 0;
 
         try {
             while (i.hasNext()) {
                 JSONObject slide = (JSONObject) i.next();
                 String[] compare = ((String) slide.get(value)).split(",");
 
-                if (Integer.parseInt(compare[0].trim()) > highes[0]) {
-                    highes[0] = Integer.parseInt(compare[0].trim());
+                if (Integer.parseInt(compare[0].trim()) > highest[0]) {
+                    highest[0] = Integer.parseInt(compare[0].trim());
                 }
 
-                if (Integer.parseInt(compare[1].trim()) > highes[1]) {
-                    highes[1] = Integer.parseInt(compare[1].trim()) + 1;
+                if (Integer.parseInt(compare[1].trim()) > highest[1]) {
+                    highest[1] = Integer.parseInt(compare[1].trim()) + 1;
                 }
             }
         } catch (Exception e) {
@@ -238,18 +261,18 @@ public class Hotel implements HotelEventListener {
             throw e;
         }
 
-        return highes;
+        return highest;
     }
 
     /**
-     * 
+     *
      */
     public Canvas getHotelCanvas() {
         return hotelCanvas;
     }
 
     /**
-     * 
+     *
      */
     public void setHotelCanvas(Canvas hotelCanvas) {
         this.hotelCanvas = hotelCanvas;
@@ -262,8 +285,133 @@ public class Hotel implements HotelEventListener {
         hotelCanvas.setDrawableEntities(entities);
     }
 
+    private void evacuateEvent(HotelEvent event) {
+        // entities.stream().filter(entity -> {
+        // return entity instanceof EntityHousekeeping && entity instanceof EntityGuest;
+        // }).forEach(entity -> {
+        // ((HotelEventListener) entity).checkout(event);
+        // });
+    }
+
+    private void checkInEvent(HotelEvent event) {
+        // TODO: maak gasten aan
+        EntityGuest guest = (EntityGuest) EntityFactory.createEntity("Guest");
+        guest.setPosition(7, 2);
+        String guestKey = event.Data.keySet().iterator().next();
+        guest.setID(guestKey);
+        guest.setPreference(event.Data.get(guestKey));
+        register(guest);
+
+        // TODO: moet path lopen
+        // Van/Tot: DijkstraAlgorithm.createLocationNode(1, 4)
+        // Graph maken: da.getGraph(4, 4, entities)
+        // da.findPath(van, tot, graph): instructies maken van de kortste route
+        // da.findPath(DijkstraAlgorithm.createLocationNode(1, 4),
+        // DijkstraAlgorithm.createLocationNode(4, 1),
+        // da.getGraph(getHighestPositions()[0], getHighestPositions()[1],
+        // entities)).stream().forEach(step -> {
+        // Elke stap moet als instructie worden meegegeven
+        // System.out.println(step.getX() + " " + step.getY() + " " +
+        // step.getCostToParent());
+        // });
+
+    }
+
+    private void checkOutEvent(HotelEvent event) {
+        // TODO: fix
+        // entities.stream().filter(entity -> {
+        // // Get guest that has to check out
+        // String guestKey = event.Data.keySet().iterator().next();
+        // int guestID = EntityGuest.parseInt(guestKey);
+        // return entity instanceof EntityGuest && ((EntityGuest) entity).getID() ==
+        // guestID;
+        // }).forEach(entity -> {
+        // // Make guest checkout
+        // ((EntityGuest) entity).checkout();
+        // });
+    }
+
+    private void cleaningEmergencyEvent(HotelEvent event) {
+        // TODO: Gast maakt kamer vies. Schoonmaker gaat er naartoe
+        // TODO: fix
+        // entities.stream().filter(entity -> {
+        // // Get guest that has to check out
+        // String guestKey = event.Data.keySet().iterator().next();
+        // int guestID = EntityGuest.parseInt(guestKey);
+        // return entity instanceof EntityGuest && ((EntityGuest) entity).getID() ==
+        // guestID;
+        // }).forEach(entity -> {
+        // // Make guest make the room filthy
+        // // TODO: ((EntityGuest) entity).filthy();
+        // });
+
+        // // TODO: pass pathfinding
+        // ((EntityHousekeeping) entities.stream().filter(entity -> {
+        // // Get housekeeping that is not cleaning
+        // return entity instanceof EntityHousekeeping;
+        // }).collect(Collectors.toList()).get(0)).cleanRoom();
+
+    }
+
+    private void godzillaEvent(HotelEvent event) {
+        // TODO Hotel gaat deud iedeereen er aan ... Alle kamers zijn vies en alle
+        // TODO: fix
+        // entities.stream().filter(entity -> {
+        // // Get all living entities
+        // return entity instanceof EntityHousekeeping && entity instanceof EntityGuest
+        // && entity instanceof EntityRoom;
+        // }).forEach(entity -> {
+        // // Make them panic
+        // ((IStressable) entity).panic();
+        // });
+
+        // TODO: Teken afbeelding van godzilla (Erwinzilla?)
+    }
+
+    private void startCinemaEvent(HotelEvent event) {
+        // TODO zoek cinema waar het over gaat en start hier de film
+
+    }
+
+    private void goToCinemaEvent(HotelEvent event) {
+        // TODO: Desbetreffende EntityGuest gaat naar Cinema
+        // TODO: fix
+        // entities.stream().filter(entity -> {
+        // String guestKey = event.Data.keySet().iterator().next();
+        // int guestID = EntityGuest.parseInt(guestKey);
+        // return entity instanceof EntityGuest && ((EntityGuest) entity).getID() ==
+        // guestID;
+        // }).forEach(entity -> {
+        // // TODO: pass pathfinding
+        // ((EntityGuest) entity).goToCinema();
+        // });
+    }
+
+    private void goToFitnessEvent(HotelEvent event) {
+        // TODO: fix
+        // entities.stream().filter(entity -> {
+        // String guestKey = event.Data.keySet().iterator().next();
+        // int guestID = EntityGuest.parseInt(guestKey);
+        // return entity instanceof EntityGuest && ((EntityGuest) entity).getID() ==
+        // guestID;
+        // }).forEach(entity -> {
+        // // TODO: pass pathfinding
+        // ((EntityGuest) entity).goToFitness();
+        // });
+    }
+
+    private void goToRestaurantEvent(HotelEvent event) {
+        // TODO: fix
+        // entities.stream().filter(entity -> {
+
+        // return entity instanceof EntityGuest;
+        // }).forEach(entity -> {
+        // ((EntityGuest) entity).goToRestaurant();
+        // });
+    }
+
     /**
-     * 
+     *
      */
     public void Notify(HotelEvent event) {
         // Set the time for every HTE
@@ -275,58 +423,49 @@ public class Hotel implements HotelEventListener {
         // Which event is fired
         switch (event.Type) {
         case CHECK_IN:
-            // TODO: maak gasten aan
-            EntityGuest guest = (EntityGuest) EntityFactory.createEntity("Guest");
-            guest.setPosition(this.highestPositions[1] + 1, 2);
-            String guestKey = event.Data.keySet().iterator().next();
-            guest.setID(guestKey);
-            guest.setPreference(event.Data.get(guestKey));
-            register(guest);
+            this.checkInEvent(event);
+            break;
 
-            break;
         case CLEANING_EMERGENCY:
-            // Standaard zijn er 2
-            // EntityHousekeeping housekeeping = (EntityHousekeeping)
-            // EntityFactory.createEntity("Housekeeping");
-            // TODO: Gast maakt kamer vies. Schoonmaker gaat er naartoe
+            this.cleaningEmergencyEvent(event);
             break;
+
         case EVACUATE:
-            // TODO: Notify alle gasten dat ze naar de deur moeten
-            entities.stream().filter(entity -> {
-                return entity instanceof EntityGuest || entity instanceof EntityHousekeeping;
-            }).forEach(entity -> {
-                ((HotelEventListener) entity).Notify(new HotelEvent(HotelEventType.CHECK_OUT, "", 0, new HashMap<String, String>()));
-            });
+            this.evacuateEvent(event);
             break;
+
         case GODZILLA:
-            // TODO Hotel gaat deud iedeereen er aan ... Alle kamers zijn vies en alle
-            // gasten gaan per direct dood
-            this.Notify(new HotelEvent(HotelEventType.EVACUATE, "", 0, new HashMap<String, String>()));
-            // TODO: Teken afbeelding van godzilla (Erwinzilla?)
+            this.godzillaEvent(event);
             break;
+
         case START_CINEMA:
-            entities.stream().filter(entity -> {
-                // TODO: filter de entity waar het om gaat op basis van de data = entity.xy
-                return entity instanceof EntityLeasure || false;
-            }).forEach(entity -> {
-                ((HotelEventListener) entity).Notify(event);
-            });
+            this.startCinemaEvent(event);
             break;
+
+        case CHECK_OUT:
+            this.checkOutEvent(event);
+            break;
+
+        case GOTO_RESTAURANT:
+            this.goToRestaurantEvent(event);
+            break;
+
+        case GOTO_FITNESS:
+            this.goToFitnessEvent(event);
+            break;
+
+        case GOTO_CINEMA:
+            this.goToCinemaEvent(event);
+            break;
+
         case NONE:
-            entities.stream().forEach(entity -> {
-                ((HotelEventListener) entity).Notify(event);
-            });
-            break;
         default:
-            entities.stream().filter(entity -> {
-                return entity instanceof EntityGuest || entity instanceof EntityHousekeeping;
-            }).forEach(entity -> {
-                ((HotelEventListener) entity).Notify(event);
-            });
+            // No event happends here
             break;
 
         }
     }
+
     /*
     *
      */

@@ -11,7 +11,7 @@ import static HHS_PROJGR6.Settings.getPixelResolution;
  * App class
  * 
  * Used as the application entry class. This class is part of the main only its
- * a bit neater because insteat of running the application from a method we run
+ * a bit neater because instead of running the application from a method we run
  * it from an object.
  */
 public class App extends JFrame {
@@ -27,8 +27,8 @@ public class App extends JFrame {
         // Set dimensions, create canvas and hotel
         Hotel myHotel = new Hotel();
 
-            Menu menu = new Menu();
-            menu.setVisible(true);
+        Menu menu = new Menu();
+        menu.setVisible(true);
 
         Statistics statistics = new Statistics();
         statistics.setVisible(true);
@@ -36,7 +36,7 @@ public class App extends JFrame {
         // Init hotel rooms
         myHotel.initRooms();
 
-        Dimension d = new Dimension(getPixelResolution() * (myHotel.getHighestPositions()[0] + 4), getPixelResolution()* (myHotel.getHighestPositions()[1] + 5));
+        Dimension d = new Dimension(getPixelResolution() * (myHotel.getHighestPositions()[0] + 4), getPixelResolution() * (myHotel.getHighestPositions()[1] + 5));
         Canvas canvas = new Canvas(d);
         myHotel.setHotelCanvas(canvas);
 
@@ -55,6 +55,7 @@ public class App extends JFrame {
         // Start frames
         myHotel.frame();
     }
+
     /**
      * Main runs the application
      * 

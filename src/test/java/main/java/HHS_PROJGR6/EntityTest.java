@@ -1,3 +1,6 @@
+package main.java.HHS_PROJGR6;
+import org.junit.Test;
+
 /**
  * EntityTest
  */
@@ -5,7 +8,8 @@ public class EntityTest {
     /**
      * 
      */
-    @Test public void testStateChangeOnAction() {
+    @Test
+    public void testStateChangeOnAction() {
         // An entity should do nothing when action is called
     }
 

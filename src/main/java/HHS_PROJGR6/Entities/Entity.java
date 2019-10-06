@@ -8,11 +8,14 @@ import HHS_PROJGR6.Settings;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-/*
-* Entity class
-*/
+import static HHS_PROJGR6.Settings.getPixelResolution;
 
+/**
+ * 
+ */
 public class Entity implements IEntity, HotelEventListener {
     /**
      * 
@@ -39,20 +42,16 @@ public class Entity implements IEntity, HotelEventListener {
      */
     public Color entityColor;
 
-
     /**
      * 
      */
 
     private JLabel label;
 
-    private int pixelResolution;
-
     public Entity(Color entityColor) {
         this.x = 0;
         this.y = 0;
         this.entityColor = entityColor;
-        this.pixelResolution = Settings.getPixelResolution();
     }
 
     /**
@@ -67,8 +66,8 @@ public class Entity implements IEntity, HotelEventListener {
      * 
      */
     public void drawEntity(Graphics g) {
-        //g.setColor(Color.black);
-        g.drawRect(x * pixelResolution, (y - (height - 1)) * pixelResolution, width * pixelResolution, height * pixelResolution);
+        g.setColor(Color.black);
+        g.drawRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
 
     }
 
@@ -131,11 +130,16 @@ public class Entity implements IEntity, HotelEventListener {
      * @return
      */
     public static List<IEntity> getOnPosition(int x, int y, List<IEntity> entities) {
-        // return entities.stream().filter(e -> {
-        // return e.getXPosition() == x && e.getXPosition() + e.getWidth() <= x &&
-        // e.getYPosition() == y && e.getYPosition() - e.getHeight() <= y;
-        // }).toArray(IEntity);
-        return null;
+        // TODO: fix for graph generator
+        return entities.stream().filter(e -> {
+            boolean position = e.getXPosition() == x && e.getYPosition() == y;
+            boolean positionWithOffset = e.getXPosition() + e.getWidth() <= x && e.getYPosition() - e.getHeight() <= y;
+            return true;// position && positionWithOffset;
+        }).collect(Collectors.toList());
+    }
+
+    public void frame() {
+        // TODO: Niks wss
     }
 
     public JLabel getLabel() {

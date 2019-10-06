@@ -13,9 +13,10 @@ import static HHS_PROJGR6.Settings.getPixelResolution;
 * Inherits from Entity
 */
 
-public class EntityRoom extends Entity implements IEntity, HotelEventListener {
+public class EntityRoom extends Entity implements IEntity {
 
     private int classification;
+    private boolean dirty = false;
 
     public EntityRoom(Color entityColor) {
         super(entityColor);
@@ -25,43 +26,67 @@ public class EntityRoom extends Entity implements IEntity, HotelEventListener {
 
     @Override
     public void drawEntity(Graphics g) {
+        g.setColor(new Color(84, 84, 84));
+        g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
 
-        g.setColor(entityColor);
         switch (this.classification) {
-
         case 1:
+            // g.setColor(new Color(0, 191, 255));
+            // g.fillRect(x * getPixelResolution(), (y - (height - 1)) *
+            // getPixelResolution(), width * getPixelResolution(), height *
+            // getPixelResolution());
+
             Image img1 = Toolkit.getDefaultToolkit().getImage("Images/star1.png");
-            g.drawImage(img1, x * getPixelResolution(), y * getPixelResolution(),getPixelResolution(),getPixelResolution(), null);
-            //g.setColor(new Color(0, 191, 255));
+            g.drawImage(img1, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
             break;
         case 2:
+            // g.setColor(new Color(255, 255, 0));
+            // g.fillRect(x * getPixelResolution(), (y - (height - 1)) *
+            // getPixelResolution(), width * getPixelResolution(), height *
+            // getPixelResolution());
+
             Image img2 = Toolkit.getDefaultToolkit().getImage("Images/star2.png");
-            g.drawImage(img2, x * getPixelResolution(), y * getPixelResolution(),getPixelResolution(),getPixelResolution(), null);
-            //g.setColor(new Color(255, 255, 0));
+            g.drawImage(img2, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
             break;
         case 3:
+            // g.setColor(new Color(0, 129, 0));
+            // g.fillRect(x * getPixelResolution(), (y - (height - 1)) *
+            // getPixelResolution(), width * getPixelResolution(), height *
+            // getPixelResolution());
+
             Image img3 = Toolkit.getDefaultToolkit().getImage("Images/star3.png");
-            g.drawImage(img3, x * getPixelResolution(), y * getPixelResolution(),getPixelResolution(),getPixelResolution(), null);
-            //g.setColor(new Color(0, 129, 0));
+            g.drawImage(img3, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
             break;
         case 4:
+            // g.setColor(new Color(0, 255, 0));
+            // g.fillRect(x * getPixelResolution(), (y - (height - 1)) *
+            // getPixelResolution(), width * getPixelResolution(), height *
+            // getPixelResolution());
+
             Image img4 = Toolkit.getDefaultToolkit().getImage("Images/star4.png");
-            g.drawImage(img4, x * getPixelResolution(), y * getPixelResolution(),getPixelResolution(),getPixelResolution(), null);
-            //g.setColor(new Color(0, 255, 0));
+            g.drawImage(img4, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
+
             break;
         case 5:
+            // g.setColor(new Color(0, 64, 255));
+            // g.fillRect(x * getPixelResolution(), (y - (height - 1)) *
+            // getPixelResolution(), width * getPixelResolution(), height *
+            // getPixelResolution());
+
             Image img5 = Toolkit.getDefaultToolkit().getImage("Images/star5.png");
-            g.drawImage(img5, x * getPixelResolution(), y * getPixelResolution(),getPixelResolution(),getPixelResolution(), null);
-            //g.setColor(new Color(0, 64, 255));
+            g.drawImage(img5, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
             break;
 
         default:
-            Image img6 = Toolkit.getDefaultToolkit().getImage("Images/0star.png");
-            g.drawImage(img6, x * getPixelResolution(), y * getPixelResolution(),getPixelResolution(),getPixelResolution(), null);
             // g.setColor(new Color(255, 255, 255));
+            // g.fillRect(x * getPixelResolution(), (y - (height - 1)) *
+            // getPixelResolution(), width * getPixelResolution(), height *
+            // getPixelResolution());
+
+            Image img6 = Toolkit.getDefaultToolkit().getImage("Images/0star.png");
+            g.drawImage(img6, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
             break;
         }
-        //g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
         super.drawEntity(g);
     }
 
@@ -70,6 +95,10 @@ public class EntityRoom extends Entity implements IEntity, HotelEventListener {
         // Logic for Room entity.
         // Make sure to implement features by OOSE principles
         // TODO: na 10x is deze vies bv
+    }
+
+    public void Panic() {
+        this.dirty = true;
     }
 
     /**
@@ -88,5 +117,20 @@ public class EntityRoom extends Entity implements IEntity, HotelEventListener {
      */
     public boolean getClassification(int classification) {
         return this.classification == classification;
+    }
+
+    public boolean isDirty() {
+        return dirty;
+    }
+
+    public void setDirty(boolean dirty) {
+        this.dirty = dirty;
+    }
+
+    /**
+     * 
+     */
+    public void frame() {
+        // TODO: make room dirty after x ticks
     }
 }

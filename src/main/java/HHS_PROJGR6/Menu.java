@@ -178,7 +178,7 @@ public class Menu extends JFrame {
 
         timeDisplay = new JTextField(5);
         timeDisplay.setFont(new Font("Consolas", Font.BOLD, 28));
-        //timeDisplay.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        // timeDisplay.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         timeDisplay.setHorizontalAlignment(SwingConstants.CENTER);
         timeDisplay.setBackground(new Color(0, 0, 128));
         timeDisplay.setBorder(null);
