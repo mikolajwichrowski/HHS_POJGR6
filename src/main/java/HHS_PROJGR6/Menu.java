@@ -178,7 +178,7 @@ public class Menu extends JFrame {
 
         timeDisplay = new JTextField(5);
         timeDisplay.setFont(new Font("Consolas", Font.BOLD, 28));
-        //timeDisplay.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        // timeDisplay.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         timeDisplay.setHorizontalAlignment(SwingConstants.CENTER);
         timeDisplay.setBackground(new Color(0, 0, 128));
         timeDisplay.setBorder(null);
@@ -186,7 +186,7 @@ public class Menu extends JFrame {
         timeDisplay.setBounds(20, 460, 150, 40);
 
         // Set timer for hotel clock Format time and display
-        new Timer(1000, e -> timeDisplay.setText(Clock.datetime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)))).start();
+        new Timer(1, e -> timeDisplay.setText(Clock.datetime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)))).start();
 
         timeLabel = new JLabel("Tijd HTE");
         timeLabel.setBounds(20, 430, 175, 40);

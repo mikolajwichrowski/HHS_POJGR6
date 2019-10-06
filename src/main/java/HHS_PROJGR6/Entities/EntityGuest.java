@@ -60,9 +60,9 @@ public class EntityGuest extends Entity implements IEntity, IStressable {
     }
 
     public void drawEntity(Graphics g) {
-        super.drawEntity(g);
-        // g.setColor(Color.BLACK);
+        g.setColor(entityColor);
         g.fillRect(x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution());
+        super.drawEntity(g);
     }
 
     public int getPreference() {

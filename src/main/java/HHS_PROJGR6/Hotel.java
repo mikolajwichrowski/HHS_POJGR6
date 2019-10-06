@@ -85,6 +85,13 @@ public class Hotel implements HotelEventListener {
             start = LocalDateTime.now();
         }
 
+        removeCheckoutGuest();
+
+        // Recursion to keep loop going
+        this.frame();
+    }
+
+    private void removeCheckoutGuest() {
         // Remove checked out guests
         // TODO: fix
         // if (false) {
@@ -104,9 +111,6 @@ public class Hotel implements HotelEventListener {
         // // TODO: Notify all entities that they have to do something
         // entities.stream().forEach(entity -> entity.frame());
         // }
-
-        // Recursion to keep loop going
-        this.frame();
     }
 
     /**
