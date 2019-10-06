@@ -38,7 +38,7 @@ public class Menu extends JFrame {
      *
      */
     public Menu() {
-        super.setSize(460, 540);
+        super.setSize(460, 620);
         super.setLocation(605, 0);
 
         tijdsEenheid = new JLabel("Hotel TijdsEenheid");
