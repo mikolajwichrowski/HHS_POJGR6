@@ -19,8 +19,8 @@ public class EntityDiner extends Entity implements IEntity {
     private int guests;
 
     // Constructor
-    public EntityDiner(Color entityColor) {
-        super(entityColor);
+    public EntityDiner(String entityImage) {
+        super(entityImage);
         this.capacity = 0;
         this.guests = 0;
     }
@@ -38,9 +38,6 @@ public class EntityDiner extends Entity implements IEntity {
     public void drawEntity(Graphics g) {
         g.setColor(new Color(84, 84, 84));
         g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
-
-        Image img1 = Toolkit.getDefaultToolkit().getImage("Images/Diner.png");
-        g.drawImage(img1, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
         super.drawEntity(g);
     }
 

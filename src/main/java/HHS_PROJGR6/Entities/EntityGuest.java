@@ -34,8 +34,8 @@ public class EntityGuest extends Entity implements IEntity, IStressable {
     private ArrayList<Node> instructions;
 
     // Constructor
-    public EntityGuest(Color entityColor) {
-        super(entityColor);
+    public EntityGuest(String entityImage) {
+        super(entityImage);
         this.instructions = new ArrayList<Node>();
     }
 
@@ -64,6 +64,7 @@ public class EntityGuest extends Entity implements IEntity, IStressable {
     public void drawEntity(Graphics g) {
         g.setColor(entityColor);
         g.fillRect(x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution());
+
         super.drawEntity(g);
     }
 

@@ -7,8 +7,8 @@ import static HHS_PROJGR6.Settings.getPixelResolution;
 import java.awt.*;
 
 public class EntityLobby extends Entity implements IEntity {
-    public EntityLobby(Color entityColor) {
-        super(entityColor);
+    public EntityLobby(String entityImage) {
+        super(entityImage);
     }
 
     public void drawEntity(Graphics g) {

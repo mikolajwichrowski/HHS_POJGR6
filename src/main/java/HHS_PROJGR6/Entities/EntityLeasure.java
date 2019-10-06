@@ -21,10 +21,9 @@ public class EntityLeasure extends Entity implements IEntity {
      * @param entityColor
      * @param activityType
      */
-    public EntityLeasure(Color entityColor, String activityType) {
+    public EntityLeasure(String entityImage, String activityType) {
         super(entityColor);
         this.activityType = activityType;
-
     }
 
     /**
@@ -50,24 +49,17 @@ public class EntityLeasure extends Entity implements IEntity {
         g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
 
         switch (this.activityType) {
-
         case "Cinema":
-            Image img1 = Toolkit.getDefaultToolkit().getImage("Images/cinema.png");
-            g.drawImage(img1, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
+            this.entityImage = Toolkit.getDefaultToolkit().getImage("Images/cinema.png");
             break;
 
         case "Fitness":
-            Image img2 = Toolkit.getDefaultToolkit().getImage("Images/fitness.png");
-            g.drawImage(img2, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
+            this.entityImage = Toolkit.getDefaultToolkit().getImage("Images/fitness.png");
             break;
-
         default:
             break;
-
         }
-
         super.drawEntity(g);
-
     }
 
     /**

@@ -27,16 +27,16 @@ public class EntityFactory {
         // TODO: replace color with image path
         switch (type) {
         case "Restaurant":
-            return new EntityDiner(new Color(255, 128, 0));
+            return new EntityDiner("Images/Diner.png");
 
         case "Room":
-            return new EntityRoom(new Color(255, 255, 255));
+            return new EntityRoom("Images/0star.png");
 
         case "Fitness":
-            return new EntityLeasure(new Color(255, 0, 0), type);
+            return new EntityLeasure("Images/cinema.png", type);
 
         case "Cinema":
-            return new EntityLeasure(new Color(255, 0, 255), type);
+            return new EntityLeasure("Images/fitness.png", type);
 
         case "Guest":
             return new EntityGuest(new Color(0, 0, 0));
@@ -45,10 +45,10 @@ public class EntityFactory {
             return new EntityHousekeeping(new Color(0, 255, 255));
 
         case "Elevator":
-            return new EntityTransport(new Color(138, 138, 92), type);
+            return new EntityTransport("Images/Elevator.png", type);
 
         case "Stairs":
-            return new EntityTransport(new Color(214, 214, 194), type);
+            return new EntityTransport("Images/Stair2.png", type);
 
         case "Lobby":
             return new EntityLobby(new Color(255, 255, 255));

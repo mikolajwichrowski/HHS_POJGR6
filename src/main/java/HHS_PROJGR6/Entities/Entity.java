@@ -40,7 +40,7 @@ public class Entity implements IEntity, HotelEventListener {
     /**
      * 
      */
-    public Color entityColor;
+    public String entityImage;
 
     /**
      * 
@@ -48,10 +48,10 @@ public class Entity implements IEntity, HotelEventListener {
 
     private JLabel label;
 
-    public Entity(Color entityColor) {
+    public Entity(String entityImage) {
         this.x = 0;
         this.y = 0;
-        this.entityColor = entityColor;
+        this.entityImage = entityImage;
     }
 
     /**
@@ -66,9 +66,11 @@ public class Entity implements IEntity, HotelEventListener {
      * 
      */
     public void drawEntity(Graphics g) {
+        Image img1 = Toolkit.getDefaultToolkit().getImage(entityImage);
+        g.drawImage(img1, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
+
         g.setColor(Color.black);
         g.drawRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
-
     }
 
     /**

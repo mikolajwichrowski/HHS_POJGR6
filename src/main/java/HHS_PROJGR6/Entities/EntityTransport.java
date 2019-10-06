@@ -16,19 +16,9 @@ import static HHS_PROJGR6.Settings.getPixelResolution;
 public class EntityTransport extends Entity implements IEntity {
     private String activityType;
 
-    public EntityTransport(Color entityColor, String activityType) {
-        super(entityColor);
+    public EntityTransport(String entityImage, String activityType) {
+        super(entityImage);
         this.activityType = activityType;
-    }
-
-    /**
-     * Action to execute when triggered
-     * 
-     * @param event
-     */
-    public void Notify(HotelEvent event) {
-        // Logic for transport entity.
-        // Make sure to implement features by OOSE principles
     }
 
     /**
@@ -39,26 +29,15 @@ public class EntityTransport extends Entity implements IEntity {
         g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
 
         switch (this.activityType) {
-
         case "Stairs":
-
-            Image img1 = Toolkit.getDefaultToolkit().getImage("Images/Stair2.png");
-            g.drawImage(img1, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
-            super.drawEntity(g);
+            this.entityImage = Toolkit.getDefaultToolkit().getImage("Images/Stair2.png");
             break;
-
         case "Elevator":
-            Image img2 = Toolkit.getDefaultToolkit().getImage("Images/Elevator.png");
-            g.drawImage(img2, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
-            super.drawEntity(g);
+            this.entityImage = Toolkit.getDefaultToolkit().getImage("Images/Elevator.png");
             break;
-
-        case "Default":
-
-            break;
-
         default:
+            break;
         }
-
+        super.drawEntity(g);
     }
 }
