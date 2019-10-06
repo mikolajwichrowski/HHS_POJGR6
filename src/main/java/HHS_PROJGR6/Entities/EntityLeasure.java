@@ -8,6 +8,8 @@ import java.awt.*;
 
 import static HHS_PROJGR6.Settings.getPixelResolution;
 
+import static HHS_PROJGR6.Settings.getPixelResolution;
+
 public class EntityLeasure extends Entity implements IEntity {
     /**
      * 
