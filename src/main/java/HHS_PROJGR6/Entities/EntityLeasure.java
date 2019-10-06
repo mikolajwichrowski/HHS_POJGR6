@@ -48,7 +48,26 @@ public class EntityLeasure extends Entity implements IEntity {
     public void drawEntity(Graphics g) {
         g.setColor(entityColor);
         g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
+
+        switch (this.activityType) {
+
+        case "Cinema":
+            Image img1 = Toolkit.getDefaultToolkit().getImage("Images/cinema.png");
+            g.drawImage(img1, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
+            break;
+
+        case "Fitness":
+            Image img2 = Toolkit.getDefaultToolkit().getImage("Images/fitness.png");
+            g.drawImage(img2, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
+            break;
+
+        default:
+            break;
+
+        }
+
         super.drawEntity(g);
+
     }
 
     /**

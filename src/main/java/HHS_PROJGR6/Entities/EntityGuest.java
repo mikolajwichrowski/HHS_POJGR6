@@ -1,5 +1,7 @@
 package HHS_PROJGR6.Entities;
 
+import HHS_PROJGR6.External.HotelEvent;
+import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.Interfaces.IEntity;
 import HHS_PROJGR6.Interfaces.IStressable;
 import HHS_PROJGR6.External.*;
@@ -61,6 +63,8 @@ public class EntityGuest extends Entity implements IEntity, IStressable {
 
     public void drawEntity(Graphics g) {
         g.setColor(entityColor);
+        Image img1 = Toolkit.getDefaultToolkit().getImage("C:\\Icons\\Sleutelbarricade\\Stairs1.png");
+        g.drawImage(img1, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
         g.fillRect(x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution());
         super.drawEntity(g);
     }
