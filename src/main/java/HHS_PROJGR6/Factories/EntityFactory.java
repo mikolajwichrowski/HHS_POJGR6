@@ -39,10 +39,10 @@ public class EntityFactory {
             return new EntityLeasure("Images/fitness.png", type);
 
         case "Guest":
-            return new EntityGuest(new Color(0, 0, 0));
+            return new EntityGuest("Images/Guest.png");
 
         case "Housekeeping":
-            return new EntityHousekeeping(new Color(0, 255, 255));
+            return new EntityHousekeeping("Images/housekeeping.png");
 
         case "Elevator":
             return new EntityTransport("Images/Elevator.png", type);
@@ -51,10 +51,10 @@ public class EntityFactory {
             return new EntityTransport("Images/Stair2.png", type);
 
         case "Lobby":
-            return new EntityLobby(new Color(255, 255, 255));
+            return new EntityLobby("Images/0star.png");
 
         default:
-            return new Entity(Color.white);
+            return new Entity("Images/0star.png");
         }
     }
 }
