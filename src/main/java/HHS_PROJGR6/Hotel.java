@@ -80,21 +80,24 @@ public class Hotel implements HotelEventListener {
         }
 
         // Remove checked out guests
-        ArrayList<IEntity> removeEntities = new ArrayList<IEntity>();
-        entities.stream().filter(entity -> {
-            // Filter guests
-            return entity instanceof EntityGuest;
-        }).forEach(entity -> {
-            // If guest is not a guest
-            if (!((EntityGuest) entity).getActive()) {
-                // Remove guest from hotel
-                removeEntities.add(entity);
-            }
-        });
-        removeEntities.stream().forEach(e -> this.deregister(e));
+        // TODO: fix
+        // if (false) {
+        // ArrayList<IEntity> removeEntities = new ArrayList<IEntity>();
+        // entities.stream().filter(entity -> {
+        // // Filter guests
+        // return entity instanceof EntityGuest;
+        // }).forEach(entity -> {
+        // // If guest is not a guest
+        // if (!((EntityGuest) entity).getActive()) {
+        // // Remove guest from hotel
+        // removeEntities.add(entity);
+        // }
+        // });
+        // removeEntities.stream().forEach(e -> this.deregister(e));
 
-        // TODO: Notify all entities that they have to do something
-        entities.stream().forEach(entity -> entity.frame());
+        // // TODO: Notify all entities that they have to do something
+        // entities.stream().forEach(entity -> entity.frame());
+        // }
 
         // Recursion to keep loop going
         this.frame();
@@ -312,21 +315,23 @@ public class Hotel implements HotelEventListener {
 
     private void cleaningEmergencyEvent(HotelEvent event) {
         // TODO: Gast maakt kamer vies. Schoonmaker gaat er naartoe
-        entities.stream().filter(entity -> {
-            // Get guest that has to check out
-            String guestKey = event.Data.keySet().iterator().next();
-            int guestID = EntityGuest.parseInt(guestKey);
-            return entity instanceof EntityGuest && ((EntityGuest) entity).getID() == guestID;
-        }).forEach(entity -> {
-            // Make guest make the room filthy
-            // TODO: ((EntityGuest) entity).filthy();
-        });
+        // TODO: fix
+        // entities.stream().filter(entity -> {
+        // // Get guest that has to check out
+        // String guestKey = event.Data.keySet().iterator().next();
+        // int guestID = EntityGuest.parseInt(guestKey);
+        // return entity instanceof EntityGuest && ((EntityGuest) entity).getID() ==
+        // guestID;
+        // }).forEach(entity -> {
+        // // Make guest make the room filthy
+        // // TODO: ((EntityGuest) entity).filthy();
+        // });
 
-        // TODO: pass pathfinding
-        ((EntityHousekeeping) entities.stream().filter(entity -> {
-            // Get housekeeping that is not cleaning
-            return entity instanceof EntityHousekeeping;
-        }).collect(Collectors.toList()).get(0)).cleanRoom();
+        // // TODO: pass pathfinding
+        // ((EntityHousekeeping) entities.stream().filter(entity -> {
+        // // Get housekeeping that is not cleaning
+        // return entity instanceof EntityHousekeeping;
+        // }).collect(Collectors.toList()).get(0)).cleanRoom();
 
     }
 
