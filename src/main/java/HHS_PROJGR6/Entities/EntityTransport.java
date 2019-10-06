@@ -2,9 +2,9 @@
 package HHS_PROJGR6.Entities;
 
 import HHS_PROJGR6.External.HotelEvent;
-import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.Interfaces.IEntity;
 
+import javax.swing.*;
 import java.awt.*;
 
 import static HHS_PROJGR6.Settings.getPixelResolution;
@@ -16,10 +16,11 @@ import static HHS_PROJGR6.Settings.getPixelResolution;
 public class EntityTransport extends Entity implements IEntity {
     private String activityType;
 
-    public EntityTransport(Color entityColor, String activityType) {
-        super(entityColor);
+    public EntityTransport(JLabel label, String activityType) {
+        super(label);
         this.activityType = activityType;
-    }
+
+}
 
     /**
      * Action to execute when triggered
@@ -35,30 +36,27 @@ public class EntityTransport extends Entity implements IEntity {
      * 
      */
     public void drawEntity(Graphics g) {
-        g.setColor(new Color(84, 84, 84));
-        g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
+        //g.setColor(new Color(84, 84, 84));
+        //g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
 
         switch (this.activityType) {
 
         case "Stairs":
-
             Image img1 = Toolkit.getDefaultToolkit().getImage("Images/Stair2.png");
             g.drawImage(img1, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
-            super.drawEntity(g);
             break;
 
         case "Elevator":
             Image img2 = Toolkit.getDefaultToolkit().getImage("Images/Elevator.png");
             g.drawImage(img2, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
-            super.drawEntity(g);
             break;
 
         case "Default":
-
             break;
 
         default:
-        }
 
+        }
+        super.drawEntity(g);
     }
 }

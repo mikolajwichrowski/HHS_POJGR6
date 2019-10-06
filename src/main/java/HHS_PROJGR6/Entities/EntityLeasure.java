@@ -1,12 +1,10 @@
 package HHS_PROJGR6.Entities;
 
 import HHS_PROJGR6.External.HotelEvent;
-import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.Interfaces.IEntity;
 
+import javax.swing.*;
 import java.awt.*;
-
-import static HHS_PROJGR6.Settings.getPixelResolution;
 
 import static HHS_PROJGR6.Settings.getPixelResolution;
 
@@ -21,8 +19,8 @@ public class EntityLeasure extends Entity implements IEntity {
      * @param entityColor
      * @param activityType
      */
-    public EntityLeasure(Color entityColor, String activityType) {
-        super(entityColor);
+    public EntityLeasure(JLabel label, String activityType) {
+        super(label);
         this.activityType = activityType;
 
     }
@@ -46,8 +44,8 @@ public class EntityLeasure extends Entity implements IEntity {
      * 
      */
     public void drawEntity(Graphics g) {
-        g.setColor(new Color(84, 84, 84));
-        g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
+        //g.setColor(new Color(84, 84, 84));
+        //g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
 
         switch (this.activityType) {
 

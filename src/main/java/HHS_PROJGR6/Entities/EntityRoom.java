@@ -1,9 +1,9 @@
 package HHS_PROJGR6.Entities;
 
 import HHS_PROJGR6.External.HotelEvent;
-import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.Interfaces.IEntity;
 
+import javax.swing.*;
 import java.awt.*;
 
 import static HHS_PROJGR6.Settings.getPixelResolution;
@@ -18,16 +18,16 @@ public class EntityRoom extends Entity implements IEntity {
     private int classification;
     private boolean dirty = false;
 
-    public EntityRoom(Color entityColor) {
-        super(entityColor);
+    public EntityRoom(JLabel label) {
+        super(label);
 
         this.classification = 0;
     }
 
     @Override
     public void drawEntity(Graphics g) {
-        g.setColor(new Color(84, 84, 84));
-        g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
+        //g.setColor(new Color(84, 84, 84));
+        //g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
 
         switch (this.classification) {
         case 1:

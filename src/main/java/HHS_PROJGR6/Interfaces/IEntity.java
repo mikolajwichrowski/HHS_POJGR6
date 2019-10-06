@@ -1,9 +1,9 @@
 package HHS_PROJGR6.Interfaces;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public interface IEntity {
+
     void drawEntity(Graphics g);
 
     void setPosition(Integer x, Integer y);

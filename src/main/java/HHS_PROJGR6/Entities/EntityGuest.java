@@ -1,12 +1,10 @@
 package HHS_PROJGR6.Entities;
 
-import HHS_PROJGR6.External.HotelEvent;
-import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.Interfaces.IEntity;
 import HHS_PROJGR6.Interfaces.IStressable;
-import HHS_PROJGR6.External.*;
 import HHS_PROJGR6.Utils.Node;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -34,8 +32,8 @@ public class EntityGuest extends Entity implements IEntity, IStressable {
     private ArrayList<Node> instructions;
 
     // Constructor
-    public EntityGuest(Color entityColor) {
-        super(entityColor);
+    public EntityGuest(JLabel label) {
+        super(label);
         this.instructions = new ArrayList<Node>();
     }
 
@@ -62,8 +60,8 @@ public class EntityGuest extends Entity implements IEntity, IStressable {
     }
 
     public void drawEntity(Graphics g) {
-        g.setColor(entityColor);
-        g.fillRect(x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution());
+        Image img1 = Toolkit.getDefaultToolkit().getImage("Images/Guest.png");
+        g.drawImage(img1, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
         super.drawEntity(g);
     }
 

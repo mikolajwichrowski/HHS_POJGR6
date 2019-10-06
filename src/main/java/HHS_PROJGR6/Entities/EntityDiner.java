@@ -2,9 +2,9 @@
 package HHS_PROJGR6.Entities;
 
 import HHS_PROJGR6.External.HotelEvent;
-import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.Interfaces.IEntity;
 
+import javax.swing.*;
 import java.awt.*;
 
 import static HHS_PROJGR6.Settings.getPixelResolution;
@@ -19,8 +19,8 @@ public class EntityDiner extends Entity implements IEntity {
     private int guests;
 
     // Constructor
-    public EntityDiner(Color entityColor) {
-        super(entityColor);
+    public EntityDiner(JLabel label) {
+        super(label);
         this.capacity = 0;
         this.guests = 0;
     }
@@ -36,8 +36,8 @@ public class EntityDiner extends Entity implements IEntity {
     }
 
     public void drawEntity(Graphics g) {
-        g.setColor(new Color(84, 84, 84));
-        g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
+        //g.setColor(new Color(84, 84, 84));
+        //g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
 
         Image img1 = Toolkit.getDefaultToolkit().getImage("Images/Diner.png");
         g.drawImage(img1, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);

@@ -31,6 +31,7 @@ public class App extends JFrame {
         menu.setVisible(true);
 
         Statistics statistics = new Statistics();
+        statistics.repaint();
         statistics.setVisible(true);
 
         // Init hotel rooms

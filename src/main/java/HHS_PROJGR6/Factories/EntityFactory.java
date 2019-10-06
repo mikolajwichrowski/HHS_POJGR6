@@ -3,7 +3,7 @@ package HHS_PROJGR6.Factories;
 import HHS_PROJGR6.Entities.*;
 import HHS_PROJGR6.Interfaces.IEntity;
 
-import java.awt.*;
+import javax.swing.*;
 
 /**
  * The sources below have been used to design the factory. Bron:
@@ -27,34 +27,34 @@ public class EntityFactory {
         // TODO: replace color with image path
         switch (type) {
         case "Restaurant":
-            return new EntityDiner(new Color(255, 128, 0));
+            return new EntityDiner(new JLabel("Restaurant"));
 
         case "Room":
-            return new EntityRoom(new Color(255, 255, 255));
+            return new EntityRoom(new JLabel());
 
         case "Fitness":
-            return new EntityLeasure(new Color(255, 0, 0), type);
+            return new EntityLeasure(new JLabel(), type);
 
         case "Cinema":
-            return new EntityLeasure(new Color(255, 0, 255), type);
+            return new EntityLeasure(new JLabel(), type);
 
         case "Guest":
-            return new EntityGuest(new Color(0, 0, 0));
+            return new EntityGuest(new JLabel());
 
         case "Housekeeping":
-            return new EntityHousekeeping(new Color(0, 255, 255));
+            return new EntityHousekeeping(new JLabel());
 
         case "Elevator":
-            return new EntityTransport(new Color(138, 138, 92), type);
+            return new EntityTransport(new JLabel("Images/Elevator.png"), type);
 
         case "Stairs":
-            return new EntityTransport(new Color(214, 214, 194), type);
+            return new EntityTransport(new JLabel(), type);
 
         case "Lobby":
-            return new EntityLobby(new Color(255, 255, 255));
+            return new EntityLobby(new JLabel());
 
         default:
-            return new Entity(Color.white);
+            return new Entity(new JLabel());
         }
     }
 }

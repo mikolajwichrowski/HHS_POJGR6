@@ -11,6 +11,8 @@ public class Statistics extends JFrame {
     JTextField g1,g2,g3,g4,g5,g6,g7,g8,g9,g10,g11,g12,g13,g14,g15,g16,g17,g18,g19,g20,g21,g22,g23,g24,g25,g26,g27;
     JTextField l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,l20,l21,l22,l23,l24,l25,l26,l27;
 
+
+
     public Statistics() {
         super.setSize(320, 620);
         super.setLocation(1050, 0);
@@ -246,7 +248,9 @@ public class Statistics extends JFrame {
         g27.setBorder(border);
         g27.setOpaque(true);
 
-        l1 = new JTextField("location");
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        l1 = new JTextField();
         l1.setHorizontalAlignment(SwingConstants.CENTER);
         l1.setFont(new Font("Calabri", Font.ITALIC, 12));
         l1.setBounds(150, 40, 150, 20);

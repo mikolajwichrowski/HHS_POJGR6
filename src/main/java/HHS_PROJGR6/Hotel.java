@@ -2,27 +2,23 @@ package HHS_PROJGR6;
 
 // imports from project
 
-import HHS_PROJGR6.Entities.*;
+import HHS_PROJGR6.Entities.EntityDiner;
+import HHS_PROJGR6.Entities.EntityGuest;
+import HHS_PROJGR6.Entities.EntityRoom;
 import HHS_PROJGR6.External.HotelEvent;
 import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.External.HotelEventManager;
-import HHS_PROJGR6.External.HotelEventType;
 import HHS_PROJGR6.Factories.EntityFactory;
 import HHS_PROJGR6.Interfaces.IEntity;
-import HHS_PROJGR6.Interfaces.IStressable;
-import HHS_PROJGR6.Utils.*;
+import HHS_PROJGR6.Utils.DijkstraAlgorithm;
 import HHS_PROJGR6.Utils.JsonReader;
+import HHS_PROJGR6.Utils.Node;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
-import java.util.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.util.Iterator;
+import java.util.List;
 
 // External imports
 
@@ -210,7 +206,7 @@ public class Hotel implements HotelEventListener {
 
             // Create lobby entity with factory
             entity = EntityFactory.createEntity("Lobby");
-            entity.setPosition(7, 3);
+            entity.setPosition(7, 4);
             entity.setDimensions(5, 1);
             this.register(entity);
 
