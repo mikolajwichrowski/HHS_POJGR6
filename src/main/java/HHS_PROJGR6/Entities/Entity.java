@@ -5,6 +5,7 @@ import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.Interfaces.IEntity;
 import HHS_PROJGR6.Settings;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
@@ -38,9 +39,12 @@ public class Entity implements IEntity, HotelEventListener {
      */
     public Color entityColor;
 
+
     /**
      * 
      */
+
+    private JLabel label;
 
     private int pixelResolution;
 
@@ -63,8 +67,9 @@ public class Entity implements IEntity, HotelEventListener {
      * 
      */
     public void drawEntity(Graphics g) {
-        g.setColor(Color.black);
+        //g.setColor(Color.black);
         g.drawRect(x * pixelResolution, (y - (height - 1)) * pixelResolution, width * pixelResolution, height * pixelResolution);
+
     }
 
     /**
@@ -131,5 +136,13 @@ public class Entity implements IEntity, HotelEventListener {
         // e.getYPosition() == y && e.getYPosition() - e.getHeight() <= y;
         // }).toArray(IEntity);
         return null;
+    }
+
+    public JLabel getLabel() {
+        return this.label;
+    }
+
+    public void setLabel(JLabel label) {
+        this.label = label;
     }
 }

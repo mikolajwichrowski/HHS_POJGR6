@@ -44,13 +44,13 @@ public class EntityFactory {
             return new EntityHousekeeping(new Color(0, 255, 255));
 
         case "Elevator":
-            return new EntityTransport(new Color(138, 138, 92));
+            return new EntityTransport(new Color(138, 138, 92),type);
 
         case "Stairs":
-            return new EntityTransport(new Color(214, 214, 194));
+            return new EntityTransport(new Color(214, 214, 194), type);
 
         case "Default":
-            return new EntityTransport(Color.white);
+            return new EntityTransport(new Color(255,255,255), type);
 
         default:
             return new Entity(Color.white);

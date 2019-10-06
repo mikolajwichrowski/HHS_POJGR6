@@ -36,8 +36,10 @@ public class EntityDiner extends Entity implements IEntity, HotelEventListener {
     }
 
     public void drawEntity(Graphics g) {
-        g.setColor(entityColor);
-        g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
+        Image img1 = Toolkit.getDefaultToolkit().getImage("Images/Diner.png");
+        g.drawImage(img1, x * getPixelResolution(), y * getPixelResolution(),getPixelResolution(),getPixelResolution(), null);
+       // g.setColor(entityColor);
+       // g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
         super.drawEntity(g);
     }
 

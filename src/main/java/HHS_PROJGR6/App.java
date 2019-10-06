@@ -1,5 +1,7 @@
 package HHS_PROJGR6;
 
+import HHS_PROJGR6.Utils.Statistics;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -28,6 +30,9 @@ public class App extends JFrame {
             Menu menu = new Menu();
             menu.setVisible(true);
 
+        Statistics statistics = new Statistics();
+        statistics.setVisible(true);
+
         // Init hotel rooms
         myHotel.initRooms();
 
@@ -42,7 +47,6 @@ public class App extends JFrame {
         setTitle("HotelSimulatie GR6");
         setResizable(true);
         setSize(d);
-        //setLocationRelativeTo(null);
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);

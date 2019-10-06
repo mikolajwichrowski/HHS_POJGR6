@@ -44,8 +44,28 @@ public class EntityLeasure extends Entity implements IEntity, HotelEventListener
      * 
      */
     public void drawEntity(Graphics g) {
-        g.setColor(entityColor);
-        g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
-        super.drawEntity(g);
+
+        switch (this.activityType) {
+
+            case "Cinema":
+                Image img1 = Toolkit.getDefaultToolkit().getImage("Images/cinema.png");
+                g.drawImage(img1, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
+                //g.setColor(entityColor);
+                //g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
+                super.drawEntity(g);
+                break;
+
+            case "Fitness":
+                Image img2 = Toolkit.getDefaultToolkit().getImage("Images/fitness.png");
+                g.drawImage(img2, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
+                super.drawEntity(g);
+                break;
+
+            default:
+
+
+
+        }
+
     }
 }
