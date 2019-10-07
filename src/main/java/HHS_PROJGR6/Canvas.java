@@ -4,7 +4,7 @@ import HHS_PROJGR6.Interfaces.IEntity;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.List;
 
 import static HHS_PROJGR6.Settings.getPixelResolution;
 
@@ -25,7 +25,7 @@ public class Canvas extends JPanel {
     /**
      * 
      */
-    private ArrayList<IEntity> drawableEntities;
+    private List<IEntity> drawableEntities;
 
     /**
      * Generated serial id
@@ -106,14 +106,14 @@ public class Canvas extends JPanel {
     /**
      * 
      */
-    public ArrayList<IEntity> getDrawableEntities() {
+    public List<IEntity> getDrawableEntities() {
         return drawableEntities;
     }
 
     /**
      * 
      */
-    public void setDrawableEntities(ArrayList<IEntity> drawableEntities) {
+    public void setDrawableEntities(List<IEntity> drawableEntities) {
         this.drawableEntities = drawableEntities;
         repaint();
     }

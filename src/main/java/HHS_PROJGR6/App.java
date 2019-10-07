@@ -25,8 +25,8 @@ public class App extends JFrame {
         // Set dimensions, create canvas and hotel
         Hotel myHotel = new Hotel();
 
-        // Init hotel rooms
-        myHotel.initRooms();
+        // Init entities
+        myHotel.init();
 
         Dimension d = new Dimension(getPixelResolution() * (myHotel.getHighestPositions()[0] + 4), getPixelResolution() * (myHotel.getHighestPositions()[1] + 5));
         Canvas canvas = new Canvas(d);

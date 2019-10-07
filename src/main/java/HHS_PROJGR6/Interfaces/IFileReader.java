@@ -1,5 +1,7 @@
 package HHS_PROJGR6.Interfaces;
 
-public interface IFileReader {
+import java.util.Iterator;
 
+public interface IFileReader {
+    Iterator getIterable();
 }

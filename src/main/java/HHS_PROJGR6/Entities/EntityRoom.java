@@ -71,8 +71,8 @@ public class EntityRoom extends Entity implements IEntity, IStressable {
      * @param classification
      * @return
      */
-    public boolean getClassification(int classification) {
-        return this.classification == classification;
+    public int getClassification() {
+        return this.classification;
     }
 
     public boolean isDirty() {

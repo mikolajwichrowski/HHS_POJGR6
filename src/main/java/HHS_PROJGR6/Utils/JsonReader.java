@@ -1,10 +1,13 @@
 package HHS_PROJGR6.Utils;
 
 import HHS_PROJGR6.Interfaces.IFileReader;
+import HHS_PROJGR6.Utils.ResourceReader;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.text.ParseException;
+import java.util.Iterator;
 
 import org.json.simple.*;
 import org.json.simple.JSONObject;
@@ -18,10 +21,10 @@ public class JsonReader implements IFileReader {
 
     // Constructor
     public JsonReader(String filename) {
-        this.resource = resourceReader(filename);
+        this.resource = ResourceReader.resourceReader(filename);
     }
 
-    public String getString() {
+    private String getString() {
         try {
             // Declare content variable and reader
             String content = "";
@@ -43,26 +46,21 @@ public class JsonReader implements IFileReader {
         }
     }
 
-    public JSONArray getJsonObject() {
+    public Iterator getIterable() {
         JSONParser parser = new JSONParser();
 
         try {
             JSONArray jsonArray = (JSONArray) parser.parse(getString());
-            return jsonArray;
+            return jsonArray.iterator();
         } catch (Exception exceptionOnParsingArray) {
             try {
                 JSONArray jsonArray = new JSONArray();
-                JSONObject jsonObject = (JSONObject)parser.parse(getString());
+                JSONObject jsonObject = (JSONObject) parser.parse(getString());
                 jsonArray.add(jsonObject);
-                return jsonArray;
+                return jsonArray.iterator();
             } catch (Exception exceptionOnParsingObject) {
                 return null;
             }
         }
     }
-
-    private File resourceReader(String resourceName) {
-        return new File(Thread.currentThread().getContextClassLoader().getResource(resourceName).getFile());
-    }
-
 }
