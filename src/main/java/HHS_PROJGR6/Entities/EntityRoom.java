@@ -15,18 +15,18 @@ import static HHS_PROJGR6.Settings.getPixelResolution;
 */
 
 public class EntityRoom extends Entity implements IEntity, IStressable {
-
+    private int inhabitantID;
     private int classification;
     private boolean dirty = false;
 
     public EntityRoom(String entityImage) {
         super(entityImage);
         this.classification = 0;
+        this.inhabitantID = 0;
     }
 
     @Override
     public void drawEntity(Graphics g) {
-        g.setColor(new Color(84, 84, 84));
         g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
 
         switch (this.classification) {
@@ -81,6 +81,21 @@ public class EntityRoom extends Entity implements IEntity, IStressable {
 
     public void setDirty(boolean dirty) {
         this.dirty = dirty;
+    }
+
+    /**
+     * @return the inhabitantID
+     */
+    public int getInhabitantID() {
+        return inhabitantID;
+    }
+
+    /**
+     * @param inhabitantID
+     *                         the inhabitantID to set
+     */
+    public void setInhabitantID(int inhabitantID) {
+        this.inhabitantID = inhabitantID;
     }
 
     /**

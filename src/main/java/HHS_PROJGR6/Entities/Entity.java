@@ -148,4 +148,14 @@ public class Entity implements IEntity, HotelEventListener {
     public void setLabel(JLabel label) {
         this.label = label;
     }
+
+    /**
+     * Parse string to int and remove all other characters while doing this.
+     * 
+     * @param someText
+     * @return
+     */
+    public static Integer parseInt(String someText) {
+        return Integer.parseInt(0 + someText.replaceAll("[^0-9]+", ""));
+    }
 }
