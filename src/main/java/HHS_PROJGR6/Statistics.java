@@ -1,46 +1,77 @@
 package HHS_PROJGR6;
 
-import javax.swing.*;
-import javax.swing.border.Border;
-import java.awt.*;
-import java.util.List;
-import java.util.ArrayList;
-
 import HHS_PROJGR6.Entities.EntityGuest;
+import HHS_PROJGR6.Entities.EntityLobby;
+import HHS_PROJGR6.Entities.EntityRoom;
 import HHS_PROJGR6.Interfaces.IEntity;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Bron: https://docs.oracle.com/javase/tutorial/uiswing/components/table.html
  */
 public class Statistics extends JFrame {
 
-    JLabel guest;
-    JLabel location;
-    JTextField g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12, g13, g14, g15, g16, g17, g18, g19, g20, g21, g22, g23, g24, g25, g26, g27;
-    JTextField l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12, l13, l14, l15, l16, l17, l18, l19, l20, l21, l22, l23, l24, l25, l26, l27;
+//    JLabel guest;
+//    JLabel location;
+//    JTextField g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12, g13, g14, g15, g16, g17, g18, g19, g20, g21, g22, g23, g24, g25, g26, g27;
+//    JTextField l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12, l13, l14, l15, l16, l17, l18, l19, l20, l21, l22, l23, l24, l25, l26, l27;
 
     public Statistics(List<IEntity> entities) {
-        super.setSize(300, 200);
+        super.setSize(800, 300);
         super.setLocation(1050, 0);
 
         System.out.println("Entities = " + entities.size());
 
         // Define data and columns
         List<String[]> data = new ArrayList<String[]>();
-        String column[] = { "ID", "X", "Y" };
+        String column[] = { "Guest", "position", "Location","Preference","Location"};
 
         // Loop trough entities
         for (int i = 0; i < entities.size(); i++) {
             // Set row data
             if (entities.get(i) instanceof EntityGuest) {
-                String[] row = new String[3];
-                row[0] = "Entity " + ((EntityGuest) entities.get(i)).getID();
+                EntityGuest entity = (EntityGuest) entities.get(i);
+                String[] row = new String[5];
+                row[0] = "Guest: " + ((EntityGuest) entities.get(i)).getID();
                 row[1] = "" + entities.get(i).getXPosition();
                 row[2] = "" + entities.get(i).getYPosition();
 
-                // Set row in data
+                if (entities.get(i).getYPosition() == 7) {
+                    row[2] = "Lobby";
+                }if (entities.get(i).getYPosition() == 6){
+                    row[2] = "First floor";
+                }if (entities.get(i).getYPosition() == 5){
+                    row[2] = "Second floor";
+                }if (entities.get(i).getYPosition() == 4){
+                    row[2] = "Third floor";
+                }if (entities.get(i).getYPosition() == 3){
+                    row[2] = "Fourth floor";
+                }if (entities.get(i).getYPosition() == 2){
+                    row[2] = "Fifth floor";
+                }
+
+                row[3] = "Room " + ((EntityGuest) entities.get(i)).getPreference();
+
+                for(IEntity lookupEntity : entities) {
+                    if (lookupEntity.getXPosition() == entity.getXPosition() && lookupEntity.getYPosition() == entity.getYPosition()) {
+
+                        if (lookupEntity instanceof EntityRoom){
+                            row[4] = "Room " + ((EntityRoom) lookupEntity).getClassification();
+                        }
+                        if (lookupEntity instanceof EntityLobby){
+                            row[4] = "Lobby";
+                        }
+                        // Set row in data
+                }
+                }
                 data.add(row);
+
             }
+
 
         }
 

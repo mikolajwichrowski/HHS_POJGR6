@@ -7,36 +7,14 @@ import java.time.format.FormatStyle;
 
 public class Menu extends JFrame {
 
-    private JLabel tijdsEenheid;
-    private JButton buttonPlus;
-    private JButton buttonMinus;
-    private JTextField timeFactor;
-    private JLabel pixelResolution;
-    private JButton pixelPlus;
-    private JButton pixelMin;
-    private JTextField pixelFactor;
-    private JLabel filthTime;
-    private JButton filthPlus;
-    private JButton filthMin;
-    private JTextField filthFactor;
-    private JLabel leasureTime;
-    private JButton leasurePlus;
-    private JButton leasureMin;
-    private JTextField leasureFactor;
-    private JLabel elevatorTime;
-    private JButton elevatorPlus;
-    private JButton elevatorMin;
-    private JTextField elevatorFactor;
-    private JLabel stairTime;
-    private JButton stairPlus;
-    private JButton stairMin;
-    private JTextField stairFactor;
-    private JLabel timeLabel;
-    private JTextField timeDisplay;
+    private JLabel tijdsEenheid, pixelResolution,filthTime,leasureTime,elevatorTime,stairTime,timeLabel;
+    private JButton buttonPlus, buttonMinus,pixelPlus,pixelMin,filthPlus,filthMin,leasurePlus,leasureMin,elevatorPlus,elevatorMin,stairPlus,stairMin       ;
+    private JTextField timeFactor,pixelFactor,filthFactor,leasureFactor,elevatorFactor,stairFactor,timeDisplay;
 
     /**
      *
      */
+
     public Menu() {
         super.setSize(460, 620);
         super.setLocation(605, 0);
@@ -184,7 +162,6 @@ public class Menu extends JFrame {
         timeDisplay.setBorder(null);
         timeDisplay.setForeground(new Color(255, 255, 255));
         timeDisplay.setBounds(20, 450, 150, 40);
-
         // Set timer for hotel clock Format time and display
         new Timer(1000, e -> timeDisplay.setText(Clock.datetime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM)))).start();
 
@@ -192,32 +169,10 @@ public class Menu extends JFrame {
         timeLabel.setBounds(20, 420, 175, 40);
         timeLabel.setFont(new Font("Calabri", Font.ITALIC, 12));
 
-        add(buttonPlus);
-        add(buttonMinus);
-        add(timeFactor);
-        add(tijdsEenheid);
-        add(pixelResolution);
-        add(pixelPlus);
-        add(pixelMin);
-        add(pixelFactor);
-        add(filthTime);
-        add(filthPlus);
-        add(filthMin);
-        add(filthFactor);
-        add(leasureTime);
-        add(leasurePlus);
-        add(leasureMin);
-        add(leasureFactor);
-        add(elevatorTime);
-        add(elevatorPlus);
-        add(elevatorMin);
-        add(elevatorFactor);
-        add(stairTime);
-        add(stairPlus);
-        add(stairMin);
-        add(stairFactor);
-        add(timeLabel);
-        add(timeDisplay);
+        add(buttonPlus);add(buttonMinus);add(timeFactor);add(tijdsEenheid);add(pixelResolution);add(pixelPlus); add(pixelMin);add(pixelFactor);
+        add(filthTime);add(filthPlus);add(filthMin);add(filthFactor);add(leasureTime);add(leasurePlus);add(leasureMin);add(leasureFactor);
+        add(elevatorTime);add(elevatorPlus);add(elevatorMin);add(elevatorFactor);add(stairTime);add(stairPlus);add(stairMin);add(stairFactor);
+        add(timeLabel);add(timeDisplay);
 
         setTitle("regulering Scherm");
         setResizable(true);
@@ -226,6 +181,5 @@ public class Menu extends JFrame {
 
         // Zet deze aan als je ze allemaal in 1 keer wil sluiten
         //setDefaultCloseOperation(EXIT_ON_CLOSE);
-
     }
 }

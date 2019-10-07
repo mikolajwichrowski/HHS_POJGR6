@@ -15,16 +15,13 @@ import HHS_PROJGR6.Utils.JsonReader;
 import HHS_PROJGR6.Utils.Node;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import javax.swing.*;
+import java.awt.event.KeyEvent;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-
-import javax.swing.JComponent;
-import javax.swing.KeyStroke;
 
 // External imports
 
@@ -315,11 +312,12 @@ public class Hotel implements HotelEventListener {
     private void checkInEvent(HotelEvent event) {
         // TODO: maak gasten aan
         EntityGuest guest = (EntityGuest) EntityFactory.createEntity("Guest");
-        guest.setPosition(7, 2);
+        guest.setPosition(6, 2);
         String guestKey = event.Data.keySet().iterator().next();
         guest.setID(guestKey);
         guest.setPreference(event.Data.get(guestKey));
         register(guest);
+
 
         // TODO: moet path lopen
         // Van/Tot: DijkstraAlgorithm.createLocationNode(1, 4)

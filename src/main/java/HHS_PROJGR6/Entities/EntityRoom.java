@@ -1,10 +1,8 @@
 package HHS_PROJGR6.Entities;
 
-import HHS_PROJGR6.External.HotelEvent;
 import HHS_PROJGR6.Interfaces.IEntity;
 import HHS_PROJGR6.Interfaces.IStressable;
 
-import javax.swing.*;
 import java.awt.*;
 
 import static HHS_PROJGR6.Settings.getPixelResolution;
@@ -26,13 +24,12 @@ public class EntityRoom extends Entity implements IEntity, IStressable {
 
     @Override
     public void drawEntity(Graphics g) {
-        g.setColor(new Color(84, 84, 84));
+        g.setColor(new Color(189, 189, 189));
         g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
 
         switch (this.classification) {
         case 1:
             this.entityImage = "Images/star1.png";
-
             break;
         case 2:
             this.entityImage = "Images/star2.png";
@@ -42,7 +39,6 @@ public class EntityRoom extends Entity implements IEntity, IStressable {
             break;
         case 4:
             this.entityImage = "Images/star4.png";
-
             break;
         case 5:
             this.entityImage = "Images/star5.png";
@@ -71,8 +67,8 @@ public class EntityRoom extends Entity implements IEntity, IStressable {
      * @param classification
      * @return
      */
-    public boolean getClassification(int classification) {
-        return this.classification == classification;
+    public int getClassification() {
+        return this.classification ;
     }
 
     public boolean isDirty() {
