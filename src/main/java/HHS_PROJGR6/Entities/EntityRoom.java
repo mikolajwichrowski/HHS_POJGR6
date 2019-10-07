@@ -1,10 +1,8 @@
 package HHS_PROJGR6.Entities;
 
-import HHS_PROJGR6.External.HotelEvent;
 import HHS_PROJGR6.Interfaces.IEntity;
 import HHS_PROJGR6.Interfaces.IStressable;
 
-import javax.swing.*;
 import java.awt.*;
 
 import static HHS_PROJGR6.Settings.getPixelResolution;
@@ -15,24 +13,23 @@ import static HHS_PROJGR6.Settings.getPixelResolution;
 */
 
 public class EntityRoom extends Entity implements IEntity, IStressable {
-
+    private int inhabitantID;
     private int classification;
     private boolean dirty = false;
 
     public EntityRoom(String entityImage) {
         super(entityImage);
         this.classification = 0;
+        this.inhabitantID = 0;
     }
 
     @Override
     public void drawEntity(Graphics g) {
-        g.setColor(new Color(84, 84, 84));
         g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
 
         switch (this.classification) {
         case 1:
             this.entityImage = "Images/star1.png";
-
             break;
         case 2:
             this.entityImage = "Images/star2.png";
@@ -42,7 +39,6 @@ public class EntityRoom extends Entity implements IEntity, IStressable {
             break;
         case 4:
             this.entityImage = "Images/star4.png";
-
             break;
         case 5:
             this.entityImage = "Images/star5.png";
@@ -81,6 +77,21 @@ public class EntityRoom extends Entity implements IEntity, IStressable {
 
     public void setDirty(boolean dirty) {
         this.dirty = dirty;
+    }
+
+    /**
+     * @return the inhabitantID
+     */
+    public int getInhabitantID() {
+        return inhabitantID;
+    }
+
+    /**
+     * @param inhabitantID
+     *                         the inhabitantID to set
+     */
+    public void setInhabitantID(int inhabitantID) {
+        this.inhabitantID = inhabitantID;
     }
 
     /**

@@ -4,7 +4,7 @@ package HHS_PROJGR6;
  * Settings
  */
 public class Settings {
-    private static int pixelResolution = 40;
+    private static int pixelResolution = 80;
     private static int filthTime = 10;
     private static int leasureTime = 10;
     private static int stairCost = 2;
@@ -22,18 +22,7 @@ public class Settings {
      *                            the pixelResolution to set
      */
     public static void setPixelResolution(int pixelResolution) {
-        switch (pixelResolution) {
-        case 12:
-        case 24:
-        case 32:
-        case 48:
-            pixelResolution = pixelResolution;
-            break;
-
-        default:
-            // TODO: verander naar default en geef melding aan gebruiker
-            break;
-        }
+        pixelResolution = pixelResolution;
     }
 
     /**

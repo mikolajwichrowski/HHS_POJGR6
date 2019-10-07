@@ -68,6 +68,7 @@ public class Canvas extends JPanel {
         // Loop door elke row heen
         for (IEntity entity : drawableEntities) {
             if (entity != null) {
+                g.setColor(new Color(189, 189, 189));
                 entity.drawEntity(g);
             }
         }

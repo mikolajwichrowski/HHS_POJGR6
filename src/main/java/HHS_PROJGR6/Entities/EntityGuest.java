@@ -38,21 +38,8 @@ public class EntityGuest extends Entity implements IEntity, IStressable {
         this.instructions = new ArrayList<Node>();
     }
 
-    public void goToRestaurant() {
-        // TODO: get path to restaurant
-    }
-
-    public void goToCinema() {
-        // TODO: get path to cinema
-    }
-
-    public void goToFitness() {
-        // TODO: get path to fittness
-    }
-
     public void checkout() {
         this.guestId = 0;
-        // TODO: get path to exit
     }
 
     public void panic() {
@@ -69,11 +56,11 @@ public class EntityGuest extends Entity implements IEntity, IStressable {
     }
 
     public void setPreference(String preference) {
-        this.preference = EntityGuest.parseInt(preference);
+        this.preference = Entity.parseInt(preference);
     }
 
     public void setID(String id) {
-        this.guestId = EntityGuest.parseInt(id);
+        this.guestId = Entity.parseInt(id);
     }
 
     public Integer getID() {
@@ -81,7 +68,7 @@ public class EntityGuest extends Entity implements IEntity, IStressable {
     }
 
     public boolean getActive() {
-        return this.guestId != 0 && this.instructions.size() > 0;
+        return !(this.guestId == 0 && this.instructions.size() > 0);
     }
 
     public void setInstructions(List<Node> instructions) {
@@ -99,14 +86,7 @@ public class EntityGuest extends Entity implements IEntity, IStressable {
             instructions.remove(0);
         }
 
-        // TODO: if on room
-        // make dirty
-
         // TODO: if no instructions and no movie playing
         // Go back to room
-    }
-
-    public static Integer parseInt(String someText) {
-        return Integer.parseInt(someText.replaceAll("[^0-9]+", ""));
     }
 }

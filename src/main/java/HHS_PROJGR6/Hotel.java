@@ -1,5 +1,7 @@
 package HHS_PROJGR6;
 
+import HHS_PROJGR6.Entities.Entity;
+
 // imports from project
 
 import HHS_PROJGR6.Entities.EntityDiner;
@@ -15,6 +17,9 @@ import HHS_PROJGR6.Utils.JsonReader;
 import HHS_PROJGR6.Utils.Node;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import javax.swing.*;
+import java.awt.event.KeyEvent;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -107,7 +112,16 @@ public class Hotel implements HotelEventListener {
      * Removes guest that are checked out
      */
     private void removeCheckoutGuest() {
+        ArrayList<IEntity> removalbleEntities = new ArrayList<IEntity>();
+        for (IEntity entity : entities) {
+            if (entity instanceof EntityGuest && !((EntityGuest) entity).getActive()) {
+                removalbleEntities.add(entity);
+            }
+        }
 
+        for (IEntity entity : removalbleEntities) {
+            entities.remove(entity);
+        }
     }
 
     /**
@@ -197,6 +211,13 @@ public class Hotel implements HotelEventListener {
 
             // Run events
             eventManager = new HotelEventManager();
+
+            eventManager.changeSpeed(0.5);
+            Clock.reduceClockspeed();
+            Clock.reduceClockspeed();
+            Clock.reduceClockspeed();
+            Clock.reduceClockspeed();
+
             eventManager.register(this);
             eventManager.start();
         } catch (Exception e) {
@@ -246,31 +267,33 @@ public class Hotel implements HotelEventListener {
      * Called upon when event manager has a event
      */
     public void Notify(HotelEvent event) {
+        String key = event.Data.keySet().iterator().next();
+
         // Which event is fired
         switch (event.Type) {
         case CHECK_IN:
             // Create new guest
             EntityGuest guest = (EntityGuest) EntityFactory.createEntity("Guest");
             guest.setPosition(getHighestPositions()[1] + 1, getHighestPositions()[0] + 2);
-            String guestKey = event.Data.keySet().iterator().next();
-            guest.setID(guestKey);
-            guest.setPreference(event.Data.get(guestKey));
+            guest.setID(key);
+            guest.setPreference(event.Data.get(key));
 
             // Find available room with preference
-            IEntity room = null;
+            EntityRoom room = null;
             for (IEntity entity : entities) {
-                if (entity instanceof EntityRoom && ((EntityRoom) entity).getClassification() == guest.getPreference()) {
-                    room = entity;
+                if (entity instanceof EntityRoom && ((EntityRoom) entity).getClassification() == guest.getPreference() && ((EntityRoom) entity).getInhabitantID() == 0) {
+                    room = ((EntityRoom) entity);
                 }
             }
 
             // If there is a room
             if (room != null) {
+                // Set inhabitant
+                room.setInhabitantID(guest.getID());
+
                 // Generate instructions to available room
                 Node from = DijkstraAlgorithm.createLocationNode(2, 7);
                 Node to = DijkstraAlgorithm.createLocationNode(room.getXPosition(), room.getYPosition());
-
-                System.out.println(nodeGraph.get(0).getX() + " " + nodeGraph.get(0).getX());
 
                 // This is weird but this needs to be
                 nodeGraph = DijkstraAlgorithm.getGraph(getHighestPositions()[0] + 2, getHighestPositions()[1] + 1, entities);
@@ -278,8 +301,33 @@ public class Hotel implements HotelEventListener {
                 guest.setInstructions(DijkstraAlgorithm.findPath(from, to, (ArrayList<Node>) nodeGraph.clone()));
 
                 register(guest);
-            } else {
-                System.out.println("No room for guest");
+            }
+            break;
+        case CHECK_OUT:
+            int removeInhabitantID = 0;
+            for (IEntity entity : entities) {
+                if (entity instanceof EntityGuest && ((EntityGuest) entity).getID() == Entity.parseInt(event.Data.get(key))) {
+                    // Generate instructions to available room
+                    Node from = DijkstraAlgorithm.createLocationNode(entity.getXPosition(), entity.getYPosition());
+                    Node to = DijkstraAlgorithm.createLocationNode(2, 7);
+
+                    // This is weird but this needs to be
+                    nodeGraph = DijkstraAlgorithm.getGraph(getHighestPositions()[0] + 2, getHighestPositions()[1] + 1, entities);
+
+                    // Remove inhabitant from room
+                    removeInhabitantID = ((EntityGuest) entity).getID();
+
+                    // Set last instructions and set ID to 0
+                    ((EntityGuest) entity).setInstructions(DijkstraAlgorithm.findPath(from, to, (ArrayList<Node>) nodeGraph.clone()));
+                    ((EntityGuest) entity).checkout();
+                }
+            }
+
+            // Remove inhabitant from room
+            for (IEntity entity : entities) {
+                if (entity instanceof EntityRoom && removeInhabitantID == ((EntityRoom) entity).getInhabitantID()) {
+                    ((EntityRoom) entity).setInhabitantID(0);
+                }
             }
             break;
 
@@ -299,10 +347,6 @@ public class Hotel implements HotelEventListener {
 
             break;
 
-        case CHECK_OUT:
-
-            break;
-
         case GOTO_RESTAURANT:
 
             break;
@@ -317,7 +361,7 @@ public class Hotel implements HotelEventListener {
 
         case NONE:
         default:
-            // No event happends here
+            // No event
             break;
 
         }
@@ -340,7 +384,7 @@ public class Hotel implements HotelEventListener {
      * @return
      */
     private int[] getHighest(Iterator i, String value) {
-        // TODO: make this a better algo !!!!!!!!!!!!
+        // This is not so good :'(
         int[] highest = new int[2];
         highest[0] = 0;
         highest[1] = 0;

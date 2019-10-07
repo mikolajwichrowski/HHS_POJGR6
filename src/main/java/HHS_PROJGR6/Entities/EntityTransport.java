@@ -1,10 +1,8 @@
 
 package HHS_PROJGR6.Entities;
 
-import HHS_PROJGR6.External.HotelEvent;
 import HHS_PROJGR6.Interfaces.IEntity;
 
-import javax.swing.*;
 import java.awt.*;
 
 import static HHS_PROJGR6.Settings.getPixelResolution;
@@ -18,7 +16,7 @@ public class EntityTransport extends Entity implements IEntity {
         super(entityImage);
         switch (activityType) {
         case "Stairs":
-            this.entityImage = "Images/Stair2.png";
+            this.entityImage = "Images/Stair.png";
             break;
         case "Elevator":
             this.entityImage = "Images/Elevator.png";
@@ -32,7 +30,6 @@ public class EntityTransport extends Entity implements IEntity {
      * 
      */
     public void drawEntity(Graphics g) {
-        g.setColor(new Color(84, 84, 84));
         g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
 
         super.drawEntity(g);

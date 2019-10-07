@@ -3,8 +3,6 @@ package HHS_PROJGR6.Factories;
 import HHS_PROJGR6.Entities.*;
 import HHS_PROJGR6.Interfaces.IEntity;
 
-import javax.swing.*;
-
 /**
  * The sources below have been used to design the factory. Bron:
  * https://blackboard.hhs.nl/bbcswebdav/pid-2782283-dt-content-rid-23462854_2/courses/H-SE-OOSE-1-17-2019/Advanced%20Programming%201.pdf
@@ -42,7 +40,7 @@ public class EntityFactory {
             return new EntityGuest("Images/Guest.png");
 
         case "Housekeeping":
-            return new EntityHousekeeping("Images/housekeeping.png");
+            return new EntityHousekeeping("Images/Housekeeping.png");
 
         case "Elevator":
             return new EntityTransport("Images/Elevator.png", type);
