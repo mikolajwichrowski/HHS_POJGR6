@@ -228,6 +228,9 @@ public class Hotel implements HotelEventListener {
 
         // Draw entities
         hotelCanvas.setDrawableEntities(entities);
+
+        // Add bindings now we know canvas is OK
+        setMenuBindings();
     }
 
     /**
@@ -369,17 +372,14 @@ public class Hotel implements HotelEventListener {
     public void showMenu() {
         Menu menu = new Menu();
         menu.setVisible(true);
-        System.out.println("Show menu");
     }
 
     /**
      * Shows statistics
      */
     public void showStatistics() {
-        if (entities != null) {
-            Statistics statistics = new Statistics(entities);
-        }
-        System.out.println("Show statistics");
+        Statistics statistics = new Statistics(entities);
+        statistics.setVisible(true);
     }
 
     /**

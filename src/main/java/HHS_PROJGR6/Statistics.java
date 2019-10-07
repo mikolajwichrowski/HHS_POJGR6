@@ -59,7 +59,6 @@ public class Statistics extends JFrame {
         setTitle("Statistieken");
         setResizable(true);
         getContentPane().setBackground(new Color(245, 245, 240));
-        setVisible(true);
 
         // guest = new JLabel("Guests", JLabel.CENTER);
         // guest.setFont(new Font("Calabri", Font.ITALIC, 12));
