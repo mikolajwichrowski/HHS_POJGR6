@@ -7,16 +7,19 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static HHS_PROJGR6.Settings.getElevatorCost;
+import static HHS_PROJGR6.Settings.getStairCost;
+
 public class DijkstraAlgorithm {
-    public int nodeCounter;
-
-    // TODO: start -> stop
-    public DijkstraAlgorithm() {
-
-    }
-
-    public List<Node> getGraph(Integer width, Integer height, List<IEntity> entities) {
-        List<Node> nodes = new ArrayList<Node>();
+    /**
+     * 
+     * @param width
+     * @param height
+     * @param entities
+     * @return
+     */
+    public static ArrayList<Node> getGraph(Integer width, Integer height, List<IEntity> entities) {
+        ArrayList<Node> nodes = new ArrayList<Node>();
 
         // Transport points
         for (int x = 1; x <= width; x++) {
@@ -28,14 +31,14 @@ public class DijkstraAlgorithm {
                     if (y != height && Entity.getOnPosition(x, y + 1, entities).size() > 0) {
                         Node below = new Node();
                         below.setPosition(node.getX(), node.getY() + 1);
-                        below.setCost(x == 1 ? 5 : 3); // right stairs are easier
+                        below.setCost(x == 1 ? getElevatorCost() : getStairCost());
                         node.addNeighbour(below);
                     }
 
                     if (y != 1 && Entity.getOnPosition(x, y - 1, entities).size() > 0) {
                         Node below = new Node();
                         below.setPosition(node.getX(), node.getY() - 1);
-                        below.setCost(x == 1 ? 5 : 3); // right stairs are easier
+                        below.setCost(x == 1 ? getElevatorCost() : getStairCost());
                         node.addNeighbour(below);
                     }
 
@@ -83,8 +86,14 @@ public class DijkstraAlgorithm {
         return nodes;
     }
 
-    private List<Node> shiftTo(List<Node> graph, Node node) {
-        List<Node> shiftedNodes = graph;
+    /**
+     * 
+     * @param graph
+     * @param node
+     * @return
+     */
+    private static ArrayList<Node> shiftTo(ArrayList<Node> graph, Node node) {
+        ArrayList<Node> shiftedNodes = graph;
         Node inspecting = null;
 
         boolean shifted = false;
@@ -102,10 +111,17 @@ public class DijkstraAlgorithm {
         return shiftedNodes;
     }
 
-    public List<Node> findPath(Node source, Node destination, List<Node> graph) {
+    /**
+     * 
+     * @param source
+     * @param destination
+     * @param graph
+     * @return
+     */
+    public static List<Node> findPath(Node source, Node destination, ArrayList<Node> graph) {
         // Keep trach of visited and unvisited
-        List<Node> visited = new ArrayList<Node>();
-        List<Node> unvisited = shiftTo(graph, source);
+        ArrayList<Node> visited = new ArrayList<Node>();
+        ArrayList<Node> unvisited = shiftTo(graph, source);
         Node inspecting = unvisited.get(0);
 
         // Set cost of head
@@ -146,14 +162,14 @@ public class DijkstraAlgorithm {
         inspecting = visited.get(0);
 
         // Create final map
-        List<Node> finalPath = new ArrayList<Node>();
+        ArrayList<Node> finalPath = new ArrayList<Node>();
         finalPath.add(inspecting);
 
         // Traverse path (destination -> source)
         boolean backToSource = false;
         while (!backToSource) {
             // Get lowest child from neighbours
-            List<Node> neighbours = new ArrayList<Node>();
+            ArrayList<Node> neighbours = new ArrayList<Node>();
             for (Node node : visited) {
                 // Where inspeciting is in children
                 boolean foundInNeighbours = false;
@@ -161,24 +177,29 @@ public class DijkstraAlgorithm {
                     foundInNeighbours = !foundInNeighbours ? child.compare(inspecting) : true;
                 }
 
-                if (foundInNeighbours) {
+                boolean inPath = finalPath.stream().filter(e -> node.compare(e)).toArray().length > 0;
+                if (foundInNeighbours && !inPath) {
                     neighbours.add(node);
                 }
             }
-            Node lowestChildNode = neighbours.stream().min(Comparator.comparing(Node::getCostToParent)).get();
+            try {
+                Node lowestChildNode = neighbours.stream().min(Comparator.comparing(Node::getCostToParent)).get();
 
-            // Set current inspecting
-            inspecting = lowestChildNode;
+                // Set current inspecting
+                inspecting = lowestChildNode;
 
-            // Add lowest child node
-            finalPath.add(lowestChildNode);
+                // Add lowest child node
+                finalPath.add(lowestChildNode);
 
-            // If the parent is the source, we are done.
-            if (lowestChildNode.getParent().compare(source)) {
+                // If the parent is the source, we are done.
+                if (lowestChildNode.getParent().compare(source)) {
+                    backToSource = true;
+                    inspecting = source;
+                    inspecting.setCostToParent(0);
+                    finalPath.add(inspecting);
+                }
+            } catch (Exception e) {
                 backToSource = true;
-                inspecting = source;
-                inspecting.setCostToParent(0);
-                finalPath.add(inspecting);
             }
 
         }
@@ -188,6 +209,12 @@ public class DijkstraAlgorithm {
         return finalPath;
     }
 
+    /**
+     * 
+     * @param x
+     * @param y
+     * @return
+     */
     public static Node createLocationNode(Integer x, Integer y) {
         Node location = new Node();
         location.setPosition(x, y);

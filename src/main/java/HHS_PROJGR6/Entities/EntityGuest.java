@@ -1,14 +1,13 @@
 package HHS_PROJGR6.Entities;
 
-import HHS_PROJGR6.External.HotelEvent;
-import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.Interfaces.IEntity;
 import HHS_PROJGR6.Interfaces.IStressable;
-import HHS_PROJGR6.External.*;
 import HHS_PROJGR6.Utils.Node;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import static HHS_PROJGR6.Settings.getPixelResolution;
 
@@ -31,11 +30,11 @@ public class EntityGuest extends Entity implements IEntity, IStressable {
     /**
      * Set of instructions the guest has to follow
      */
-    private ArrayList<Node> instructions;
+    private List<Node> instructions;
 
     // Constructor
-    public EntityGuest(Color entityColor) {
-        super(entityColor);
+    public EntityGuest(String entityImage) {
+        super(entityImage);
         this.instructions = new ArrayList<Node>();
     }
 
@@ -62,8 +61,6 @@ public class EntityGuest extends Entity implements IEntity, IStressable {
     }
 
     public void drawEntity(Graphics g) {
-        g.setColor(entityColor);
-        g.fillRect(x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution());
         super.drawEntity(g);
     }
 
@@ -87,23 +84,29 @@ public class EntityGuest extends Entity implements IEntity, IStressable {
         return this.guestId != 0 && this.instructions.size() > 0;
     }
 
-    public static Integer parseInt(String someText) {
-        return Integer.parseInt(someText.replaceAll("[^0-9]+", ""));
+    public void setInstructions(List<Node> instructions) {
+        this.instructions = instructions;
     }
 
     /**
      * 
      */
     public void frame() {
-        // TODO: if has instructions
-        Node instruction = instructions.get(0);
-        setPosition(instruction.getY(), instruction.getX());
-        instructions.remove(0);
+        // if has instructions do them
+        if (instructions.size() > 0) {
+            Node instruction = instructions.get(0);
+            setPosition(instruction.getY(), instruction.getX());
+            instructions.remove(0);
+        }
 
         // TODO: if on room
         // make dirty
 
         // TODO: if no instructions and no movie playing
         // Go back to room
+    }
+
+    public static Integer parseInt(String someText) {
+        return Integer.parseInt(someText.replaceAll("[^0-9]+", ""));
     }
 }

@@ -1,12 +1,10 @@
 package HHS_PROJGR6.Entities;
 
 import HHS_PROJGR6.External.HotelEvent;
-import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.Interfaces.IEntity;
 
+import javax.swing.*;
 import java.awt.*;
-
-import static HHS_PROJGR6.Settings.getPixelResolution;
 
 import static HHS_PROJGR6.Settings.getPixelResolution;
 
@@ -21,10 +19,9 @@ public class EntityLeasure extends Entity implements IEntity {
      * @param entityColor
      * @param activityType
      */
-    public EntityLeasure(Color entityColor, String activityType) {
-        super(entityColor);
+    public EntityLeasure(String entityImage, String activityType) {
+        super(entityImage);
         this.activityType = activityType;
-
     }
 
     /**
@@ -50,24 +47,17 @@ public class EntityLeasure extends Entity implements IEntity {
         g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
 
         switch (this.activityType) {
-
         case "Cinema":
-            Image img1 = Toolkit.getDefaultToolkit().getImage("Images/cinema.png");
-            g.drawImage(img1, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
+            this.entityImage = "Images/cinema.png";
             break;
 
         case "Fitness":
-            Image img2 = Toolkit.getDefaultToolkit().getImage("Images/fitness.png");
-            g.drawImage(img2, x * getPixelResolution(), y * getPixelResolution(), getPixelResolution(), getPixelResolution(), null);
+            this.entityImage = "Images/fitness.png";
             break;
-
         default:
             break;
-
         }
-
         super.drawEntity(g);
-
     }
 
     /**

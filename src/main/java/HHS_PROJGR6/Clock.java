@@ -16,7 +16,7 @@ public class Clock {
     /**
      * 
      */
-    private static int clockspeed = 1;
+    private static double clockspeed = 1.00;
 
     /**
      * 
@@ -27,21 +27,25 @@ public class Clock {
      * 
      */
     public static void addClockspeed() {
-        Clock.clockspeed++;
+        if (Clock.clockspeed < 2) {
+            Clock.clockspeed += 0.1;
+        }
     }
 
     /**
      * Method to reduce the clockspeed
      */
     public static void reduceClockspeed() {
-        Clock.clockspeed--;
+        if (Clock.clockspeed > 0) {
+            Clock.clockspeed -= 0.1;
+        }
     }
 
     /**
      * 
      * @return
      */
-    public static int getClockspeed() {
+    public static double getClockspeed() {
         return clockspeed;
     }
 
