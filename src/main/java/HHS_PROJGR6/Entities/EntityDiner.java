@@ -4,7 +4,6 @@ package HHS_PROJGR6.Entities;
 import HHS_PROJGR6.External.HotelEvent;
 import HHS_PROJGR6.Interfaces.IEntity;
 
-import javax.swing.*;
 import java.awt.*;
 
 import static HHS_PROJGR6.Settings.getPixelResolution;
