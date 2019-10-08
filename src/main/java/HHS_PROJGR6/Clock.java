@@ -12,41 +12,34 @@ public class Clock {
      *
      */
     private static final long serialVersionUID = 5747202131986299347L;
-
     /**
      * 
      */
-    private static double clockspeed = 1.00;
-
+    private static double clockspeed = 1.0;
     /**
      * 
      */
     public static LocalDateTime datetime = LocalDateTime.now();
-
     /**
-     * 
+     * Method to make the clockspeed go faster.
      */
     public static void addClockspeed() {
-        if (Clock.clockspeed < 2) {
+        if (Clock.clockspeed < 2.0) {
             Clock.clockspeed += 0.1;
         }
     }
-
     /**
-     * Method to reduce the clockspeed
+     * Method to reduce the clockspeed.
      */
     public static void reduceClockspeed() {
-        if (Clock.clockspeed > 0) {
+        if (Clock.clockspeed > 0.0) {
             Clock.clockspeed -= 0.1;
         }
     }
-
     /**
-     * 
      * @return
      */
     public static double getClockspeed() {
-        return clockspeed;
+        return Clock.clockspeed;
     }
-
 }

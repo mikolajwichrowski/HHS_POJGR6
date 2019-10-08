@@ -1,8 +1,6 @@
 package HHS_PROJGR6;
 
 import HHS_PROJGR6.Entities.EntityGuest;
-import HHS_PROJGR6.Entities.EntityLobby;
-import HHS_PROJGR6.Entities.EntityRoom;
 import HHS_PROJGR6.Interfaces.IEntity;
 
 import javax.swing.*;
@@ -28,67 +26,62 @@ public class Statistics extends JFrame {
 
         // Define data and columns
         List<String[]> data = new ArrayList<String[]>();
-        String column[] = { "Guest", "position", "Location", "Preference", "Location" };
+        String column[] = {"Person", "Floor", "Preference",/* "Location"*/};
 
-        // Loop trough entities
-        for (int i = 0; i < entities.size(); i++) {
-            // Set row data
-            if (entities.get(i) instanceof EntityGuest) {
-                EntityGuest entity = (EntityGuest) entities.get(i);
-                String[] row = new String[5];
-                row[0] = "Guest: " + ((EntityGuest) entities.get(i)).getID();
-                row[1] = "" + entities.get(i).getXPosition();
-                row[2] = "" + entities.get(i).getYPosition();
+            // Loop trough entities
+            for (int i = 0; i < entities.size(); i++) {
+                // Set row data
+                if (entities.get(i) instanceof EntityGuest) {
+                    EntityGuest entity = (EntityGuest) entities.get(i);
+                    String[] row = new String[3];
+                    row[0] = "Guest: " + ((EntityGuest) entities.get(i)).getID();
+                    row[1] = "" + entities.get(i).getYPosition();
 
-                if (entities.get(i).getYPosition() == 7) {
-                    row[2] = "Lobby";
-                }
-                if (entities.get(i).getYPosition() == 6) {
-                    row[2] = "First floor";
-                }
-                if (entities.get(i).getYPosition() == 5) {
-                    row[2] = "Second floor";
-                }
-                if (entities.get(i).getYPosition() == 4) {
-                    row[2] = "Third floor";
-                }
-                if (entities.get(i).getYPosition() == 3) {
-                    row[2] = "Fourth floor";
-                }
-                if (entities.get(i).getYPosition() == 2) {
-                    row[2] = "Fifth floor";
-                }
 
-                row[3] = "Room " + ((EntityGuest) entities.get(i)).getPreference();
-
-                for (IEntity lookupEntity : entities) {
-                    if (lookupEntity.getXPosition() == entity.getXPosition() && lookupEntity.getYPosition() == entity.getYPosition()) {
-
-                        if (lookupEntity instanceof EntityRoom) {
-                            row[4] = "Room " + ((EntityRoom) lookupEntity).getClassification();
-                        }
-                        if (lookupEntity instanceof EntityLobby) {
-                            row[4] = "Lobby";
-                        }
-                        // Set row in data
+                    if (entities.get(i).getYPosition() == 7) {
+                        row[1] = "Lobby";
                     }
-                }
-                data.add(row);
+                    if (entities.get(i).getYPosition() == 6) {
+                        row[1] = "First floor";
+                    }
+                    if (entities.get(i).getYPosition() == 5) {
+                        row[1] = "Second floor";
+                    }
+                    if (entities.get(i).getYPosition() == 4) {
+                        row[1] = "Third floor";
+                    }
+                    if (entities.get(i).getYPosition() == 3) {
+                        row[1] = "Fourth floor";
+                    }
+                    if (entities.get(i).getYPosition() == 2) {
+                        row[1] = "Fifth floor";
+                    }
+                    row[2] = "Room " + ((EntityGuest) entities.get(i)).getPreference();
 
+//                for (IEntity lookupEntity : entities) {
+//                    if (lookupEntity.getXPosition() == entity.getXPosition() && lookupEntity.getYPosition() == entity.getYPosition()) {
+//
+//                        if (lookupEntity instanceof EntityRoom) {
+//                            row[4] = "Room " + ((EntityRoom) lookupEntity).getClassification();
+//                        }
+//                        if (lookupEntity instanceof EntityLobby) {
+//
+//                        }
+//                        // Set row in data
+//                    }
+//                }
+                    data.add(row);
+                }
             }
 
-        }
 
         // Create table
         String[][] arrayOfData = new String[data.size()][];
         arrayOfData = data.toArray(arrayOfData);
 
         JTable jt = new JTable(arrayOfData, column);
-
-        // Add table
         jt.setBounds(30, 40, 200, 300);
         JScrollPane sp = new JScrollPane(jt);
-
         add(sp);
 
         setTitle("Statistieken");

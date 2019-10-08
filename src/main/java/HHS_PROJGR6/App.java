@@ -30,6 +30,7 @@ public class App extends JFrame {
 
         Dimension d = new Dimension(getPixelResolution() * (myHotel.getHighestPositions()[0] + 4), getPixelResolution() * (myHotel.getHighestPositions()[1] + 5));
         Canvas canvas = new Canvas(d);
+
         myHotel.setHotelCanvas(canvas);
 
         // Adding components to the JFrame
@@ -41,6 +42,7 @@ public class App extends JFrame {
         setSize(d);
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
+        setLocation(450,0);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
 
