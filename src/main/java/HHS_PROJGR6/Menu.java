@@ -56,7 +56,7 @@ public class Menu extends JFrame {
         pixelPlus.setBackground(new Color(112, 219, 112));
         pixelPlus.setForeground(new Color(255, 255, 255));
         pixelPlus.addActionListener(e -> {
-            if (Settings.getPixelResolution() < 100){
+            if (Settings.getPixelResolution() < 60){
                 Settings.setPixelResolution(Settings.getPixelResolution() + 10);
                 repaint();
             }
@@ -81,7 +81,7 @@ public class Menu extends JFrame {
         pixelFactor.setHorizontalAlignment(SwingConstants.CENTER);
         pixelFactor.setBounds(125, 100, 100, 40);
         pixelFactor.setText(""+ Settings.getPixelResolution());
-        pixelFactor.setText("40");
+        pixelFactor.setText("60");
 
         JLabel filthTime = new JLabel("Cleaning expensive");
         filthTime.setBounds(20, 140, 175, 40);
