@@ -25,21 +25,6 @@ public class EntityLeasure extends Entity implements IEntity {
 
     /**
      * 
-     * @param event
-     */
-    public void Notify(HotelEvent event) {
-        // if (event == HotelEventType.START_CINEMA) {
-        // set op locked
-        // }
-
-        // als lock op 1 dan tellen
-        if (false) {
-            // wacht tijd ophogen zolang wacht tijd tussen 1 en eind(10?)
-        }
-    }
-
-    /**
-     * 
      */
     public void drawEntity(Graphics g) {
         g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
@@ -59,9 +44,16 @@ public class EntityLeasure extends Entity implements IEntity {
     }
 
     /**
+     * @return the activityType
+     */
+    public String getActivityType() {
+        return activityType;
+    }
+
+    /**
      * 
      */
-    public void frame() {
+    public void Notify() {
         // TODO: ?
     }
 }

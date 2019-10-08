@@ -13,14 +13,13 @@ public class EntityLobby extends Entity implements IEntity {
 
     public void drawEntity(Graphics g) {
         g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
-
         super.drawEntity(g);
     }
 
     /**
      * 
      */
-    public void frame() {
+    public void Notify() {
         // TODO: nothing
     }
 }

@@ -34,4 +34,12 @@ public class EntityTransport extends Entity implements IEntity {
 
         super.drawEntity(g);
     }
+
+    /**
+     * 
+     */
+    public void Notify() {
+
+    }
+
 }

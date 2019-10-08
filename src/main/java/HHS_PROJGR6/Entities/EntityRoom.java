@@ -59,7 +59,7 @@ public class EntityRoom extends Entity implements IEntity, IStressable {
      */
     public void setClassification(String classification) {
         // TODO: verplaatsen naar een util
-        this.classification = Integer.parseInt(classification.replaceAll("[^0-9]+", ""));
+        this.classification = Entity.parseInt(classification);
     }
 
     /**
@@ -97,7 +97,7 @@ public class EntityRoom extends Entity implements IEntity, IStressable {
     /**
      * 
      */
-    public void frame() {
+    public void Notify() {
         // TODO: make room dirty after x ticks
     }
 }

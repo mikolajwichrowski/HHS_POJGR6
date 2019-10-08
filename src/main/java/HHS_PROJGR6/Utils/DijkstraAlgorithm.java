@@ -2,6 +2,7 @@ package HHS_PROJGR6.Utils;
 
 import HHS_PROJGR6.Entities.Entity;
 import HHS_PROJGR6.Interfaces.IEntity;
+import HHS_PROJGR6.Interfaces.ISquare;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -18,7 +19,7 @@ public class DijkstraAlgorithm {
      * @param entities
      * @return
      */
-    public static ArrayList<Node> getGraph(Integer width, Integer height, List<IEntity> entities) {
+    public static ArrayList<Node> getGraph(Integer width, Integer height, ArrayList<Entity> entities) {
         ArrayList<Node> nodes = new ArrayList<Node>();
 
         // Transport points
@@ -118,7 +119,7 @@ public class DijkstraAlgorithm {
      * @param graph
      * @return
      */
-    public static List<Node> findPath(Node source, Node destination, ArrayList<Node> graph) {
+    public static ArrayList<Node> findPath(Node source, Node destination, ArrayList<Node> graph) {
         // Keep trach of visited and unvisited
         ArrayList<Node> visited = new ArrayList<Node>();
         ArrayList<Node> unvisited = shiftTo(graph, source);

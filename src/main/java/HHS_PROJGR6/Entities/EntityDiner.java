@@ -43,7 +43,7 @@ public class EntityDiner extends Entity implements IEntity {
      * 
      */
     public void setCapacity(String capacity) {
-        this.capacity = Integer.parseInt(capacity.replaceAll("[^0-9]+", ""));
+        this.capacity = Entity.parseInt(capacity);
     }
 
     /**
@@ -56,7 +56,7 @@ public class EntityDiner extends Entity implements IEntity {
     /**
      * 
      */
-    public void frame() {
+    public void Notify() {
         // TODO: ?
     }
 }

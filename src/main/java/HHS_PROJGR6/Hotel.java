@@ -6,6 +6,7 @@ import HHS_PROJGR6.Entities.Entity;
 
 import HHS_PROJGR6.Entities.EntityDiner;
 import HHS_PROJGR6.Entities.EntityGuest;
+import HHS_PROJGR6.Entities.EntityLeasure;
 import HHS_PROJGR6.Entities.EntityRoom;
 import HHS_PROJGR6.External.HotelEvent;
 import HHS_PROJGR6.External.HotelEventListener;
@@ -15,6 +16,8 @@ import HHS_PROJGR6.Interfaces.IEntity;
 import HHS_PROJGR6.Utils.DijkstraAlgorithm;
 import HHS_PROJGR6.Utils.JsonReader;
 import HHS_PROJGR6.Utils.Node;
+import HHS_PROJGR6.Interfaces.ISquare;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -53,7 +56,7 @@ public class Hotel implements HotelEventListener {
     /**
      * All entities in simulation
      */
-    private ArrayList<IEntity> entities;
+    private ArrayList<Entity> entities;
 
     /**
      * Graph of positions to walk on
@@ -70,13 +73,16 @@ public class Hotel implements HotelEventListener {
      */
     public Hotel() {
         // Initilize entities
-        this.entities = new ArrayList<IEntity>();
+        this.entities = new ArrayList<Entity>();
     }
 
     /**
      * Draws frame
      */
     public void frame() {
+        // Removes guest that are checked out
+        removeCheckoutGuest();
+
         // Set the time for every HTE
         Clock.datetime = Clock.datetime.plusSeconds(1);
 
@@ -95,33 +101,14 @@ public class Hotel implements HotelEventListener {
 
         // Let's every entity react to frame
         for (IEntity entity : entities) {
-            entity.frame();
+            entity.Notify();
         }
-
-        // Removes guest that are checked out
-        removeCheckoutGuest();
 
         // Repaints canvas because JAVA
         hotelCanvas.repaint();
 
         // Recursion to keep loop going
         frame();
-    }
-
-    /**
-     * Removes guest that are checked out
-     */
-    private void removeCheckoutGuest() {
-        ArrayList<IEntity> removalbleEntities = new ArrayList<IEntity>();
-        for (IEntity entity : entities) {
-            if (entity instanceof EntityGuest && !((EntityGuest) entity).getActive()) {
-                removalbleEntities.add(entity);
-            }
-        }
-
-        for (IEntity entity : removalbleEntities) {
-            entities.remove(entity);
-        }
     }
 
     /**
@@ -136,7 +123,7 @@ public class Hotel implements HotelEventListener {
             highestPositions = getHighest(reader.getIterable(), "Position");
 
             // Declare entity to reuse
-            IEntity entity = null;
+            ISquare entity = null;
 
             // Loop trough json array
             Iterator i = reader.getIterable();
@@ -199,15 +186,12 @@ public class Hotel implements HotelEventListener {
             register(entity);
 
             // Create housekeeping with factory
-            for (int j = 1; j < 5; j++) {
+            for (int j = 1; j < 2; j++) {
                 entity = EntityFactory.createEntity("Housekeeping");
-                entity.setPosition(getHighestPositions()[1] + 1, getHighestPositions()[0] + 2);
+                entity.setPosition(getHighestPositions()[1] + 1, getHighestPositions()[0] + 1);
                 entity.setDimensions(1, 1);
                 register(entity);
             }
-
-            // Init path finder after all basic entites are created
-            nodeGraph = DijkstraAlgorithm.getGraph(getHighestPositions()[0] + 2, getHighestPositions()[1] + 1, entities);
 
             // Run events
             eventManager = new HotelEventManager();
@@ -267,6 +251,7 @@ public class Hotel implements HotelEventListener {
      * Called upon when event manager has a event
      */
     public void Notify(HotelEvent event) {
+        // Key of event
         String key = event.Data.keySet().iterator().next();
 
         // Which event is fired
@@ -280,7 +265,7 @@ public class Hotel implements HotelEventListener {
 
             // Find available room with preference
             EntityRoom room = null;
-            for (IEntity entity : entities) {
+            for (ISquare entity : entities) {
                 if (entity instanceof EntityRoom && ((EntityRoom) entity).getClassification() == guest.getPreference() && ((EntityRoom) entity).getInhabitantID() == 0) {
                     room = ((EntityRoom) entity);
                 }
@@ -293,38 +278,39 @@ public class Hotel implements HotelEventListener {
 
                 // Generate instructions to available room
                 Node from = DijkstraAlgorithm.createLocationNode(2, 7);
-                Node to = DijkstraAlgorithm.createLocationNode(room.getXPosition(), room.getYPosition());
+                Node to = DijkstraAlgorithm.createLocationNode(room.getX(), room.getY());
 
                 // This is weird but this needs to be
                 nodeGraph = DijkstraAlgorithm.getGraph(getHighestPositions()[0] + 2, getHighestPositions()[1] + 1, entities);
 
-                guest.setInstructions(DijkstraAlgorithm.findPath(from, to, (ArrayList<Node>) nodeGraph.clone()));
+                // Set instructions to room
+                guest.setInstructions(DijkstraAlgorithm.findPath(from, to, nodeGraph));
 
                 register(guest);
             }
             break;
         case CHECK_OUT:
             int removeInhabitantID = 0;
-            for (IEntity entity : entities) {
+            for (ISquare entity : entities) {
                 if (entity instanceof EntityGuest && ((EntityGuest) entity).getID() == Entity.parseInt(event.Data.get(key))) {
                     // Generate instructions to available room
-                    Node from = DijkstraAlgorithm.createLocationNode(entity.getXPosition(), entity.getYPosition());
+                    Node from = DijkstraAlgorithm.createLocationNode(entity.getX(), entity.getY());
                     Node to = DijkstraAlgorithm.createLocationNode(2, 7);
-
-                    // This is weird but this needs to be
-                    nodeGraph = DijkstraAlgorithm.getGraph(getHighestPositions()[0] + 2, getHighestPositions()[1] + 1, entities);
 
                     // Remove inhabitant from room
                     removeInhabitantID = ((EntityGuest) entity).getID();
 
+                    // This is weird but this needs to be
+                    nodeGraph = DijkstraAlgorithm.getGraph(getHighestPositions()[0] + 2, getHighestPositions()[1] + 1, entities);
+
                     // Set last instructions and set ID to 0
-                    ((EntityGuest) entity).setInstructions(DijkstraAlgorithm.findPath(from, to, (ArrayList<Node>) nodeGraph.clone()));
+                    ((EntityGuest) entity).setInstructions(DijkstraAlgorithm.findPath(from, to, nodeGraph));
                     ((EntityGuest) entity).checkout();
                 }
             }
 
             // Remove inhabitant from room
-            for (IEntity entity : entities) {
+            for (ISquare entity : entities) {
                 if (entity instanceof EntityRoom && removeInhabitantID == ((EntityRoom) entity).getInhabitantID()) {
                     ((EntityRoom) entity).setInhabitantID(0);
                 }
@@ -332,31 +318,139 @@ public class Hotel implements HotelEventListener {
             break;
 
         case CLEANING_EMERGENCY:
-
+            // TODO: ?
             break;
 
         case EVACUATE:
+            for (ISquare entity : entities) {
+                if (entity instanceof EntityGuest) {
+                    // Generate instructions to available room
+                    Node from = DijkstraAlgorithm.createLocationNode(entity.getX(), entity.getY());
+                    Node to = DijkstraAlgorithm.createLocationNode(2, 7);
 
+                    // Remove inhabitant from room
+                    removeInhabitantID = ((EntityGuest) entity).getID();
+
+                    // This is weird but this needs to be
+                    nodeGraph = DijkstraAlgorithm.getGraph(getHighestPositions()[0] + 2, getHighestPositions()[1] + 1, entities);
+
+                    // Set last instructions and set ID to 0
+                    ((EntityGuest) entity).setInstructions(DijkstraAlgorithm.findPath(from, to, nodeGraph));
+                    ((EntityGuest) entity).checkout();
+                }
+            }
+
+            // Remove inhabitant from room
+            for (ISquare entity : entities) {
+                if (entity instanceof EntityRoom) {
+                    ((EntityRoom) entity).setInhabitantID(0);
+                }
+            }
             break;
 
         case GODZILLA:
-
+            // TODO: ?
             break;
 
         case START_CINEMA:
-
+            // TODO: ?
             break;
 
         case GOTO_RESTAURANT:
+        case NEED_FOOD:
+            for (ISquare entity : entities) {
+                if (entity instanceof EntityGuest && ((EntityGuest) entity).getID() == Entity.parseInt(event.Data.get(key))) {
+                    // Generate instructions to available room
+                    Node from = DijkstraAlgorithm.createLocationNode(entity.getX(), entity.getY());
 
+                    // TODO: find restaurant
+                    Node to = null;
+                    for (ISquare lookupEntity : entities) {
+                        if (lookupEntity instanceof EntityDiner) {
+                            to = DijkstraAlgorithm.createLocationNode(lookupEntity.getX(), lookupEntity.getY());
+                        }
+                    }
+
+                    if (to != null) {
+                        // This is weird but this needs to be
+                        nodeGraph = DijkstraAlgorithm.getGraph(getHighestPositions()[0] + 2, getHighestPositions()[1] + 1, entities);
+
+                        ArrayList<Node> route = DijkstraAlgorithm.findPath(from, to, nodeGraph);
+
+                        // Go back to hotel room
+                        route.addAll(DijkstraAlgorithm.findPath(to, from, nodeGraph));
+
+                        // Set instructions
+                        ((EntityGuest) entity).setInstructions(route);
+                    }
+                }
+            }
             break;
 
         case GOTO_FITNESS:
+            for (ISquare entity : entities) {
+                if (entity instanceof EntityGuest && ((EntityGuest) entity).getID() == Entity.parseInt(event.Data.get(key))) {
+                    // Generate instructions to available room
+                    Node from = DijkstraAlgorithm.createLocationNode(entity.getX(), entity.getY());
 
+                    // TODO: find restaurant
+                    Node to = null;
+                    for (ISquare lookupEntity : entities) {
+                        if (lookupEntity instanceof EntityLeasure && ((EntityLeasure) lookupEntity).getActivityType() == "Fitness") {
+                            to = DijkstraAlgorithm.createLocationNode(lookupEntity.getX(), lookupEntity.getY());
+                        }
+                    }
+
+                    if (to != null) {
+                        // This is weird but this needs to be
+                        nodeGraph = DijkstraAlgorithm.getGraph(getHighestPositions()[0] + 2, getHighestPositions()[1] + 1, entities);
+
+                        ArrayList<Node> route = DijkstraAlgorithm.findPath(from, to, nodeGraph);
+
+                        // This is weird but this needs to be
+                        nodeGraph = DijkstraAlgorithm.getGraph(getHighestPositions()[0] + 2, getHighestPositions()[1] + 1, entities);
+
+                        // Go back to hotel room
+                        route.addAll(DijkstraAlgorithm.findPath(to, from, nodeGraph));
+
+                        // Set instructions
+                        ((EntityGuest) entity).setInstructions(route);
+                    }
+                }
+            }
             break;
 
         case GOTO_CINEMA:
+            for (ISquare entity : entities) {
+                if (entity instanceof EntityGuest && ((EntityGuest) entity).getID() == Entity.parseInt(event.Data.get(key))) {
+                    // Generate instructions to available room
+                    Node from = DijkstraAlgorithm.createLocationNode(entity.getX(), entity.getY());
 
+                    // TODO: find restaurant
+                    Node to = null;
+                    for (ISquare lookupEntity : entities) {
+                        if (lookupEntity instanceof EntityLeasure && ((EntityLeasure) lookupEntity).getActivityType() == "Cinema") {
+                            to = DijkstraAlgorithm.createLocationNode(lookupEntity.getX(), lookupEntity.getY());
+                        }
+                    }
+
+                    if (to != null) {
+                        // This is weird but this needs to be
+                        nodeGraph = DijkstraAlgorithm.getGraph(getHighestPositions()[0] + 2, getHighestPositions()[1] + 1, entities);
+
+                        ArrayList<Node> route = DijkstraAlgorithm.findPath(from, to, nodeGraph);
+
+                        // This is weird but this needs to be
+                        nodeGraph = DijkstraAlgorithm.getGraph(getHighestPositions()[0] + 2, getHighestPositions()[1] + 1, entities);
+
+                        // Go back to hotel room
+                        route.addAll(DijkstraAlgorithm.findPath(to, from, nodeGraph));
+
+                        // Set instructions
+                        ((EntityGuest) entity).setInstructions(route);
+                    }
+                }
+            }
             break;
 
         case NONE:
@@ -431,10 +525,10 @@ public class Hotel implements HotelEventListener {
      * 
      * @param actor
      */
-    private void register(IEntity actor) {
-        entities.add(actor);
+    private void register(ISquare actor) {
+        entities.add((Entity) actor);
         if (hotelCanvas != null) {
-            hotelCanvas.setDrawableEntities(entities);
+            hotelCanvas.setDrawableEntities((ArrayList<Entity>) entities);
         }
     }
 
@@ -443,8 +537,24 @@ public class Hotel implements HotelEventListener {
      * 
      * @param actor
      */
-    private void deregister(IEntity actor) {
+    private void deregister(Entity actor) {
         entities.remove(actor);
         hotelCanvas.setDrawableEntities(entities);
+    }
+
+    /**
+     * Removes guest that are checked out
+     */
+    private void removeCheckoutGuest() {
+        ArrayList<IEntity> removalbleEntities = new ArrayList<IEntity>();
+        for (IEntity entity : entities) {
+            if (entity instanceof EntityGuest && !((EntityGuest) entity).getActive() && ((EntityGuest) entity).getY() == getHighestPositions()[1] + 1 && ((EntityGuest) entity).getX() == 2) {
+                removalbleEntities.add(entity);
+            }
+        }
+
+        for (IEntity entity : removalbleEntities) {
+            entities.remove(entity);
+        }
     }
 }
