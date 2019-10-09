@@ -116,7 +116,7 @@ public class Canvas extends JPanel {
      */
     public void setDrawableEntities(List<IEntity> drawableEntities) {
         this.drawableEntities = drawableEntities;
-        repaint();
+        //repaint();
     }
 
     /**
@@ -124,7 +124,8 @@ public class Canvas extends JPanel {
      */
     @Override
     protected void paintComponent(Graphics g) {
-        drawGrid(g);
         drawableEntity(g);
+        drawGrid(g);
+
     }
 }

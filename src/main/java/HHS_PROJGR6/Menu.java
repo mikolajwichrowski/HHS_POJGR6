@@ -81,7 +81,7 @@ public class Menu extends JFrame {
         pixelFactor.setHorizontalAlignment(SwingConstants.CENTER);
         pixelFactor.setBounds(125, 100, 100, 40);
         pixelFactor.setText(""+ Settings.getPixelResolution());
-        pixelFactor.setText("60");
+        pixelFactor.setText("40");
 
         JLabel filthTime = new JLabel("Cleaning expensive");
         filthTime.setBounds(20, 140, 175, 40);
