@@ -125,7 +125,7 @@ public class Entity implements ISquare {
             ISquare e = (ISquare) entity;
             boolean belowPosition = e.getX() + (e.getWidth() - 1) >= x && e.getY() - (e.getHeight() - 1) <= y;
             boolean abovePostion = (e.getX() <= x && e.getY() >= y) ? belowPosition : false;
-            return true; // abovePostion;
+            return abovePostion;
         }).collect(Collectors.toCollection(ArrayList::new));
     }
 

@@ -6,7 +6,7 @@ package HHS_PROJGR6;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class DijkstraTest {
+public class DijkstraTest extends Hotel {
     @Test
     public static void testGraph() {
         // maak entities
