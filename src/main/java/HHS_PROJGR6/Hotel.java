@@ -1,11 +1,5 @@
 package HHS_PROJGR6;
 
-import HHS_PROJGR6.Entities.Entity;
-import HHS_PROJGR6.Entities.EntityDiner;
-import HHS_PROJGR6.Entities.EntityGuest;
-import HHS_PROJGR6.Entities.EntityHousekeeping;
-import HHS_PROJGR6.Entities.EntityLeasure;
-import HHS_PROJGR6.Entities.EntityRoom;
 import HHS_PROJGR6.Entities.*;
 import HHS_PROJGR6.External.HotelEvent;
 import HHS_PROJGR6.External.HotelEventListener;
@@ -17,6 +11,7 @@ import HHS_PROJGR6.Utils.DijkstraAlgorithm;
 import HHS_PROJGR6.Utils.JsonReader;
 import HHS_PROJGR6.Utils.Node;
 import org.json.simple.JSONObject;
+
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.time.LocalDateTime;
