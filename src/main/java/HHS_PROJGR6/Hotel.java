@@ -48,6 +48,11 @@ public class Hotel implements HotelEventListener {
     private ArrayList<Entity> entities;
 
     /**
+     * All statistics
+     */
+    private Statistics statistics;
+
+    /**
      * Hotel class
      * 
      * The object derived from this class must contain all the entities. All the
@@ -98,6 +103,9 @@ public class Hotel implements HotelEventListener {
         for (Entity entity : removalbleEntities) {
             deregister(entity);
         }
+
+        // New statistics
+        statistics.setStatistics(entities);
 
         // Recursion to keep loop going
         frame();
@@ -191,6 +199,9 @@ public class Hotel implements HotelEventListener {
             eventManager = new HotelEventManager();
             eventManager.register(this);
             eventManager.start();
+
+            // Load first statistics
+            statistics = new Statistics(entities);
         } catch (Exception e) {
             // TODO: better exception handling
             throw e;
@@ -640,8 +651,8 @@ public class Hotel implements HotelEventListener {
      * Shows statistics
      */
     public void showStatistics() {
-        Statistics statistics = new Statistics(entities);
-        statistics.setVisible(true);
+        this.statistics = new Statistics(entities);
+        this.statistics.setVisible(true);
     }
 
     /**
@@ -709,8 +720,15 @@ public class Hotel implements HotelEventListener {
             Node from = DijkstraAlgorithm.createLocationNode(housekeeperAssigned.getX(), housekeeperAssigned.getY());
             Node to = DijkstraAlgorithm.createLocationNode(roomToClean.getX(), roomToClean.getY());
 
+            // Zorgt er voor dat ze niet met de lift gaan
+            int oldElevatorCost = Settings.getElevatorCost();
+            Settings.setElevatorCost(100000);
+
             // Set last instructions and set ID to 0
             housekeeperAssigned.setInstructions(DijkstraAlgorithm.findPath(from, to, nodeGraph()));
+
+            // Zorgt er voor dat ze niet met de lift gaan
+            Settings.setElevatorCost(oldElevatorCost);
         }
     }
 
