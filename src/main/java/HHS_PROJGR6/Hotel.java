@@ -27,6 +27,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -80,16 +81,16 @@ public class Hotel implements HotelEventListener {
         // Removes guest that are checked out
         removeCheckoutGuest();
 
-        // Set the time for every HTE
-        Clock.datetime = Clock.datetime.plusSeconds(1);
-
         // Wait for clockspeed
         LocalDateTime start = LocalDateTime.now();
-        long hteInNano = (long) (100000000 * Clock.getClockspeed());
+        long hteInNano = (long) (1000000000 / Clock.getClockspeed());
         LocalDateTime end = LocalDateTime.now().plusNanos(hteInNano);
 
+        // Set the time for every HTE
+        Clock.datetime = Clock.datetime.plusNanos(hteInNano);
+
         // Change hte based on clock speed from clock singleton
-        eventManager.changeSpeed(Clock.getClockspeed());
+        eventManager.changeSpeed(1);
 
         // While the hte has not yet ticked. Keep checking
         while (start.isBefore(end)) {
