@@ -61,9 +61,6 @@ public class App extends JFrame {
         add(myHotel.getHotelCanvas());
         add(p);
 
-
-
-
         // Options for the JFrame
         setTitle("HotelSimulatie GR6");
         setResizable(true);
