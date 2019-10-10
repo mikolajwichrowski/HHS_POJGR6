@@ -690,17 +690,18 @@ public class Hotel implements HotelEventListener {
         if (roomToClean != null) {
             for (ISquare entity : getEntitiesOfType(EntityHousekeeping.class)) {
                 EntityHousekeeping housekeeper = (EntityHousekeeping) entity;
-                if (!housekeeper.getActive()) {
-                    // Set assigned housekeeper
-                    housekeeperAssigned = housekeeper;
-                } else {
-                    // Find cleaned room by this housekeeper
-                    for (ISquare lookupEntity : getEntitiesOfType(EntityRoom.class)) {
-                        EntityRoom room = (EntityRoom) lookupEntity;
-                        if (housekeeper.getID() == room.getHousekeeperID()) {
-                            room.cleanRoom();
-                        }
+
+                // Clean room if cyka is done.
+                for (ISquare lookupEntity : getEntitiesOfType(EntityRoom.class)) {
+                    EntityRoom room = (EntityRoom) lookupEntity;
+                    if (!housekeeper.getActive() && housekeeper.getID() == room.getHousekeeperID()) {
+                        room.cleanRoom();
                     }
+                }
+
+                if (!housekeeper.getActive()) {
+                    // Set assigned housekeeper.
+                    housekeeperAssigned = housekeeper;
                 }
             }
         }

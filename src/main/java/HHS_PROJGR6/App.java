@@ -1,6 +1,8 @@
 package HHS_PROJGR6;
 
 import javax.swing.*;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+
 import java.awt.*;
 
 import static HHS_PROJGR6.Settings.getPixelResolution;
@@ -22,6 +24,13 @@ public class App extends JFrame {
     private JTextField timeDisplay;
 
     public App() {
+        // Fix because windows and mac do stuff diferently
+        try {
+            UIManager.setLookAndFeel(new MetalLookAndFeel());
+        } catch (Exception e) {
+
+        }
+
         // Set dimensions, create canvas and hotel
         Hotel myHotel = new Hotel();
 
