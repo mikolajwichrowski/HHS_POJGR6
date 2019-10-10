@@ -1,50 +1,86 @@
 package HHS_PROJGR6.Entities;
 
 import HHS_PROJGR6.Interfaces.IEntity;
-import HHS_PROJGR6.Interfaces.IStressable;
+import HHS_PROJGR6.Utils.Node;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
 * Housekeeping class
 * Inherits from Entity
 */
 
-public class EntityHousekeeping extends Entity implements IEntity, IStressable {
+public class EntityHousekeeping extends Entity implements IEntity {
+    /**
+     * 
+     */
+    private int id;
 
-    // Constructor
+    /**
+     * Set of instructions the guest has to follow
+     */
+    private List<Node> instructions;
+
+    /**
+     * 
+     * @param entityImage
+     */
     public EntityHousekeeping(String entityImage) {
         super(entityImage);
+        this.instructions = new ArrayList<Node>();
     }
 
-    public void cleanRoom() {
-        // v ---- > room niet als property nemen :D dat is onnzinige agregatie (Probeer
-        // hier de algoritme het werk te laten doen ;) tip: if(Hotel.whatsHere(x, y) ==
-        // kamer && !Hotel.whatsHere(x, y).isClean())
-        // code schrijven voor maak kamer schoon.
-        // TODO: Iterate door alle rooms, als room vies is, ga erheen.
+    /**
+     * 
+     * @return
+     */
+    public boolean getActive() {
+        return instructions.size() > 0;
     }
 
-    public void panic() {
-        cleanRoom();
+    /**
+     * 
+     * @param instructions
+     */
+    public void setInstructions(List<Node> instructions) {
+        this.instructions = instructions;
     }
 
-    public void drawEntity(Graphics g) {
-        super.drawEntity(g);
+    /**
+     * 
+     * @param id
+     */
+    public void setID(String id) {
+        this.id = Entity.parseInt(id);
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public Integer getID() {
+        return id;
     }
 
     /**
      * 
      */
     public void Notify() {
-        // TODO: If has instructions
-        // // Node instruction = instructions.get(0);
-        // // setPosition(instruction.getY(), instruction.getX());
-        // // instructions.remove(0);
-        // TODO: else clean room
+        // if has instructions do them
+        if (instructions.size() > 0) {
+            Node instruction = instructions.get(0);
+            setPosition(instruction.getY(), instruction.getX());
+            instructions.remove(0);
+        }
+    }
 
-        // TODO: if clean room and no instructions
-        // Look for filthy room and set instructions
+    /**
+     * 
+     */
+    public void drawEntity(Graphics g) {
+        super.drawEntity(g);
     }
 }

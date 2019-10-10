@@ -1,7 +1,6 @@
 package HHS_PROJGR6.Entities;
 
 import HHS_PROJGR6.Interfaces.IEntity;
-import HHS_PROJGR6.Interfaces.IStressable;
 import HHS_PROJGR6.Utils.Node;
 
 import javax.swing.*;
@@ -16,11 +15,11 @@ import static HHS_PROJGR6.Settings.getPixelResolution;
 * Inherits from Entity
 */
 
-public class EntityGuest extends Entity implements IEntity, IStressable {
+public class EntityGuest extends Entity implements IEntity {
     /**
      * Guest number
      */
-    private int guestId;
+    private int id;
 
     /**
      * The preference for a room
@@ -32,40 +31,76 @@ public class EntityGuest extends Entity implements IEntity, IStressable {
      */
     private List<Node> instructions;
 
-    // Constructor
+    /**
+     * 
+     * @param entityImage
+     */
     public EntityGuest(String entityImage) {
         super(entityImage);
         this.instructions = new ArrayList<Node>();
     }
 
+    /**
+     * 
+     */
     public void checkout() {
-        this.guestId = 0;
+        setID("0");
     }
 
+    /**
+     * 
+     */
     public void drawEntity(Graphics g) {
-        super.drawEntity(g);
+        if (instructions.size() > 0) {
+            super.drawEntity(g);
+        }
+
     }
 
+    /**
+     * 
+     * @return
+     */
     public int getPreference() {
         return preference;
     }
 
+    /**
+     * 
+     * @param preference
+     */
     public void setPreference(String preference) {
         this.preference = Entity.parseInt(preference);
     }
 
+    /**
+     * 
+     * @param id
+     */
     public void setID(String id) {
-        this.guestId = Entity.parseInt(id);
+        this.id = Entity.parseInt(id);
     }
 
+    /**
+     * 
+     * @return
+     */
     public Integer getID() {
-        return this.guestId;
+        return id;
     }
 
+    /**
+     * 
+     * @return
+     */
     public boolean getActive() {
-        return !(this.guestId == 0);
+        return !(id == 0);
     }
 
+    /**
+     * 
+     * @param instructions
+     */
     public void setInstructions(List<Node> instructions) {
         this.instructions = instructions;
     }
@@ -80,13 +115,5 @@ public class EntityGuest extends Entity implements IEntity, IStressable {
             setPosition(instruction.getY(), instruction.getX());
             instructions.remove(0);
         }
-
-        // TODO: if no instructions and no movie playing
-        // Go back to room
-    }
-
-    public void panic() {
-        // Gast sterft, verander image van gast naar dode gast? || Stop tekenen van
-        // guest?
     }
 }

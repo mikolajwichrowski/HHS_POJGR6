@@ -15,32 +15,36 @@ import static HHS_PROJGR6.Settings.getPixelResolution;
 /**
  * 
  */
-public class Entity implements IEntity, ISquare {
+public class Entity implements ISquare {
     /**
      * 
      */
-    public int x;
+    private int x;
 
     /**
      * 
      */
-    public int y;
+    private int y;
 
     /**
      * 
      */
-    public int width;
+    private int width;
 
     /**
      * 
      */
-    public int height;
+    private int height;
 
     /**
      * 
      */
-    public String entityImage;
+    private String entityImage;
 
+    /**
+     * 
+     * @param entityImage
+     */
     public Entity(String entityImage) {
         this.x = 0;
         this.y = 0;
@@ -48,15 +52,8 @@ public class Entity implements IEntity, ISquare {
     }
 
     /**
-     * Action to execute when triggered
      * 
-     */
-    public void Notify(HotelEvent entities) {
-
-    }
-
-    /**
-     * 
+     * @param g
      */
     public void drawEntity(Graphics g) {
         Image img1 = Toolkit.getDefaultToolkit().getImage(entityImage);

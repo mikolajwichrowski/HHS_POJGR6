@@ -42,7 +42,7 @@ public class App extends JFrame {
         setSize(d);
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
-        setLocation(350,0);
+        setLocation(350, 0);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
 

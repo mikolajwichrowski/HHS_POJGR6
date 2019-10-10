@@ -1,56 +1,55 @@
 package HHS_PROJGR6.Entities;
 
 import HHS_PROJGR6.Interfaces.IEntity;
-import HHS_PROJGR6.Interfaces.IStressable;
 
 import java.awt.*;
 
 import static HHS_PROJGR6.Settings.getPixelResolution;
+import static HHS_PROJGR6.Settings.getFilthTime;
 
 /*
 * Room class
 * Inherits from Entity
 */
 
-public class EntityRoom extends Entity implements IStressable {
+public class EntityRoom extends Entity implements IEntity {
+    /**
+     * 
+     */
     private int inhabitantID;
+
+    /**
+     * 
+     */
+    private int housekeeperID;
+
+    /**
+     * 
+     */
     private int classification;
-    private boolean dirty = false;
 
-    public EntityRoom(String entityImage) {
+    /**
+     * 
+     */
+    private int dirty;
+
+    /**
+     * 
+     */
+    public EntityRoom(String entityImage, String classification) {
         super(entityImage);
-        this.classification = 0;
+        setClassification(classification);
         this.inhabitantID = 0;
+        this.housekeeperID = 0;
+        this.dirty = 0;
     }
 
-    @Override
+    /**
+     * 
+     */
     public void drawEntity(Graphics g) {
-        g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
-
-        switch (this.classification) {
-        case 1:
-            this.entityImage = "Images/star1.png";
-            break;
-        case 2:
-            this.entityImage = "Images/star2.png";
-            break;
-        case 3:
-            this.entityImage = "Images/star3.png";
-            break;
-        case 4:
-            this.entityImage = "Images/star4.png";
-            break;
-        case 5:
-            this.entityImage = "Images/star5.png";
-            break;
-        default:
-            break;
-        }
+        g.fillRect(getX() * getPixelResolution(), (getY() - (getHeight() - 1)) * getPixelResolution(), getWidth() * getPixelResolution(), getHeight() * getPixelResolution());
         super.drawEntity(g);
-    }
-
-    public void panic() {
-        this.dirty = true;
     }
 
     /**
@@ -58,7 +57,6 @@ public class EntityRoom extends Entity implements IStressable {
      * @param classification
      */
     public void setClassification(String classification) {
-        // TODO: verplaatsen naar een util
         this.classification = Entity.parseInt(classification);
     }
 
@@ -71,19 +69,11 @@ public class EntityRoom extends Entity implements IStressable {
         return this.classification;
     }
 
-    public boolean isDirty() {
-        return dirty;
-    }
-
-    public void setDirty(boolean dirty) {
-        this.dirty = dirty;
-    }
-
     /**
      * @return the inhabitantID
      */
     public int getInhabitantID() {
-        return inhabitantID;
+        return this.inhabitantID;
     }
 
     /**
@@ -92,5 +82,45 @@ public class EntityRoom extends Entity implements IStressable {
      */
     public void setInhabitantID(int inhabitantID) {
         this.inhabitantID = inhabitantID;
+    }
+
+    /**
+     * @return the housekeeperID
+     */
+    public int getHousekeeperID() {
+        return this.housekeeperID;
+    }
+
+    /**
+     * @param inhabitantID
+     *                         the housekeeperID to set
+     */
+    public void setHousekeeperID(int housekeeperID) {
+        this.housekeeperID = housekeeperID;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public boolean isDirty() {
+        return this.dirty >= getFilthTime();
+    }
+
+    /**
+     * 
+     */
+    public void cleanRoom() {
+        this.housekeeperID = 0;
+        this.dirty = 0;
+    }
+
+    /**
+     * Room gets dirtier with every second if there is an inhabitant
+     */
+    public void Notify() {
+        if (this.inhabitantID != 0) {
+            this.dirty++;
+        }
     }
 }

@@ -6,6 +6,7 @@ import HHS_PROJGR6.Entities.Entity;
 
 import HHS_PROJGR6.Entities.EntityDiner;
 import HHS_PROJGR6.Entities.EntityGuest;
+import HHS_PROJGR6.Entities.EntityHousekeeping;
 import HHS_PROJGR6.Entities.EntityLeasure;
 import HHS_PROJGR6.Entities.EntityRoom;
 import HHS_PROJGR6.External.HotelEvent;
@@ -78,8 +79,8 @@ public class Hotel implements HotelEventListener {
      * Draws frame
      */
     public void frame() {
-        // Removes guest that are checked out
-        removeCheckoutGuest();
+        // Get guests that can be removed
+        ArrayList<Entity> removalbleEntities = removeCheckoutGuest();
 
         // Wait for clockspeed
         LocalDateTime start = LocalDateTime.now();
@@ -98,11 +99,19 @@ public class Hotel implements HotelEventListener {
         }
 
         // Let's every entity react to frame
-        for (IEntity entity : entities) {
+        for (IEntity entity : getReactableEntites()) {
             entity.Notify();
         }
 
-        // Repaints canvas because JAVA
+        // Make housekeepers look for rooms and clean them
+        housekeepingProcedure();
+
+        // Remove removables
+        for (Entity entity : removalbleEntities) {
+            deregister(entity);
+        }
+
+        // Repaints
         hotelCanvas.repaint();
 
         // Recursion to keep loop going
@@ -146,18 +155,20 @@ public class Hotel implements HotelEventListener {
                 int width = Integer.parseInt(dimension[0].trim());
                 int height = Integer.parseInt(dimension[1].trim());
 
-                // Create entity with factory
-                entity = EntityFactory.createEntity(type);
+                String classification = (String) jsonObject.get("Classification");
+                if (classification != null && !classification.equals("")) {
+                    // Create entity with factory
+                    entity = EntityFactory.createEntity(type, "" + Entity.parseInt(classification));
+                } else {
+                    // Cinema and stuff have different images
+                    entity = EntityFactory.createEntity(type, type.toLowerCase());
+                }
+
                 entity.setPosition(y, x);
                 entity.setDimensions(width, height);
 
-                String classification = (String) jsonObject.get("Classification");
-                if (classification != null && classification != "") {
-                    ((EntityRoom) entity).setClassification(classification);
-                }
-
                 String capacity = (String) jsonObject.get("Capacity");
-                if (capacity != null && capacity != "") {
+                if (capacity != null && !capacity.equals("")) {
                     ((EntityDiner) entity).setCapacity(capacity);
                 }
 
@@ -166,29 +177,29 @@ public class Hotel implements HotelEventListener {
             }
 
             // Create entity elevator with factory
-            entity = EntityFactory.createEntity("Elevator");
+            entity = EntityFactory.createEntity("Elevator", null);
             entity.setPosition(getHighestPositions()[1] + 1, 1);
             entity.setDimensions(1, getHighestPositions()[0] + 1);
             register(entity);
 
             // Create stairs entity with factory
-            entity = EntityFactory.createEntity("Stairs");
+            entity = EntityFactory.createEntity("Stairs", null);
             entity.setPosition(getHighestPositions()[1] + 1, 8);
             entity.setDimensions(1, getHighestPositions()[0] + 1);
             register(entity);
 
             // Create lobby entity with factory
-            entity = EntityFactory.createEntity("Lobby");
+            entity = EntityFactory.createEntity("Lobby", null);
             entity.setPosition(getHighestPositions()[1] + 1, 2);
             entity.setDimensions(getHighestPositions()[1], 1);
             register(entity);
 
             // Create housekeeping with factory
             for (int j = 1; j < 2; j++) {
-                entity = EntityFactory.createEntity("Housekeeping");
-                entity.setPosition(getHighestPositions()[1] + 1, getHighestPositions()[0] + 1);
-                entity.setDimensions(1, 1);
-                register(entity);
+                EntityHousekeeping housekeeping = (EntityHousekeeping) EntityFactory.createEntity("Housekeeping", null);
+                housekeeping.setPosition(getHighestPositions()[1] + 1, getHighestPositions()[0] + 1);
+                housekeeping.setID("" + j);
+                register((ISquare) housekeeping);
             }
 
             // Run events
@@ -251,7 +262,7 @@ public class Hotel implements HotelEventListener {
         switch (event.Type) {
         case CHECK_IN:
             // Create new guest
-            guest = (EntityGuest) EntityFactory.createEntity("Guest");
+            guest = (EntityGuest) EntityFactory.createEntity("Guest", null);
             guest.setPosition(getHighestPositions()[1] + 1, getHighestPositions()[0] + 2);
             guest.setID(key);
             guest.setPreference(event.Data.get(key));
@@ -260,7 +271,7 @@ public class Hotel implements HotelEventListener {
             EntityRoom checkedRoom = null;
             for (ISquare entity : getEntitiesOfType(EntityRoom.class)) {
                 EntityRoom room = ((EntityRoom) entity);
-                if (room.getClassification() == guest.getPreference() && room.getInhabitantID() == 0) {
+                if (room.getClassification() == guest.getPreference() && room.getInhabitantID() == 0 && !room.isDirty()) {
                     checkedRoom = room;
                 }
             }
@@ -335,14 +346,10 @@ public class Hotel implements HotelEventListener {
             }
             break;
 
-        case GODZILLA:
-            // TODO: ?
-            break;
-
         case START_CINEMA:
             // Lookup cinemas
             int cinemaID = Entity.parseInt(event.Data.get(key)) - 1;
-            ArrayList<ISquare> cinemas = null;
+            ArrayList<ISquare> cinemas = new ArrayList<ISquare>();
             for (ISquare entity : getEntitiesOfType(EntityLeasure.class)) {
                 EntityLeasure current = (EntityLeasure) entity;
                 if (current.getActivityType() == "Cinema") {
@@ -446,6 +453,7 @@ public class Hotel implements HotelEventListener {
         case GOTO_CINEMA:
             for (ISquare entity : getEntitiesOfType(EntityGuest.class)) {
                 guest = (EntityGuest) entity;
+                System.out.println(guest.getID());
                 if (guest.getID() == Entity.parseInt(event.Data.get(key))) {
                     // Generate instructions to available room
                     Node from = DijkstraAlgorithm.createLocationNode(entity.getX(), entity.getY());
@@ -489,6 +497,23 @@ public class Hotel implements HotelEventListener {
         for (ISquare lookupEntity : entities) {
             if (type.isInstance(lookupEntity)) {
                 foundEntities.add(lookupEntity);
+            }
+        }
+        return foundEntities;
+    }
+
+    /**
+     * Find entity with type
+     * 
+     * @param type
+     * @return
+     */
+    private ArrayList<IEntity> getReactableEntites() {
+        ArrayList<IEntity> foundEntities = new ArrayList<IEntity>();
+        for (ISquare lookupEntity : entities) {
+            Entity entity = (Entity) lookupEntity;
+            if (lookupEntity instanceof EntityGuest || lookupEntity instanceof EntityHousekeeping || lookupEntity instanceof EntityRoom) {
+                foundEntities.add((IEntity) entity);
             }
         }
         return foundEntities;
@@ -576,9 +601,50 @@ public class Hotel implements HotelEventListener {
     }
 
     /**
+     * This procedure makes a housekeeper look for a room that has to be cleaned
+     */
+    private void housekeepingProcedure() {
+        EntityRoom roomToClean = null;
+
+        // Find dirty room
+        for (ISquare entity : getEntitiesOfType(EntityRoom.class)) {
+            EntityRoom room = (EntityRoom) entity;
+            if (room.isDirty() && room.getHousekeeperID() == 0) {
+                roomToClean = room;
+            }
+        }
+
+        // Make housekeeping go to dirty room
+        if (roomToClean != null) {
+            for (ISquare entity : getEntitiesOfType(EntityHousekeeping.class)) {
+                EntityHousekeeping housekeeper = (EntityHousekeeping) entity;
+                if (!housekeeper.getActive()) {
+                    // Mark the room to be cleaned by this housekeeper
+                    roomToClean.setHousekeeperID(housekeeper.getID());
+
+                    // Generate instructions to available room
+                    Node from = DijkstraAlgorithm.createLocationNode(housekeeper.getX(), housekeeper.getY());
+                    Node to = DijkstraAlgorithm.createLocationNode(roomToClean.getX(), roomToClean.getY());
+
+                    // Set last instructions and set ID to 0
+                    housekeeper.setInstructions(DijkstraAlgorithm.findPath(from, to, nodeGraph()));
+                } else {
+                    // Find cleaned room by this housekeeper
+                    for (ISquare lookupEntity : getEntitiesOfType(EntityRoom.class)) {
+                        EntityRoom room = (EntityRoom) lookupEntity;
+                        if (housekeeper.getID() == room.getHousekeeperID()) {
+                            room.cleanRoom();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * Removes guest that are checked out
      */
-    private void removeCheckoutGuest() {
+    private ArrayList<Entity> removeCheckoutGuest() {
         ArrayList<Entity> removalbleEntities = new ArrayList<Entity>();
 
         for (ISquare lookupEntity : getEntitiesOfType(EntityGuest.class)) {
@@ -588,9 +654,7 @@ public class Hotel implements HotelEventListener {
             }
         }
 
-        for (Entity entity : removalbleEntities) {
-            deregister(entity);
-        }
+        return removalbleEntities;
     }
 
     private ArrayList<Node> nodeGraph() {

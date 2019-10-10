@@ -27,19 +27,7 @@ public class EntityLeasure extends Entity {
      * 
      */
     public void drawEntity(Graphics g) {
-        g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
-
-        switch (this.activityType) {
-        case "Cinema":
-            this.entityImage = "Images/cinema.png";
-            break;
-
-        case "Fitness":
-            this.entityImage = "Images/fitness.png";
-            break;
-        default:
-            break;
-        }
+        g.fillRect(getX() * getPixelResolution(), (getY() - (getHeight() - 1)) * getPixelResolution(), getWidth() * getPixelResolution(), getHeight() * getPixelResolution());
         super.drawEntity(g);
     }
 
