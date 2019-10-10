@@ -51,23 +51,22 @@ public class App extends JFrame {
         p.setLayout(new FlowLayout());
 
         JLabel info = new JLabel("Groen = Kamer is schoon \n", JLabel.LEFT);
-        info.setPreferredSize(new Dimension(getPixelResolution() * (myHotel.getHighestPositions()[0] + 4), 20));
 
         info.setForeground(Color.GREEN);
         p.add(info);
 
-        info.setText("Oranje = Kamer wordt schoongemaakt \n");
+        info = new JLabel("Oranje = Kamer wordt schoongemaakt \n", JLabel.LEFT);
         info.setForeground(Color.ORANGE);
         p.add(info);
 
-        info.setText("Rood = Kamer vies \n");
+        info = new JLabel("Rood = Kamer vies \n", JLabel.LEFT);
         info.setForeground(Color.RED);
         p.add(info);
 
-        info.setText("M = menu \n");
+        info = new JLabel("M = menu \n", JLabel.LEFT);
         p.add(info);
 
-        info.setText("S = Settings \n");
+        info = new JLabel("S = Settings \n", JLabel.LEFT);
         p.add(info);
 
         // Adding components to the JFrame
