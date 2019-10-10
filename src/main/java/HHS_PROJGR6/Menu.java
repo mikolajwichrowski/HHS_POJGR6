@@ -7,10 +7,7 @@ import java.time.format.FormatStyle;
 
 public class Menu extends JFrame {
 
-    private JTextField timeFactor,pixelFactor,filthFactor,leasureFactor,elevatorFactor,stairFactor,timeDisplay;
-
-    Hotel myHotel;
-    Canvas canvas;
+    private JTextField timeFactor, pixelFactor, filthFactor, leasureFactor, elevatorFactor, stairFactor, timeDisplay;
 
     /**
      *
@@ -23,12 +20,12 @@ public class Menu extends JFrame {
         tijdsEenheid.setFont(new Font("Calabri", Font.ITALIC, 12));
         tijdsEenheid.setBounds(20, 0, 175, 40);
 
-        timeFactor = new JTextField(1);
+        timeFactor = new JTextField(3);
         timeFactor.setFont(new Font("Consolas", Font.BOLD, 18));
-        timeFactor.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        // timeFactor.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         timeFactor.setHorizontalAlignment(SwingConstants.CENTER);
         timeFactor.setBounds(125, 30, 100, 40);
-        timeFactor.setText("1,0");
+        timeFactor.setText("0.5");
 
         // Set button plus and functionality
         JButton buttonPlus = new JButton("Time unit +");
@@ -37,7 +34,7 @@ public class Menu extends JFrame {
         buttonPlus.setForeground(new Color(255, 255, 255));
         buttonPlus.addActionListener(e -> {
             Clock.addClockspeed();
-            timeFactor.setText(String.format("%.1f",Clock.getClockspeed()));
+            timeFactor.setText(String.format("%.1f", Clock.getClockspeed()));
         });
 
         // Set button minus and functionality
@@ -47,7 +44,7 @@ public class Menu extends JFrame {
         buttonMinus.setForeground(new Color(255, 255, 255));
         buttonMinus.addActionListener(e -> {
             Clock.reduceClockspeed();
-            timeFactor.setText(String.format("%.1f",Clock.getClockspeed()));
+            timeFactor.setText(String.format("%.1f", Clock.getClockspeed()));
         });
 
         JLabel pixelResolution = new JLabel("Pixel Resolution");
@@ -59,11 +56,11 @@ public class Menu extends JFrame {
         pixelPlus.setBackground(new Color(112, 219, 112));
         pixelPlus.setForeground(new Color(255, 255, 255));
         pixelPlus.addActionListener(e -> {
-            if (Settings.getPixelResolution() < 60){
+            if (Settings.getPixelResolution() < 60) {
                 Settings.setPixelResolution(Settings.getPixelResolution() + 10);
                 repaint();
             }
-            pixelFactor.setText(""+ Settings.getPixelResolution());
+            pixelFactor.setText("" + Settings.getPixelResolution());
         });
 
         JButton pixelMin = new JButton("Resolution -");
@@ -71,11 +68,11 @@ public class Menu extends JFrame {
         pixelMin.setBackground(new Color(255, 77, 77));
         pixelMin.setForeground(new Color(255, 255, 255));
         pixelMin.addActionListener(e -> {
-            if (Settings.getPixelResolution() > 10){
+            if (Settings.getPixelResolution() > 10) {
                 Settings.setPixelResolution(Settings.getPixelResolution() - 10);
                 repaint();
             }
-            pixelFactor.setText(""+ Settings.getPixelResolution());
+            pixelFactor.setText("" + Settings.getPixelResolution());
         });
 
         pixelFactor = new JTextField();
@@ -83,7 +80,7 @@ public class Menu extends JFrame {
         pixelFactor.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         pixelFactor.setHorizontalAlignment(SwingConstants.CENTER);
         pixelFactor.setBounds(125, 100, 100, 40);
-        pixelFactor.setText(""+ Settings.getPixelResolution());
+        pixelFactor.setText("" + Settings.getPixelResolution());
         pixelFactor.setText("40");
 
         JLabel filthTime = new JLabel("Cleaning expensive");
@@ -95,10 +92,10 @@ public class Menu extends JFrame {
         filthPlus.setBackground(new Color(112, 219, 112));
         filthPlus.setForeground(new Color(255, 255, 255));
         filthPlus.addActionListener(e -> {
-            if (Settings.getFilthTime() < 20){
-                Settings.setFilthTime(Settings.getFilthTime() + 2 );
+            if (Settings.getFilthTime() < 20) {
+                Settings.setFilthTime(Settings.getFilthTime() + 2);
             }
-            filthFactor.setText(""+ Settings.getFilthTime());
+            filthFactor.setText("" + Settings.getFilthTime());
         });
 
         JButton filthMin = new JButton("Cleaning -");
@@ -106,10 +103,10 @@ public class Menu extends JFrame {
         filthMin.setBackground(new Color(255, 77, 77));
         filthMin.setForeground(new Color(255, 255, 255));
         filthMin.addActionListener(e -> {
-            if (Settings.getFilthTime() > 0){
-                Settings.setFilthTime(Settings.getFilthTime() - 2 );
+            if (Settings.getFilthTime() > 0) {
+                Settings.setFilthTime(Settings.getFilthTime() - 2);
             }
-            filthFactor.setText(""+ Settings.getFilthTime());
+            filthFactor.setText("" + Settings.getFilthTime());
         });
 
         filthFactor = new JTextField();
@@ -128,10 +125,10 @@ public class Menu extends JFrame {
         leasurePlus.setBackground(new Color(112, 219, 112));
         leasurePlus.setForeground(new Color(255, 255, 255));
         leasurePlus.addActionListener(e -> {
-            if (Settings.getLeasureTime() < 20){
-                Settings.setLeasureTime(Settings.getLeasureTime() + 2 );
+            if (Settings.getLeasureTime() < 20) {
+                Settings.setLeasureTime(Settings.getLeasureTime() + 2);
             }
-            leasureFactor.setText(""+ Settings.getLeasureTime());
+            leasureFactor.setText("" + Settings.getLeasureTime());
         });
 
         JButton leasureMin = new JButton("Leasure -");
@@ -139,10 +136,10 @@ public class Menu extends JFrame {
         leasureMin.setBackground(new Color(255, 77, 77));
         leasureMin.setForeground(new Color(255, 255, 255));
         leasureMin.addActionListener(e -> {
-            if (Settings.getLeasureTime() > 0){
-                Settings.setLeasureTime(Settings.getLeasureTime() - 2 );
+            if (Settings.getLeasureTime() > 0) {
+                Settings.setLeasureTime(Settings.getLeasureTime() - 2);
             }
-            leasureFactor.setText(""+ Settings.getLeasureTime());
+            leasureFactor.setText("" + Settings.getLeasureTime());
         });
 
         leasureFactor = new JTextField();
@@ -161,10 +158,10 @@ public class Menu extends JFrame {
         elevatorPlus.setBackground(new Color(112, 219, 112));
         elevatorPlus.setForeground(new Color(255, 255, 255));
         elevatorPlus.addActionListener(e -> {
-            if (Settings.getElevatorCost() < 10){
-                Settings.setElevatorCost(Settings.getElevatorCost() + 1 );
+            if (Settings.getElevatorCost() < 10) {
+                Settings.setElevatorCost(Settings.getElevatorCost() + 1);
             }
-            elevatorFactor.setText(""+ Settings.getElevatorCost());
+            elevatorFactor.setText("" + Settings.getElevatorCost());
         });
 
         JButton elevatorMin = new JButton("Elevator -");
@@ -172,10 +169,10 @@ public class Menu extends JFrame {
         elevatorMin.setBackground(new Color(255, 77, 77));
         elevatorMin.setForeground(new Color(255, 255, 255));
         elevatorMin.addActionListener(e -> {
-            if (Settings.getElevatorCost() > 0){
-                Settings.setElevatorCost(Settings.getElevatorCost() - 1 );
+            if (Settings.getElevatorCost() > 0) {
+                Settings.setElevatorCost(Settings.getElevatorCost() - 1);
             }
-            elevatorFactor.setText(""+ Settings.getElevatorCost());
+            elevatorFactor.setText("" + Settings.getElevatorCost());
         });
 
         elevatorFactor = new JTextField();
@@ -194,10 +191,10 @@ public class Menu extends JFrame {
         stairPlus.setBackground(new Color(112, 219, 112));
         stairPlus.setForeground(new Color(255, 255, 255));
         stairPlus.addActionListener(e -> {
-            if (Settings.getStairCost() < 5){
-                Settings.setStairCost(Settings.getStairCost() + 1 );
+            if (Settings.getStairCost() < 5) {
+                Settings.setStairCost(Settings.getStairCost() + 1);
             }
-            stairFactor.setText(""+ Settings.getStairCost());
+            stairFactor.setText("" + Settings.getStairCost());
         });
 
         JButton stairMin = new JButton("Stair -");
@@ -205,10 +202,10 @@ public class Menu extends JFrame {
         stairMin.setBackground(new Color(255, 77, 77));
         stairMin.setForeground(new Color(255, 255, 255));
         stairMin.addActionListener(e -> {
-            if (Settings.getStairCost() > 0){
-                Settings.setStairCost(Settings.getStairCost() - 1 );
+            if (Settings.getStairCost() > 0) {
+                Settings.setStairCost(Settings.getStairCost() - 1);
             }
-            stairFactor.setText(""+ Settings.getStairCost());
+            stairFactor.setText("" + Settings.getStairCost());
         });
 
         stairFactor = new JTextField();
@@ -233,18 +230,36 @@ public class Menu extends JFrame {
         timeLabel.setBounds(20, 420, 175, 40);
         timeLabel.setFont(new Font("Calabri", Font.ITALIC, 12));
 
-        add(buttonPlus);add(buttonMinus);add(timeFactor);add(tijdsEenheid);add(pixelResolution);add(pixelPlus); add(pixelMin);add(pixelFactor);
-        add(filthTime);add(filthPlus);add(filthMin);add(filthFactor);add(leasureTime);add(leasurePlus);add(leasureMin);add(leasureFactor);
-        add(elevatorTime);add(elevatorPlus);add(elevatorMin);add(elevatorFactor);add(stairTime);add(stairPlus);add(stairMin);add(stairFactor);
-        add(timeLabel);add(timeDisplay);
+        add(buttonPlus);
+        add(buttonMinus);
+        add(timeFactor);
+        add(tijdsEenheid);
+        add(pixelResolution);
+        add(pixelPlus);
+        add(pixelMin);
+        add(pixelFactor);
+        add(filthTime);
+        add(filthPlus);
+        add(filthMin);
+        add(filthFactor);
+        add(leasureTime);
+        add(leasurePlus);
+        add(leasureMin);
+        add(leasureFactor);
+        add(elevatorTime);
+        add(elevatorPlus);
+        add(elevatorMin);
+        add(elevatorFactor);
+        add(stairTime);
+        add(stairPlus);
+        add(stairMin);
+        add(stairFactor);
+        add(timeLabel);
+        add(timeDisplay);
 
         setTitle("Regulation screen");
         setResizable(true);
         getContentPane().setBackground(new Color(245, 245, 240));
         setLayout(null);
-    }
-
-    private static int[] getHighestPositions() {
-        return new int[0];
     }
 }

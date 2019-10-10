@@ -3,10 +3,11 @@ package HHS_PROJGR6.Entities;
 import HHS_PROJGR6.External.HotelEvent;
 import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.Interfaces.IEntity;
+import HHS_PROJGR6.Interfaces.ISquare;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import static HHS_PROJGR6.Settings.getPixelResolution;
@@ -14,7 +15,7 @@ import static HHS_PROJGR6.Settings.getPixelResolution;
 /**
  * 
  */
-public class Entity implements IEntity, HotelEventListener {
+public class Entity implements IEntity, ISquare {
     /**
      * 
      */
@@ -39,12 +40,6 @@ public class Entity implements IEntity, HotelEventListener {
      * 
      */
     public String entityImage;
-
-    /**
-     * 
-     */
-
-    private JLabel label;
 
     public Entity(String entityImage) {
         this.x = 0;
@@ -74,14 +69,14 @@ public class Entity implements IEntity, HotelEventListener {
      * 
      * @return
      */
-    public int getXPosition() {
+    public int getX() {
         return x;
     }
 
     /**
      * 
      */
-    public int getYPosition() {
+    public int getY() {
         return y;
     }
 
@@ -128,25 +123,13 @@ public class Entity implements IEntity, HotelEventListener {
      * @param entities
      * @return
      */
-    public static List<IEntity> getOnPosition(int x, int y, List<IEntity> entities) {
-        // TODO: fix for graph generator
-        return entities.stream().filter(e -> {
-            boolean position = e.getXPosition() == x && e.getYPosition() == y;
-            boolean positionWithOffset = e.getXPosition() + e.getWidth() <= x && e.getYPosition() - e.getHeight() <= y;
-            return true;// position && positionWithOffset;
-        }).collect(Collectors.toList());
-    }
-
-    public void frame() {
-        // TODO: Niks wss
-    }
-
-    public JLabel getLabel() {
-        return this.label;
-    }
-
-    public void setLabel(JLabel label) {
-        this.label = label;
+    public static ArrayList<ISquare> getOnPosition(int x, int y, ArrayList<Entity> entities) {
+        return ((ArrayList<ISquare>) entities.clone()).stream().filter(entity -> {
+            ISquare e = (ISquare) entity;
+            boolean belowPosition = e.getX() + (e.getWidth() - 1) >= x && e.getY() - (e.getHeight() - 1) <= y;
+            boolean abovePostion = (e.getX() <= x && e.getY() >= y) ? belowPosition : false;
+            return true; // abovePostion;
+        }).collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
@@ -157,5 +140,12 @@ public class Entity implements IEntity, HotelEventListener {
      */
     public static Integer parseInt(String someText) {
         return Integer.parseInt(0 + someText.replaceAll("[^0-9]+", ""));
+    }
+
+    /**
+     * 
+     */
+    public void Notify() {
+        // TODO: Niks wss
     }
 }
