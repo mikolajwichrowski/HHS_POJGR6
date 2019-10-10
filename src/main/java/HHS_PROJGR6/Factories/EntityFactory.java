@@ -2,6 +2,7 @@ package HHS_PROJGR6.Factories;
 
 import HHS_PROJGR6.Entities.*;
 import HHS_PROJGR6.Interfaces.IEntity;
+import HHS_PROJGR6.Interfaces.ISquare;
 
 /**
  * The sources below have been used to design the factory. Bron:
@@ -20,7 +21,7 @@ public class EntityFactory {
      *                 is from Enum EntityType
      * @return IEntity
      */
-    public static IEntity createEntity(String type) {
+    public static ISquare createEntity(String type) {
         // Creating entity based on requested type
         // TODO: replace color with image path
         switch (type) {

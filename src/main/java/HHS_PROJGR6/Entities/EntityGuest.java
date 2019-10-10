@@ -42,11 +42,6 @@ public class EntityGuest extends Entity implements IEntity, IStressable {
         this.guestId = 0;
     }
 
-    public void panic() {
-        // Gast sterft, verander image van gast naar dode gast? || Stop tekenen van
-        // guest?
-    }
-
     public void drawEntity(Graphics g) {
         super.drawEntity(g);
     }
@@ -68,7 +63,7 @@ public class EntityGuest extends Entity implements IEntity, IStressable {
     }
 
     public boolean getActive() {
-        return !(this.guestId == 0 && this.instructions.size() > 0);
+        return !(this.guestId == 0);
     }
 
     public void setInstructions(List<Node> instructions) {
@@ -78,7 +73,7 @@ public class EntityGuest extends Entity implements IEntity, IStressable {
     /**
      * 
      */
-    public void frame() {
+    public void Notify() {
         // if has instructions do them
         if (instructions.size() > 0) {
             Node instruction = instructions.get(0);
@@ -88,5 +83,10 @@ public class EntityGuest extends Entity implements IEntity, IStressable {
 
         // TODO: if no instructions and no movie playing
         // Go back to room
+    }
+
+    public void panic() {
+        // Gast sterft, verander image van gast naar dode gast? || Stop tekenen van
+        // guest?
     }
 }

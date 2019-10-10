@@ -7,7 +7,7 @@ import java.awt.*;
 
 import static HHS_PROJGR6.Settings.getPixelResolution;
 
-public class EntityLeasure extends Entity implements IEntity {
+public class EntityLeasure extends Entity {
     /**
      * 
      */
@@ -21,21 +21,6 @@ public class EntityLeasure extends Entity implements IEntity {
     public EntityLeasure(String entityImage, String activityType) {
         super(entityImage);
         this.activityType = activityType;
-    }
-
-    /**
-     * 
-     * @param event
-     */
-    public void Notify(HotelEvent event) {
-        // if (event == HotelEventType.START_CINEMA) {
-        // set op locked
-        // }
-
-        // als lock op 1 dan tellen
-        if (false) {
-            // wacht tijd ophogen zolang wacht tijd tussen 1 en eind(10?)
-        }
     }
 
     /**
@@ -59,9 +44,9 @@ public class EntityLeasure extends Entity implements IEntity {
     }
 
     /**
-     * 
+     * @return the activityType
      */
-    public void frame() {
-        // TODO: ?
+    public String getActivityType() {
+        return activityType;
     }
 }

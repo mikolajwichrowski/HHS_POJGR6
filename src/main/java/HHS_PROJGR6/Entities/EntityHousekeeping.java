@@ -37,7 +37,7 @@ public class EntityHousekeeping extends Entity implements IEntity, IStressable {
     /**
      * 
      */
-    public void frame() {
+    public void Notify() {
         // TODO: If has instructions
         // // Node instruction = instructions.get(0);
         // // setPosition(instruction.getY(), instruction.getX());
