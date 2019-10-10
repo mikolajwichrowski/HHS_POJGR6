@@ -11,26 +11,15 @@ import static HHS_PROJGR6.Settings.getPixelResolution;
 * Inherits from Entity
 */
 public class EntityTransport extends Entity {
-    public EntityTransport(String entityImage, String activityType) {
+    public EntityTransport(String entityImage) {
         super(entityImage);
-        switch (activityType) {
-        case "Stairs":
-            this.entityImage = "Images/Stair.png";
-            break;
-        case "Elevator":
-            this.entityImage = "Images/Elevator.png";
-            break;
-        default:
-            break;
-        }
     }
 
     /**
      * 
      */
     public void drawEntity(Graphics g) {
-        g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
-
+        g.fillRect(getX() * getPixelResolution(), (getY() - (getHeight() - 1)) * getPixelResolution(), getWidth() * getPixelResolution(), getHeight() * getPixelResolution());
         super.drawEntity(g);
     }
 }

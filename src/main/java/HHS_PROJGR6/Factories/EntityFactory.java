@@ -21,7 +21,7 @@ public class EntityFactory {
      *                 is from Enum EntityType
      * @return IEntity
      */
-    public static ISquare createEntity(String type) {
+    public static ISquare createEntity(String type, String subclass) {
         // Creating entity based on requested type
         // TODO: replace color with image path
         switch (type) {
@@ -29,13 +29,13 @@ public class EntityFactory {
             return new EntityDiner("Images/Diner.png");
 
         case "Room":
-            return new EntityRoom("Images/0star.png");
+            return new EntityRoom("Images/star" + subclass + ".png", subclass);
 
         case "Fitness":
-            return new EntityLeasure("Images/cinema.png", type);
+            return new EntityLeasure("Images/" + subclass + ".png", type);
 
         case "Cinema":
-            return new EntityLeasure("Images/fitness.png", type);
+            return new EntityLeasure("Images/" + subclass + ".png", type);
 
         case "Guest":
             return new EntityGuest("Images/Guest.png");
@@ -44,10 +44,10 @@ public class EntityFactory {
             return new EntityHousekeeping("Images/Housekeeping.png");
 
         case "Elevator":
-            return new EntityTransport("Images/Elevator.png", type);
+            return new EntityTransport("Images/Elevator.png");
 
         case "Stairs":
-            return new EntityTransport("Images/Stair2.png", type);
+            return new EntityTransport("Images/Stair.png");
 
         case "Lobby":
             return new EntityLobby("Images/reception1.png");

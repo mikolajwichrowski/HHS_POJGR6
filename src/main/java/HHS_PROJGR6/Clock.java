@@ -32,7 +32,7 @@ public class Clock {
      * Method to reduce the clockspeed.
      */
     public static void reduceClockspeed() {
-        if (Clock.clockspeed > 0.0) {
+        if (Clock.clockspeed > 0.2) {
             Clock.clockspeed -= 0.1;
         }
     }

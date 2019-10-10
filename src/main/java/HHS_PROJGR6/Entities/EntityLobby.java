@@ -12,7 +12,7 @@ public class EntityLobby extends Entity {
     }
 
     public void drawEntity(Graphics g) {
-        g.fillRect(x * getPixelResolution(), (y - (height - 1)) * getPixelResolution(), width * getPixelResolution(), height * getPixelResolution());
+        g.fillRect(getX() * getPixelResolution(), (getY() - (getHeight() - 1)) * getPixelResolution(), getWidth() * getPixelResolution(), getHeight() * getPixelResolution());
         super.drawEntity(g);
     }
 }

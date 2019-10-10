@@ -2,8 +2,6 @@ package HHS_PROJGR6;
 
 import HHS_PROJGR6.Entities.Entity;
 import HHS_PROJGR6.Entities.EntityGuest;
-import HHS_PROJGR6.Interfaces.IEntity;
-import HHS_PROJGR6.Interfaces.ISquare;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,23 +32,19 @@ public class Statistics extends JFrame {
 
                 if (entities.get(i).getY() == 7) {
                     row[1] = "Lobby";
-                }
-                if (entities.get(i).getY() == 6) {
+                }if (entities.get(i).getY() == 6) {
                     row[1] = "First floor";
-                }
-                if (entities.get(i).getY() == 5) {
+                }if (entities.get(i).getY() == 5) {
                     row[1] = "Second floor";
-                }
-                if (entities.get(i).getY() == 4) {
+                }if (entities.get(i).getY() == 4) {
                     row[1] = "Third floor";
-                }
-                if (entities.get(i).getY() == 3) {
+                }if (entities.get(i).getY() == 3) {
                     row[1] = "Fourth floor";
-                }
-                if (entities.get(i).getY() == 2) {
+                }if (entities.get(i).getY() == 2) {
                     row[1] = "Fifth floor";
                 }
-                row[2] = "Room " + ((EntityGuest) entities.get(i)).getPreference();
+                row[2] = "Room: " + ((EntityGuest) entities.get(i)).getPreference();
+                //row[3] = ""+ ((EntityHousekeeping) entities.get(i))
 
                 // for (IEntity lookupEntity : entities) {
                 // if (lookupEntity.getXPosition() == entity.getXPosition() &&
