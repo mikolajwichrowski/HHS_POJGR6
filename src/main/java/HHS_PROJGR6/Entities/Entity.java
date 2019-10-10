@@ -7,7 +7,7 @@ import HHS_PROJGR6.Interfaces.ISquare;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import static HHS_PROJGR6.Settings.getPixelResolution;
@@ -123,14 +123,13 @@ public class Entity implements IEntity, ISquare {
      * @param entities
      * @return
      */
-    public static List<ISquare> getOnPosition(int x, int y, List<Entity> entities) {
-        // TODO: fix for graph generator
-        return entities.stream().filter(entity -> {
+    public static ArrayList<ISquare> getOnPosition(int x, int y, ArrayList<Entity> entities) {
+        return ((ArrayList<ISquare>) entities.clone()).stream().filter(entity -> {
             ISquare e = (ISquare) entity;
-            boolean position = e.getX() == x && e.getY() == y;
-            boolean positionWithOffset = e.getX() + e.getWidth() <= x && e.getY() - e.getHeight() <= y;
-            return true;// position && positionWithOffset;
-        }).collect(Collectors.toList());
+            boolean belowPosition = e.getX() + (e.getWidth() - 1) >= x && e.getY() - (e.getHeight() - 1) <= y;
+            boolean abovePostion = (e.getX() <= x && e.getY() >= y) ? belowPosition : false;
+            return true; // abovePostion;
+        }).collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**

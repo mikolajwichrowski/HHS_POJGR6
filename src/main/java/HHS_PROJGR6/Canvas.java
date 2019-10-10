@@ -31,11 +31,6 @@ public class Canvas extends JPanel {
     private ArrayList<Entity> drawableEntities;
 
     /**
-     * Generated serial id
-     */
-    private static final long serialVersionUID = -2041936094389559508L;
-
-    /**
      * 
      */
 

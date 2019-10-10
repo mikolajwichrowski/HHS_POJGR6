@@ -12,7 +12,7 @@ import static HHS_PROJGR6.Settings.getPixelResolution;
 * Inherits from Entity
 */
 
-public class EntityRoom extends Entity implements IEntity, IStressable {
+public class EntityRoom extends Entity implements IStressable {
     private int inhabitantID;
     private int classification;
     private boolean dirty = false;
@@ -92,12 +92,5 @@ public class EntityRoom extends Entity implements IEntity, IStressable {
      */
     public void setInhabitantID(int inhabitantID) {
         this.inhabitantID = inhabitantID;
-    }
-
-    /**
-     * 
-     */
-    public void Notify() {
-        // TODO: make room dirty after x ticks
     }
 }
