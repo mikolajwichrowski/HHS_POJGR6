@@ -9,6 +9,9 @@ public class Menu extends JFrame {
 
     private JTextField timeFactor,pixelFactor,filthFactor,leasureFactor,elevatorFactor,stairFactor,timeDisplay;
 
+    Hotel myHotel;
+    Canvas canvas;
+
     /**
      *
      */
@@ -20,12 +23,12 @@ public class Menu extends JFrame {
         tijdsEenheid.setFont(new Font("Calabri", Font.ITALIC, 12));
         tijdsEenheid.setBounds(20, 0, 175, 40);
 
-        timeFactor = new JTextField(3);
+        timeFactor = new JTextField(1);
         timeFactor.setFont(new Font("Consolas", Font.BOLD, 18));
-        //timeFactor.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        timeFactor.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         timeFactor.setHorizontalAlignment(SwingConstants.CENTER);
         timeFactor.setBounds(125, 30, 100, 40);
-        timeFactor.setText("0.5");
+        timeFactor.setText("1,0");
 
         // Set button plus and functionality
         JButton buttonPlus = new JButton("Time unit +");
@@ -34,7 +37,7 @@ public class Menu extends JFrame {
         buttonPlus.setForeground(new Color(255, 255, 255));
         buttonPlus.addActionListener(e -> {
             Clock.addClockspeed();
-            timeFactor.setText("" + Clock.getClockspeed());
+            timeFactor.setText(String.format("%.1f",Clock.getClockspeed()));
         });
 
         // Set button minus and functionality
@@ -44,7 +47,7 @@ public class Menu extends JFrame {
         buttonMinus.setForeground(new Color(255, 255, 255));
         buttonMinus.addActionListener(e -> {
             Clock.reduceClockspeed();
-            timeFactor.setText("" + Clock.getClockspeed());
+            timeFactor.setText(String.format("%.1f",Clock.getClockspeed()));
         });
 
         JLabel pixelResolution = new JLabel("Pixel Resolution");
@@ -239,5 +242,9 @@ public class Menu extends JFrame {
         setResizable(true);
         getContentPane().setBackground(new Color(245, 245, 240));
         setLayout(null);
+    }
+
+    private static int[] getHighestPositions() {
+        return new int[0];
     }
 }

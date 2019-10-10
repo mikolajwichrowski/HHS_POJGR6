@@ -42,7 +42,7 @@ public class Canvas extends JPanel {
         this.gridWidth = 0;
 
         setSize(d);
-        repaint();
+        //repaint();
     }
 
     /**
@@ -86,7 +86,7 @@ public class Canvas extends JPanel {
      */
     public void setGridHeight(int height) {
         this.gridHeight = height;
-        repaint();
+        //repaint();
     }
 
     /**
@@ -101,7 +101,7 @@ public class Canvas extends JPanel {
      */
     public void setGridWidth(int width) {
         this.gridWidth = width;
-        repaint();
+        //repaint();
     }
 
     /**
@@ -124,8 +124,7 @@ public class Canvas extends JPanel {
      */
     @Override
     protected void paintComponent(Graphics g) {
-        drawableEntity(g);
         drawGrid(g);
-
+        drawableEntity(g);
     }
 }
