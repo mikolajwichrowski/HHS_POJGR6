@@ -166,6 +166,9 @@ public class DijkstraAlgorithm {
         ArrayList<Node> finalPath = new ArrayList<Node>();
         finalPath.add(inspecting);
 
+        // Add two times for frame
+        finalPath.add(inspecting);
+
         // Traverse path (destination -> source)
         boolean backToSource = false;
         while (!backToSource) {
@@ -206,6 +209,9 @@ public class DijkstraAlgorithm {
         }
 
         Collections.reverse(finalPath);
+
+        // Add two times for frame
+        finalPath.add(destination);
 
         return finalPath;
     }

@@ -41,7 +41,7 @@ public class EntityFactory {
             return new EntityGuest("Images/Guest.png");
 
         case "Housekeeping":
-            return new EntityHousekeeping("Images/Housekeeping.png");
+            return new EntityHousekeeping("Images/Housekeeping" + subclass + ".png");
 
         case "Elevator":
             return new EntityTransport("Images/Elevator.png");

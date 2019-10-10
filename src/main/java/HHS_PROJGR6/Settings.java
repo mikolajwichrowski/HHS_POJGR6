@@ -4,7 +4,7 @@ package HHS_PROJGR6;
  * Settings
  */
 public class Settings {
-    private static int pixelResolution = 40;
+    private static int pixelResolution = 60;
     private static int filthTime = 10;
     private static int leasureTime = 10;
     private static int stairCost = 2;

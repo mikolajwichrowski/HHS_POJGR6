@@ -50,6 +50,30 @@ public class EntityRoom extends Entity implements IEntity {
     public void drawEntity(Graphics g) {
         g.fillRect(getX() * getPixelResolution(), (getY() - (getHeight() - 1)) * getPixelResolution(), getWidth() * getPixelResolution(), getHeight() * getPixelResolution());
         super.drawEntity(g);
+
+        // Draw status
+        boolean drawStatus = false;
+        if (this.inhabitantID != 0) {
+            g.setColor(Color.green);
+            drawStatus = true;
+        }
+
+        if (isDirty()) {
+            g.setColor(Color.red);
+            drawStatus = true;
+        }
+
+        if (this.housekeeperID != 0) {
+            g.setColor(Color.orange);
+            drawStatus = true;
+        }
+
+        if (drawStatus) {
+            g.drawRect(getX() * getPixelResolution() + 1, (getY() - (getHeight() - 1)) * getPixelResolution() + 1, (getWidth() * getPixelResolution()) - 2, (getHeight() * getPixelResolution()) - 2);
+            // Reset color
+            g.setColor(Color.black);
+        }
+
     }
 
     /**
@@ -105,6 +129,13 @@ public class EntityRoom extends Entity implements IEntity {
      */
     public boolean isDirty() {
         return this.dirty >= getFilthTime();
+    }
+
+    /**
+     * 
+     */
+    public void makeDirty() {
+        this.dirty = getFilthTime();
     }
 
     /**
