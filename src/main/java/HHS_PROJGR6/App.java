@@ -44,13 +44,10 @@ public class App extends JFrame {
         setLayout(null);
         setLocation(350,0);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
         setVisible(true);
 
         // Start frames
         myHotel.frame();
-
-
     }
 
     /**

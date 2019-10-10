@@ -1,24 +1,15 @@
 package HHS_PROJGR6;
 
-import HHS_PROJGR6.Entities.Entity;
-
-// imports from project
-
-import HHS_PROJGR6.Entities.EntityDiner;
-import HHS_PROJGR6.Entities.EntityGuest;
-import HHS_PROJGR6.Entities.EntityLeasure;
-import HHS_PROJGR6.Entities.EntityRoom;
+import HHS_PROJGR6.Entities.*;
 import HHS_PROJGR6.External.HotelEvent;
 import HHS_PROJGR6.External.HotelEventListener;
 import HHS_PROJGR6.External.HotelEventManager;
 import HHS_PROJGR6.Factories.EntityFactory;
 import HHS_PROJGR6.Interfaces.IEntity;
+import HHS_PROJGR6.Interfaces.ISquare;
 import HHS_PROJGR6.Utils.DijkstraAlgorithm;
 import HHS_PROJGR6.Utils.JsonReader;
 import HHS_PROJGR6.Utils.Node;
-import HHS_PROJGR6.Interfaces.ISquare;
-
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import javax.swing.*;
@@ -26,15 +17,10 @@ import java.awt.event.KeyEvent;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import javax.swing.JComponent;
-import javax.swing.KeyStroke;
 
 import static HHS_PROJGR6.Settings.getLeasureTime;
+
+// imports from project
 
 /**
  *
@@ -234,8 +220,8 @@ public class Hotel implements HotelEventListener {
      */
     private void setMenuBindings() {
         // Add key listeners
-        hotelCanvas.registerKeyboardAction(e -> showStatistics(), KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0, false), JComponent.WHEN_FOCUSED);
-        hotelCanvas.registerKeyboardAction(e -> showMenu(), KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0, false), JComponent.WHEN_FOCUSED);
+        hotelCanvas.registerKeyboardAction(e -> showStatistics(), KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, false), JComponent.WHEN_FOCUSED);
+        hotelCanvas.registerKeyboardAction(e -> showMenu(), KeyStroke.getKeyStroke(KeyEvent.VK_M, 0, false), JComponent.WHEN_FOCUSED);
     }
 
     /**
