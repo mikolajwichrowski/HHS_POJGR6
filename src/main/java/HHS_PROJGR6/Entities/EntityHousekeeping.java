@@ -81,6 +81,8 @@ public class EntityHousekeeping extends Entity implements IEntity {
      * 
      */
     public void drawEntity(Graphics g) {
-        super.drawEntity(g);
+        if (instructions.size() > 0) {
+            super.drawEntity(g);
+        }
     }
 }

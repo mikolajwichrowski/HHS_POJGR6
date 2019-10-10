@@ -93,6 +93,9 @@ public class Hotel implements HotelEventListener {
             entity.Notify();
         }
 
+        // Repaints
+        hotelCanvas.repaint();
+
         // Make housekeepers look for rooms and clean them
         housekeepingProcedure();
 
@@ -100,9 +103,6 @@ public class Hotel implements HotelEventListener {
         for (Entity entity : removalbleEntities) {
             deregister(entity);
         }
-
-        // Repaints
-        hotelCanvas.repaint();
 
         // Recursion to keep loop going
         frame();
@@ -185,7 +185,7 @@ public class Hotel implements HotelEventListener {
             register(entity);
 
             // Create housekeeping with factory
-            for (int j = 1; j < 2; j++) {
+            for (int j = 1; j <= 2; j++) {
                 EntityHousekeeping housekeeping = (EntityHousekeeping) EntityFactory.createEntity("Housekeeping", null);
                 housekeeping.setPosition(getHighestPositions()[1] + 1, getHighestPositions()[0] + 1);
                 housekeeping.setID("" + j);
