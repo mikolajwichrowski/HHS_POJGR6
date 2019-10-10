@@ -605,19 +605,13 @@ public class Hotel implements HotelEventListener {
         }
 
         // Make housekeeping go to dirty room
+        EntityHousekeeping housekeeperAssigned = null;
         if (roomToClean != null) {
             for (ISquare entity : getEntitiesOfType(EntityHousekeeping.class)) {
                 EntityHousekeeping housekeeper = (EntityHousekeeping) entity;
                 if (!housekeeper.getActive()) {
-                    // Mark the room to be cleaned by this housekeeper
-                    roomToClean.setHousekeeperID(housekeeper.getID());
-
-                    // Generate instructions to available room
-                    Node from = DijkstraAlgorithm.createLocationNode(housekeeper.getX(), housekeeper.getY());
-                    Node to = DijkstraAlgorithm.createLocationNode(roomToClean.getX(), roomToClean.getY());
-
-                    // Set last instructions and set ID to 0
-                    housekeeper.setInstructions(DijkstraAlgorithm.findPath(from, to, nodeGraph()));
+                    // Set assigned housekeeper
+                    housekeeperAssigned = housekeeper;
                 } else {
                     // Find cleaned room by this housekeeper
                     for (ISquare lookupEntity : getEntitiesOfType(EntityRoom.class)) {
@@ -628,6 +622,18 @@ public class Hotel implements HotelEventListener {
                     }
                 }
             }
+        }
+
+        if (housekeeperAssigned != null) {
+            // Mark the room to be cleaned by this housekeeper
+            roomToClean.setHousekeeperID(housekeeperAssigned.getID());
+
+            // Generate instructions to available room
+            Node from = DijkstraAlgorithm.createLocationNode(housekeeperAssigned.getX(), housekeeperAssigned.getY());
+            Node to = DijkstraAlgorithm.createLocationNode(roomToClean.getX(), roomToClean.getY());
+
+            // Set last instructions and set ID to 0
+            housekeeperAssigned.setInstructions(DijkstraAlgorithm.findPath(from, to, nodeGraph()));
         }
     }
 
