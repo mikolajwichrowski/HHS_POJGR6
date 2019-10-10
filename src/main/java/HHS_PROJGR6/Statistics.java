@@ -2,6 +2,8 @@ package HHS_PROJGR6;
 
 import HHS_PROJGR6.Entities.Entity;
 import HHS_PROJGR6.Entities.EntityGuest;
+import HHS_PROJGR6.Entities.EntityRoom;
+import HHS_PROJGR6.Interfaces.ISquare;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,14 +21,13 @@ public class Statistics extends JFrame {
 
         // Define data and columns
         List<String[]> data = new ArrayList<String[]>();
-        String column[] = { "Person", "Floor", "Preference",/* "Location" */ };
+        String column[] = { "Person", "Floor", "Preference","Room" };
 
         // Loop trough entities
         for (int i = 0; i < entities.size(); i++) {
             // Set row data
             if (entities.get(i) instanceof EntityGuest) {
-                EntityGuest entity = (EntityGuest) entities.get(i);
-                String[] row = new String[3];
+                String[] row = new String[4];
                 row[0] = "Guest: " + ((EntityGuest) entities.get(i)).getID();
                 row[1] = "" + entities.get(i).getY();
 
@@ -44,7 +45,14 @@ public class Statistics extends JFrame {
                     row[1] = "Fifth floor";
                 }
                 row[2] = "Room: " + ((EntityGuest) entities.get(i)).getPreference();
-                //row[3] = ""+ ((EntityHousekeeping) entities.get(i))
+
+                for(ISquare lookupEntity : entities){
+                    if (lookupEntity instanceof EntityRoom && ((EntityRoom) lookupEntity).getInhabitantID() == ((EntityGuest) entities.get(i)).getID()) {
+                        row[3] = ((EntityRoom) lookupEntity).isDirty() ? "Dirty" : "Clean";
+
+                    }
+                }
+
 
                 // for (IEntity lookupEntity : entities) {
                 // if (lookupEntity.getXPosition() == entity.getXPosition() &&
