@@ -181,8 +181,8 @@ public class Hotel implements HotelEventListener {
 
             // Create housekeeping with factory
             for (int j = 1; j <= 2; j++) {
-                EntityHousekeeping housekeeping = (EntityHousekeeping) EntityFactory.createEntity("Housekeeping", null);
-                housekeeping.setPosition(getHighestPositions()[1] + 1, getHighestPositions()[0] + 1);
+                EntityHousekeeping housekeeping = (EntityHousekeeping) EntityFactory.createEntity("Housekeeping", "" + j);
+                housekeeping.setPosition(getHighestPositions()[1] + 1, 2);
                 housekeeping.setID("" + j);
                 register((ISquare) housekeeping);
             }
@@ -235,6 +235,275 @@ public class Hotel implements HotelEventListener {
     }
 
     /**
+     * 
+     * @param event
+     */
+    private void checkIn(HotelEvent event) {
+        String key = event.Data.keySet().iterator().next();
+
+        // Create new guest
+        EntityGuest guest = (EntityGuest) EntityFactory.createEntity("Guest", null);
+        guest.setPosition(getHighestPositions()[1] + 1, getHighestPositions()[0] + 2);
+        guest.setID(key);
+        guest.setPreference(event.Data.get(key));
+
+        // Find available room with preference
+        EntityRoom checkedRoom = null;
+        for (ISquare entity : getEntitiesOfType(EntityRoom.class)) {
+            EntityRoom room = ((EntityRoom) entity);
+            if (room.getClassification() == guest.getPreference() && room.getInhabitantID() == 0 && !room.isDirty()) {
+                checkedRoom = room;
+            }
+        }
+
+        // If there is a room
+        if (checkedRoom != null) {
+            // Set inhabitant
+            checkedRoom.setInhabitantID(guest.getID());
+
+            // Generate instructions to available room
+            Node from = DijkstraAlgorithm.createLocationNode(2, 7);
+            Node to = DijkstraAlgorithm.createLocationNode(checkedRoom.getX(), checkedRoom.getY());
+
+            // Set instructions to room
+            guest.setInstructions(DijkstraAlgorithm.findPath(from, to, nodeGraph()));
+
+            register(guest);
+        }
+    }
+
+    /**
+     * 
+     */
+    private void checkOut(HotelEvent event) {
+        String key = event.Data.keySet().iterator().next();
+
+        int removeInhabitantID = 0;
+        for (ISquare entity : getEntitiesOfType(EntityGuest.class)) {
+            EntityGuest guest = (EntityGuest) entity;
+            if (guest.getID() == Entity.parseInt(event.Data.get(key))) {
+                // Generate instructions to available room
+                Node from = DijkstraAlgorithm.createLocationNode(entity.getX(), entity.getY());
+                Node to = DijkstraAlgorithm.createLocationNode(2, 7);
+
+                // Remove inhabitant from room
+                removeInhabitantID = guest.getID();
+
+                // Set last instructions and set ID to 0
+                guest.setInstructions(DijkstraAlgorithm.findPath(from, to, nodeGraph()));
+                guest.checkout();
+            }
+        }
+
+        // Remove inhabitant from room
+        for (ISquare entity : getEntitiesOfType(EntityRoom.class)) {
+            EntityRoom room = (EntityRoom) entity;
+            if (removeInhabitantID == room.getInhabitantID()) {
+                room.setInhabitantID(0);
+            }
+        }
+    }
+
+    /**
+     * 
+     * @param event
+     */
+    private void cleaningEmergency(HotelEvent event) {
+        String key = event.Data.keySet().iterator().next();
+        for (ISquare entity : getEntitiesOfType(EntityRoom.class)) {
+            EntityRoom room = (EntityRoom) entity;
+            if (Entity.parseInt(event.Data.get(key)) == room.getInhabitantID()) {
+                room.makeDirty();
+            }
+        }
+    }
+
+    /**
+     * 
+     * @param event
+     */
+    private void evacuate(HotelEvent event) {
+        String key = event.Data.keySet().iterator().next();
+        Integer removeInhabitantID = null;
+
+        for (ISquare entity : getEntitiesOfType(EntityGuest.class)) {
+            EntityGuest guest = (EntityGuest) entity;
+
+            // Generate instructions to available room
+            Node from = DijkstraAlgorithm.createLocationNode(entity.getX(), entity.getY());
+            Node to = DijkstraAlgorithm.createLocationNode(2, 7);
+
+            // Remove inhabitant from room
+            removeInhabitantID = guest.getID();
+
+            // Set last instructions and set ID to 0
+            guest.setInstructions(DijkstraAlgorithm.findPath(from, to, nodeGraph()));
+            guest.checkout();
+
+        }
+
+        // Remove inhabitants from rooms
+        for (ISquare entity : getEntitiesOfType(EntityRoom.class)) {
+            EntityRoom room = (EntityRoom) entity;
+            room.setInhabitantID(0);
+        }
+    }
+
+    /**
+     * 
+     * @param event
+     */
+    private void startCinema(HotelEvent event) {
+        String key = event.Data.keySet().iterator().next();
+
+        // Lookup cinemas
+        int cinemaID = Entity.parseInt(event.Data.get(key)) - 1;
+        ArrayList<ISquare> cinemas = new ArrayList<ISquare>();
+        for (ISquare entity : getEntitiesOfType(EntityLeasure.class)) {
+            EntityLeasure current = (EntityLeasure) entity;
+            if (current.getActivityType() == "Cinema") {
+                cinemas.add(entity);
+            }
+        }
+
+        // When cinema exists
+        if (cinemaID < cinemas.size() - 1) {
+            EntityLeasure cinema = (EntityLeasure) cinemas.get(cinemaID);
+            for (ISquare entity : getEntitiesOfType(EntityGuest.class)) {
+                EntityGuest guest = (EntityGuest) entity;
+                if (cinema.getX() == guest.getX() && cinema.getY() == guest.getY()) {
+                    Node from = DijkstraAlgorithm.createLocationNode(entity.getX(), entity.getY());
+
+                    // Find Room
+                    Node to = null;
+                    for (ISquare lookupEntity : getEntitiesOfType(EntityRoom.class)) {
+                        EntityRoom current = (EntityRoom) lookupEntity;
+                        if (current.getInhabitantID() == guest.getID()) {
+                            to = DijkstraAlgorithm.createLocationNode(current.getX(), current.getY());
+                        }
+                    }
+
+                    if (to != null) {
+                        // Calculate route
+                        ArrayList<Node> route = new ArrayList<Node>();
+
+                        // Amount of time the entity waits in cinema
+                        for (int i = 0; i < getLeasureTime(); i++) {
+                            DijkstraAlgorithm.createLocationNode(cinema.getX(), cinema.getY());
+                        }
+
+                        route.addAll(DijkstraAlgorithm.findPath(from, to, nodeGraph()));
+
+                        // Set instructions
+                        guest.setInstructions(route);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 
+     * @param event
+     */
+    private void needFood(HotelEvent event) {
+        String key = event.Data.keySet().iterator().next();
+
+        for (ISquare entity : getEntitiesOfType(EntityGuest.class)) {
+            EntityGuest guest = (EntityGuest) entity;
+            if (guest.getID() == Entity.parseInt(event.Data.get(key))) {
+                // Generate instructions to available room
+                Node from = DijkstraAlgorithm.createLocationNode(entity.getX(), entity.getY());
+
+                // TODO: find restaurant
+                Node to = null;
+                for (ISquare lookupEntity : getEntitiesOfType(EntityDiner.class)) {
+                    to = DijkstraAlgorithm.createLocationNode(lookupEntity.getX(), lookupEntity.getY());
+                }
+
+                if (to != null) {
+
+                    ArrayList<Node> route = DijkstraAlgorithm.findPath(from, to, nodeGraph());
+
+                    // Go back to hotel room
+                    route.addAll(DijkstraAlgorithm.findPath(to, from, nodeGraph()));
+
+                    // Set instructions
+                    guest.setInstructions(route);
+                }
+            }
+        }
+    }
+
+    /**
+     * 
+     */
+    private void gotoFitness(HotelEvent event) {
+        String key = event.Data.keySet().iterator().next();
+
+        for (ISquare entity : getEntitiesOfType(EntityGuest.class)) {
+            EntityGuest guest = (EntityGuest) entity;
+            if (guest.getID() == Entity.parseInt(event.Data.get(key))) {
+                // Generate instructions to available room
+                Node from = DijkstraAlgorithm.createLocationNode(entity.getX(), entity.getY());
+
+                // Find fitness
+                Node to = null;
+                for (ISquare lookupEntity : getEntitiesOfType(EntityLeasure.class)) {
+                    EntityLeasure current = (EntityLeasure) lookupEntity;
+                    if (current.getActivityType() == "Fitness") {
+                        to = DijkstraAlgorithm.createLocationNode(current.getX(), current.getY());
+                    }
+                }
+
+                if (to != null) {
+
+                    ArrayList<Node> route = DijkstraAlgorithm.findPath(from, to, nodeGraph());
+
+                    // Go back to hotel room
+                    route.addAll(DijkstraAlgorithm.findPath(to, from, nodeGraph()));
+
+                    // Set instructions
+                    guest.setInstructions(route);
+                }
+            }
+        }
+    }
+
+    /**
+     * 
+     */
+    private void gotoCinema(HotelEvent event) {
+        String key = event.Data.keySet().iterator().next();
+
+        for (ISquare entity : getEntitiesOfType(EntityGuest.class)) {
+            EntityGuest guest = (EntityGuest) entity;
+            System.out.println(guest.getID());
+            if (guest.getID() == Entity.parseInt(event.Data.get(key))) {
+                // Generate instructions to available room
+                Node from = DijkstraAlgorithm.createLocationNode(entity.getX(), entity.getY());
+
+                // Find cinema
+                Node to = null;
+                for (ISquare lookupEntity : getEntitiesOfType(EntityLeasure.class)) {
+                    EntityLeasure current = (EntityLeasure) lookupEntity;
+                    if (current.getActivityType() == "Cinema") {
+                        to = DijkstraAlgorithm.createLocationNode(current.getX(), current.getY());
+                    }
+                }
+
+                if (to != null) {
+                    // Calculate route
+                    ArrayList<Node> route = DijkstraAlgorithm.findPath(from, to, nodeGraph());
+
+                    // Set instructions
+                    guest.setInstructions(route);
+                }
+            }
+        }
+    }
+
+    /**
      * Called upon when event manager has a event Don't worry... we know this method
      * is hella big. It shouldn't be :(
      */
@@ -246,221 +515,34 @@ public class Hotel implements HotelEventListener {
         // Which event is fired
         switch (event.Type) {
         case CHECK_IN:
-            // Create new guest
-            guest = (EntityGuest) EntityFactory.createEntity("Guest", null);
-            guest.setPosition(getHighestPositions()[1] + 1, getHighestPositions()[0] + 2);
-            guest.setID(key);
-            guest.setPreference(event.Data.get(key));
-
-            // Find available room with preference
-            EntityRoom checkedRoom = null;
-            for (ISquare entity : getEntitiesOfType(EntityRoom.class)) {
-                EntityRoom room = ((EntityRoom) entity);
-                if (room.getClassification() == guest.getPreference() && room.getInhabitantID() == 0 && !room.isDirty()) {
-                    checkedRoom = room;
-                }
-            }
-
-            // If there is a room
-            if (checkedRoom != null) {
-                // Set inhabitant
-                checkedRoom.setInhabitantID(guest.getID());
-
-                // Generate instructions to available room
-                Node from = DijkstraAlgorithm.createLocationNode(2, 7);
-                Node to = DijkstraAlgorithm.createLocationNode(checkedRoom.getX(), checkedRoom.getY());
-
-                // Set instructions to room
-                guest.setInstructions(DijkstraAlgorithm.findPath(from, to, nodeGraph()));
-
-                register(guest);
-            }
+            checkIn(event);
             break;
         case CHECK_OUT:
-            int removeInhabitantID = 0;
-            for (ISquare entity : getEntitiesOfType(EntityGuest.class)) {
-                guest = (EntityGuest) entity;
-                if (guest.getID() == Entity.parseInt(event.Data.get(key))) {
-                    // Generate instructions to available room
-                    Node from = DijkstraAlgorithm.createLocationNode(entity.getX(), entity.getY());
-                    Node to = DijkstraAlgorithm.createLocationNode(2, 7);
-
-                    // Remove inhabitant from room
-                    removeInhabitantID = guest.getID();
-
-                    // Set last instructions and set ID to 0
-                    guest.setInstructions(DijkstraAlgorithm.findPath(from, to, nodeGraph()));
-                    guest.checkout();
-                }
-            }
-
-            // Remove inhabitant from room
-            for (ISquare entity : getEntitiesOfType(EntityRoom.class)) {
-                EntityRoom room = (EntityRoom) entity;
-                if (removeInhabitantID == room.getInhabitantID()) {
-                    room.setInhabitantID(0);
-                }
-            }
+            checkOut(event);
             break;
 
         case CLEANING_EMERGENCY:
-            // TODO: Get room that has to bee cleaned
+            cleaningEmergency(event);
             break;
 
         case EVACUATE:
-            for (ISquare entity : getEntitiesOfType(EntityGuest.class)) {
-                guest = (EntityGuest) entity;
-
-                // Generate instructions to available room
-                Node from = DijkstraAlgorithm.createLocationNode(entity.getX(), entity.getY());
-                Node to = DijkstraAlgorithm.createLocationNode(2, 7);
-
-                // Remove inhabitant from room
-                removeInhabitantID = guest.getID();
-
-                // Set last instructions and set ID to 0
-                guest.setInstructions(DijkstraAlgorithm.findPath(from, to, nodeGraph()));
-                guest.checkout();
-
-            }
-
-            // Remove inhabitants from rooms
-            for (ISquare entity : getEntitiesOfType(EntityRoom.class)) {
-                EntityRoom room = (EntityRoom) entity;
-                room.setInhabitantID(0);
-            }
+            evacuate(event);
             break;
 
         case START_CINEMA:
-            // Lookup cinemas
-            int cinemaID = Entity.parseInt(event.Data.get(key)) - 1;
-            ArrayList<ISquare> cinemas = new ArrayList<ISquare>();
-            for (ISquare entity : getEntitiesOfType(EntityLeasure.class)) {
-                EntityLeasure current = (EntityLeasure) entity;
-                if (current.getActivityType() == "Cinema") {
-                    cinemas.add(entity);
-                }
-            }
-
-            // When cinema exists
-            if (cinemaID < cinemas.size() - 1) {
-                EntityLeasure cinema = (EntityLeasure) cinemas.get(cinemaID);
-                for (ISquare entity : getEntitiesOfType(EntityGuest.class)) {
-                    guest = (EntityGuest) entity;
-                    if (cinema.getX() == guest.getX() && cinema.getY() == guest.getY()) {
-                        Node from = DijkstraAlgorithm.createLocationNode(entity.getX(), entity.getY());
-
-                        // Find Room
-                        Node to = null;
-                        for (ISquare lookupEntity : getEntitiesOfType(EntityRoom.class)) {
-                            EntityRoom current = (EntityRoom) lookupEntity;
-                            if (current.getInhabitantID() == guest.getID()) {
-                                to = DijkstraAlgorithm.createLocationNode(current.getX(), current.getY());
-                            }
-                        }
-
-                        if (to != null) {
-                            // Calculate route
-                            ArrayList<Node> route = new ArrayList<Node>();
-
-                            // Amount of time the entity waits in cinema
-                            for (int i = 0; i < getLeasureTime(); i++) {
-                                DijkstraAlgorithm.createLocationNode(cinema.getX(), cinema.getY());
-                            }
-
-                            route.addAll(DijkstraAlgorithm.findPath(from, to, nodeGraph()));
-
-                            // Set instructions
-                            guest.setInstructions(route);
-                        }
-                    }
-                }
-            }
+            startCinema(event);
             break;
 
         case NEED_FOOD:
-            for (ISquare entity : getEntitiesOfType(EntityGuest.class)) {
-                guest = (EntityGuest) entity;
-                if (guest.getID() == Entity.parseInt(event.Data.get(key))) {
-                    // Generate instructions to available room
-                    Node from = DijkstraAlgorithm.createLocationNode(entity.getX(), entity.getY());
-
-                    // TODO: find restaurant
-                    Node to = null;
-                    for (ISquare lookupEntity : getEntitiesOfType(EntityDiner.class)) {
-                        to = DijkstraAlgorithm.createLocationNode(lookupEntity.getX(), lookupEntity.getY());
-                    }
-
-                    if (to != null) {
-
-                        ArrayList<Node> route = DijkstraAlgorithm.findPath(from, to, nodeGraph());
-
-                        // Go back to hotel room
-                        route.addAll(DijkstraAlgorithm.findPath(to, from, nodeGraph()));
-
-                        // Set instructions
-                        guest.setInstructions(route);
-                    }
-                }
-            }
+            needFood(event);
             break;
 
         case GOTO_FITNESS:
-            for (ISquare entity : getEntitiesOfType(EntityGuest.class)) {
-                guest = (EntityGuest) entity;
-                if (guest.getID() == Entity.parseInt(event.Data.get(key))) {
-                    // Generate instructions to available room
-                    Node from = DijkstraAlgorithm.createLocationNode(entity.getX(), entity.getY());
-
-                    // Find fitness
-                    Node to = null;
-                    for (ISquare lookupEntity : getEntitiesOfType(EntityLeasure.class)) {
-                        EntityLeasure current = (EntityLeasure) lookupEntity;
-                        if (current.getActivityType() == "Fitness") {
-                            to = DijkstraAlgorithm.createLocationNode(current.getX(), current.getY());
-                        }
-                    }
-
-                    if (to != null) {
-
-                        ArrayList<Node> route = DijkstraAlgorithm.findPath(from, to, nodeGraph());
-
-                        // Go back to hotel room
-                        route.addAll(DijkstraAlgorithm.findPath(to, from, nodeGraph()));
-
-                        // Set instructions
-                        guest.setInstructions(route);
-                    }
-                }
-            }
+            gotoFitness(event);
             break;
 
         case GOTO_CINEMA:
-            for (ISquare entity : getEntitiesOfType(EntityGuest.class)) {
-                guest = (EntityGuest) entity;
-                System.out.println(guest.getID());
-                if (guest.getID() == Entity.parseInt(event.Data.get(key))) {
-                    // Generate instructions to available room
-                    Node from = DijkstraAlgorithm.createLocationNode(entity.getX(), entity.getY());
-
-                    // Find cinema
-                    Node to = null;
-                    for (ISquare lookupEntity : getEntitiesOfType(EntityLeasure.class)) {
-                        EntityLeasure current = (EntityLeasure) lookupEntity;
-                        if (current.getActivityType() == "Cinema") {
-                            to = DijkstraAlgorithm.createLocationNode(current.getX(), current.getY());
-                        }
-                    }
-
-                    if (to != null) {
-                        // Calculate route
-                        ArrayList<Node> route = DijkstraAlgorithm.findPath(from, to, nodeGraph());
-
-                        // Set instructions
-                        guest.setInstructions(route);
-                    }
-                }
-            }
+            gotoCinema(event);
             break;
 
         case NONE:
@@ -489,8 +571,6 @@ public class Hotel implements HotelEventListener {
 
     /**
      * Find entity with type
-     * 
-     * @param type
      * @return
      */
     private ArrayList<IEntity> getReactableEntites() {
@@ -515,8 +595,7 @@ public class Hotel implements HotelEventListener {
 
     /**
      * Gets highest value from layout file
-     * 
-     * @param array
+     * @param i
      * @param value
      * @return
      */
@@ -540,7 +619,6 @@ public class Hotel implements HotelEventListener {
                 }
             }
         } catch (Exception e) {
-            // TODO: better exception handling
             throw e;
         }
 
@@ -604,17 +682,18 @@ public class Hotel implements HotelEventListener {
         if (roomToClean != null) {
             for (ISquare entity : getEntitiesOfType(EntityHousekeeping.class)) {
                 EntityHousekeeping housekeeper = (EntityHousekeeping) entity;
-                if (!housekeeper.getActive()) {
-                    // Set assigned housekeeper
-                    housekeeperAssigned = housekeeper;
-                } else {
-                    // Find cleaned room by this housekeeper
-                    for (ISquare lookupEntity : getEntitiesOfType(EntityRoom.class)) {
-                        EntityRoom room = (EntityRoom) lookupEntity;
-                        if (housekeeper.getID() == room.getHousekeeperID()) {
-                            room.cleanRoom();
-                        }
+
+                // Clean room if cyka is done.
+                for (ISquare lookupEntity : getEntitiesOfType(EntityRoom.class)) {
+                    EntityRoom room = (EntityRoom) lookupEntity;
+                    if (!housekeeper.getActive() && housekeeper.getID() == room.getHousekeeperID()) {
+                        room.cleanRoom();
                     }
+                }
+
+                if (!housekeeper.getActive()) {
+                    // Set assigned housekeeper.
+                    housekeeperAssigned = housekeeper;
                 }
             }
         }
