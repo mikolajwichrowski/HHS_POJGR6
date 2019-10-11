@@ -12,14 +12,45 @@ public class Menu extends JFrame {
     /**
      * global JTextField variables
      */
-    private JTextField timeFactor, pixelFactor, filthFactor, leasureFactor, elevatorFactor, stairFactor, timeDisplay;
+    private JTextField timeFactor;
+
+    /**
+     * resolution
+     */
+    private JTextField pixelFactor;
+
+    /**
+     * the time it takes for a room to get dirty
+     */
+    private JTextField filthFactor;
+
+    /**
+     * how long people go to cinema
+     */
+    private JTextField leasureFactor;
+
+    /**
+     * the elevator cost
+     */
+    private JTextField elevatorFactor;
+
+    /**
+     * stair cost
+     */
+    private JTextField stairFactor;
+
+    /**
+     * clock
+     */
+    private JTextField timeDisplay;
 
     /**
      * Constructor Menu
      */
     public Menu() {
 
-        //set the (title, size, location, color, layout) of the JFrame(super class) of the Menu.
+        // set the (title, size, location, color, layout) of the JFrame(super class) of
+        // the Menu.
         setTitle("Regulation screen");
         setSize(365, 540);
         setLocation(0, 0);
@@ -27,7 +58,7 @@ public class Menu extends JFrame {
         getContentPane().setBackground(new Color(245, 245, 240));
         setLayout(null);
 
-        //add the create Jlabels to the JFrame wich are fabric in the MenuFactory
+        // add the create Jlabels to the JFrame wich are fabric in the MenuFactory
         add(MenuFactory.createJLabel("Hotel Time Unit", 0));
         add(MenuFactory.createJLabel("Pixel Resolution", 1));
         add(MenuFactory.createJLabel("Cleaning expensive", 2));
@@ -36,7 +67,7 @@ public class Menu extends JFrame {
         add(MenuFactory.createJLabel("Stair time", 5));
         add(MenuFactory.createJLabel("Local time", 6));
 
-        //add the create JTextFields to the JFrame wich are fabric in the MenuFactory
+        // add the create JTextFields to the JFrame wich are fabric in the MenuFactory
         timeFactor = MenuFactory.createJTextField(String.format("%.1f", Clock.getClockspeed()), 0);
         add(timeFactor);
 
@@ -60,7 +91,7 @@ public class Menu extends JFrame {
         timeDisplay.setForeground(new Color(255, 255, 255));
         add(timeDisplay);
 
-        //add the create JButtons to the JFrame wich are fabric in the MenuFactory
+        // add the create JButtons to the JFrame wich are fabric in the MenuFactory
         add(MenuFactory.createJButton("Time unit +", "plus", 0, e -> {
             Clock.addClockspeed();
             timeFactor.setText(String.format("%.1f", Clock.getClockspeed()));

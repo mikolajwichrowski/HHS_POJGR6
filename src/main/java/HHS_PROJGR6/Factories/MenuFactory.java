@@ -23,22 +23,22 @@ public class MenuFactory {
      */
     public static JButton createJButton(String text, String type, int position, ActionListener action) {
         JButton button = new JButton(text);
-        button.setBounds(type == "plus" ? 20 : 228, 30 + (position * 70), 100, 40);
+        button.setBounds(type.equals("plus") ? 20 : 228, 30 + (position * 70), 100, 40);
         button.setFont(new Font("Calabri", Font.ITALIC, 10));
 
         switch (type) {
-            case "plus":
-                button.setBackground(new Color(112, 219, 112));
-                button.setForeground(new Color(255, 255, 255));
-                break;
+        case "plus":
+            button.setBackground(new Color(112, 219, 112));
+            button.setForeground(new Color(255, 255, 255));
+            break;
 
-            case "min":
-                button.setBackground(new Color(255, 77, 77));
-                button.setForeground(new Color(255, 255, 255));
-                break;
+        case "min":
+            button.setBackground(new Color(255, 77, 77));
+            button.setForeground(new Color(255, 255, 255));
+            break;
 
-            default:
-                return button;
+        default:
+            return button;
         }
         button.addActionListener(action);
         return button;
