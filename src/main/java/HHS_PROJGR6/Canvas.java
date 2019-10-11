@@ -1,9 +1,11 @@
 package HHS_PROJGR6;
 
 import HHS_PROJGR6.Entities.Entity;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+
 import static HHS_PROJGR6.Settings.getPixelResolution;
 
 /**
@@ -11,22 +13,22 @@ import static HHS_PROJGR6.Settings.getPixelResolution;
  */
 public class Canvas extends JPanel {
     /**
-     * 
+     *
      */
     private Integer gridHeight;
 
     /**
-     * 
+     *
      */
     private Integer gridWidth;
 
     /**
-     * 
+     *
      */
     private ArrayList<Entity> drawableEntities;
 
     /**
-     * 
+     *
      */
 
     public Canvas(Dimension d) {
@@ -39,7 +41,6 @@ public class Canvas extends JPanel {
     }
 
     /**
-     * 
      * @param g
      */
     private void drawGrid(Graphics g) {
@@ -54,7 +55,6 @@ public class Canvas extends JPanel {
     }
 
     /**
-     * 
      * @param g
      */
     private void drawableEntity(Graphics g) {
@@ -68,14 +68,14 @@ public class Canvas extends JPanel {
     }
 
     /**
-     * 
+     *
      */
     public int getGridHeight() {
         return gridHeight;
     }
 
     /**
-     * 
+     *
      */
     public void setGridHeight(int height) {
         this.gridHeight = height;
@@ -83,14 +83,14 @@ public class Canvas extends JPanel {
     }
 
     /**
-     * 
+     *
      */
     public int getGridWidth() {
         return gridWidth;
     }
 
     /**
-     * 
+     *
      */
     public void setGridWidth(int width) {
         this.gridWidth = width;
@@ -98,14 +98,14 @@ public class Canvas extends JPanel {
     }
 
     /**
-     * 
+     *
      */
     public ArrayList<Entity> getDrawableEntities() {
         return drawableEntities;
     }
 
     /**
-     * 
+     *
      */
     public void setDrawableEntities(ArrayList<Entity> drawableEntities) {
         this.drawableEntities = drawableEntities;
@@ -113,7 +113,7 @@ public class Canvas extends JPanel {
     }
 
     /**
-     * 
+     *
      */
     @Override
     protected void paintComponent(Graphics g) {

@@ -1,7 +1,7 @@
 package HHS_PROJGR6;
 
 /**
- * Settings
+ * Settings for the menu. When application is running press the VK_M button for changing the settings.
  */
 public class Settings {
     private static int pixelResolution = 60;

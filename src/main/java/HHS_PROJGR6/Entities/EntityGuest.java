@@ -3,17 +3,14 @@ package HHS_PROJGR6.Entities;
 import HHS_PROJGR6.Interfaces.IEntity;
 import HHS_PROJGR6.Utils.Node;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static HHS_PROJGR6.Settings.getPixelResolution;
-
 /*
-* Guest class
-* Inherits from Entity
-*/
+ * Guest class
+ * Inherits from Entity
+ */
 
 public class EntityGuest extends Entity implements IEntity {
     /**
@@ -32,7 +29,6 @@ public class EntityGuest extends Entity implements IEntity {
     private List<Node> instructions;
 
     /**
-     * 
      * @param entityImage
      */
     public EntityGuest(String entityImage) {
@@ -41,14 +37,14 @@ public class EntityGuest extends Entity implements IEntity {
     }
 
     /**
-     * 
+     *
      */
     public void checkout() {
         setID("0");
     }
 
     /**
-     * 
+     *
      */
     public void drawEntity(Graphics g) {
         if (instructions.size() > 0) {
@@ -58,7 +54,6 @@ public class EntityGuest extends Entity implements IEntity {
     }
 
     /**
-     * 
      * @return
      */
     public int getPreference() {
@@ -66,7 +61,6 @@ public class EntityGuest extends Entity implements IEntity {
     }
 
     /**
-     * 
      * @param preference
      */
     public void setPreference(String preference) {
@@ -74,7 +68,6 @@ public class EntityGuest extends Entity implements IEntity {
     }
 
     /**
-     * 
      * @param id
      */
     public void setID(String id) {
@@ -82,7 +75,6 @@ public class EntityGuest extends Entity implements IEntity {
     }
 
     /**
-     * 
      * @return
      */
     public Integer getID() {
@@ -90,7 +82,6 @@ public class EntityGuest extends Entity implements IEntity {
     }
 
     /**
-     * 
      * @return
      */
     public boolean getActive() {
@@ -98,7 +89,6 @@ public class EntityGuest extends Entity implements IEntity {
     }
 
     /**
-     * 
      * @param instructions
      */
     public void setInstructions(List<Node> instructions) {
@@ -106,7 +96,7 @@ public class EntityGuest extends Entity implements IEntity {
     }
 
     /**
-     * 
+     *
      */
     public void Notify() {
         // if has instructions do them

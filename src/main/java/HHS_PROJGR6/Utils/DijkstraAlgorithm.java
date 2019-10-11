@@ -1,19 +1,16 @@
 package HHS_PROJGR6.Utils;
 
 import HHS_PROJGR6.Entities.Entity;
-import HHS_PROJGR6.Interfaces.IEntity;
-import HHS_PROJGR6.Interfaces.ISquare;
 
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import static HHS_PROJGR6.Settings.getElevatorCost;
 import static HHS_PROJGR6.Settings.getStairCost;
 
 public class DijkstraAlgorithm {
     /**
-     * 
      * @param width
      * @param height
      * @param entities
@@ -88,7 +85,6 @@ public class DijkstraAlgorithm {
     }
 
     /**
-     * 
      * @param graph
      * @param node
      * @return
@@ -113,7 +109,6 @@ public class DijkstraAlgorithm {
     }
 
     /**
-     * 
      * @param source
      * @param destination
      * @param graph
@@ -217,7 +212,6 @@ public class DijkstraAlgorithm {
     }
 
     /**
-     * 
      * @param x
      * @param y
      * @return

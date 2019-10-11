@@ -66,7 +66,7 @@ public class Entity implements ISquare {
      */
     public static ArrayList<ISquare> getOnPosition(int x, int y, ArrayList<Entity> entities) {
         return ((ArrayList<ISquare>) entities.clone()).stream().filter(entity -> {
-            ISquare e = (ISquare) entity;
+            ISquare e = entity;
             boolean belowPosition = e.getX() + (e.getWidth() - 1) >= x && e.getY() - (e.getHeight() - 1) <= y;
             boolean abovePostion = (e.getX() <= x && e.getY() >= y) ? belowPosition : false;
             return abovePostion;
@@ -86,9 +86,6 @@ public class Entity implements ISquare {
     /**
      *
      */
-    public void Notify() {
-        // TODO: Niks wss
-    }
 
     public int getX() {
         return x;

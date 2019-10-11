@@ -20,8 +20,6 @@ import java.util.Iterator;
 
 import static HHS_PROJGR6.Settings.getLeasureTime;
 
-// imports from project
-
 /**
  *
  */
