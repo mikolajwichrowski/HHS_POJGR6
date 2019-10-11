@@ -33,22 +33,24 @@ public class App extends JFrame {
         Canvas canvas = new Canvas(d);
 
         // Change size of window for legenda
-        d = new Dimension(getPixelResolution() * (myHotel.getHighestPositions()[0] + 4), getPixelResolution() * (myHotel.getHighestPositions()[1] + 1) + 200);
+        d = new Dimension(getPixelResolution() * (myHotel.getHighestPositions()[0] + 4), getPixelResolution() * (myHotel.getHighestPositions()[1] + 2) + 200);
 
         // Add canvas to hotel
         myHotel.setHotelCanvas(canvas);
 
         // Add JPanel to show a little legenda unfortunately Windows and Mac show different layout
-        JPanel p = new JPanel();
+        JPanel p = new JPanel(new GridLayout(5, 1));
         p.setFont(new Font("Calabri", Font.ITALIC, 20));
         p.setBackground(new Color(245, 245, 240));
-        p.setBounds(0, 500, 500, 200);
+        p.setBounds(10, 510, 500, 100);
 
 
         L1 = new JLabel("Groen = Kamer is schoon", SwingConstants.LEFT);
         L1.setForeground(Color.GREEN);
+        L1.setLocation(10,0);
         L2 = new JLabel("Oranje = Kamer wordt schoongemaakt");
         L2.setForeground(Color.ORANGE);
+        L2.setLocation(20,0);
         L3 = new JLabel("Rood = Kamer vies");
         L3.setForeground(Color.RED);
         L4 = new JLabel("M = Menu for settings");
