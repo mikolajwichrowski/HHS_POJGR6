@@ -512,47 +512,46 @@ public class Hotel implements HotelEventListener {
      * is hella big. It shouldn't be :(
      */
     public void Notify(HotelEvent event) {
-        // Key of event
-        String key = event.Data.keySet().iterator().next();
+        // Guest
         EntityGuest guest = null;
 
         // Which event is fired
         switch (event.Type) {
-            case CHECK_IN:
-                checkIn(event);
-                break;
-            case CHECK_OUT:
-                checkOut(event);
-                break;
+        case CHECK_IN:
+            checkIn(event);
+            break;
+        case CHECK_OUT:
+            checkOut(event);
+            break;
 
-            case CLEANING_EMERGENCY:
-                cleaningEmergency(event);
-                break;
+        case CLEANING_EMERGENCY:
+            cleaningEmergency(event);
+            break;
 
-            case EVACUATE:
-                evacuate(event);
-                break;
+        case EVACUATE:
+            evacuate(event);
+            break;
 
-            case START_CINEMA:
-                startCinema(event);
-                break;
+        case START_CINEMA:
+            startCinema(event);
+            break;
 
-            case NEED_FOOD:
-                needFood(event);
-                break;
+        case NEED_FOOD:
+            needFood(event);
+            break;
 
-            case GOTO_FITNESS:
-                gotoFitness(event);
-                break;
+        case GOTO_FITNESS:
+            gotoFitness(event);
+            break;
 
-            case GOTO_CINEMA:
-                gotoCinema(event);
-                break;
+        case GOTO_CINEMA:
+            gotoCinema(event);
+            break;
 
-            case NONE:
-            default:
-                // No event
-                break;
+        case NONE:
+        default:
+            // No event
+            break;
 
         }
     }
