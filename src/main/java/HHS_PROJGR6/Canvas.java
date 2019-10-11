@@ -1,14 +1,9 @@
 package HHS_PROJGR6;
 
 import HHS_PROJGR6.Entities.Entity;
-import HHS_PROJGR6.Interfaces.IEntity;
-import HHS_PROJGR6.Interfaces.ISquare;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
-
 import static HHS_PROJGR6.Settings.getPixelResolution;
 
 /**

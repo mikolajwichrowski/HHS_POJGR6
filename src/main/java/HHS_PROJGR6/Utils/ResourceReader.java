@@ -1,9 +1,6 @@
 package HHS_PROJGR6.Utils;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.net.URL;
 
 /**
@@ -12,7 +9,6 @@ import java.net.URL;
 public class ResourceReader {
 
     /**
-     * 
      * @param fileName
      * @return
      */
@@ -28,7 +24,6 @@ public class ResourceReader {
     }
 
     /**
-     * 
      * @param resourceName
      * @return
      */

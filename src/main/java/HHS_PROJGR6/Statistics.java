@@ -15,9 +15,6 @@ import java.util.List;
  */
 public class Statistics extends JFrame {
 
-    JTable jt = new JTable();
-
-
     public Statistics(List<Entity> entities) {
         super.setSize(400, 540);
         super.setLocation(935, 0);
@@ -59,23 +56,23 @@ public class Statistics extends JFrame {
                     if (lookupEntity instanceof EntityRoom && ((EntityRoom) lookupEntity).getInhabitantID() == ((EntityGuest) entities.get(i)).getID()) {
                         row[3] = ((EntityRoom) lookupEntity).isDirty() ? "Dirty" : "Clean";
                     }
-                        data.add(row);
-                    }
-
-                // Create table
-                String[][] arrayOfData = new String[data.size()][];
-                arrayOfData = data.toArray(arrayOfData);
-
-                jt = new JTable(arrayOfData, column);
-                jt.setBounds(30, 40, 200, 300);
-                JScrollPane sp = new JScrollPane(jt);
-                add(sp);
-
-                setTitle("Statistieken");
-                setResizable(true);
-                getContentPane().setBackground(new Color(245, 245, 240));
-                setVisible(true);
-
+                data.add(row);
             }
+
+        // Create table
+        String[][] arrayOfData = new String[data.size()][];
+        arrayOfData = data.toArray(arrayOfData);
+
+        JTable jt = new JTable(arrayOfData, column);
+        jt.setBounds(30, 40, 200, 300);
+        JScrollPane sp = new JScrollPane(jt);
+        add(sp);
+
+        setTitle("Statistieken");
+        setResizable(true);
+        getContentPane().setBackground(new Color(245, 245, 240));
+        setVisible(true);
+
     }
+}
 
