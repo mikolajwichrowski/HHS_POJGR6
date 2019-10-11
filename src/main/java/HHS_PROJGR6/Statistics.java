@@ -19,10 +19,25 @@ public class Statistics extends JFrame {
         super.setSize(400, 540);
         super.setLocation(935, 0);
 
+        setStatistics(entities);
+
+        setTitle("Statistieken");
+        setResizable(true);
+        getContentPane().setBackground(new Color(245, 245, 240));
+        setVisible(true);
+
+    }
+
+    public void setStatistics(List<Entity> entities) {
+        getContentPane().removeAll();
+        repaint();
+
+        JTable jt = new JTable();
+
         // Define data and columns
         List<String[]> data = new ArrayList<String[]>();
 
-        String column[] = {"Person", "Floor", "Preference", "Room"};
+        String column[] = { "Person", "Floor", "Preference", "Room" };
 
         // Loop trough entities
         // Set row data
@@ -63,16 +78,16 @@ public class Statistics extends JFrame {
         String[][] arrayOfData = new String[data.size()][];
         arrayOfData = data.toArray(arrayOfData);
 
-        JTable jt = new JTable(arrayOfData, column);
+        jt = new JTable(arrayOfData, column);
         jt.setBounds(30, 40, 200, 300);
         JScrollPane sp = new JScrollPane(jt);
-        add(sp);
+        try {
+            add(sp);
+        } catch (Exception e) {
 
-        setTitle("Statistieken");
-        setResizable(true);
-        getContentPane().setBackground(new Color(245, 245, 240));
-        setVisible(true);
+        }
+
+        validate();
 
     }
 }
-
