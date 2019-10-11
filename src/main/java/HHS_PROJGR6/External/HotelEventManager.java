@@ -411,7 +411,7 @@ public class HotelEventManager implements Runnable {
 
     /**
      * Registers a HotelEventListener to the EventManager
-     * 
+     *
      * @param listener
      * @return true = succesful adding
      */
@@ -421,21 +421,6 @@ public class HotelEventManager implements Runnable {
         } else {
             listeners.add(listener);
             return true;
-        }
-    }
-
-    /**
-     * Deregisters a existing HotelEventListener from the EventManager
-     *
-     * @param listener
-     * @return true = succesfull removal
-     */
-    public boolean deregister(HotelEventListener listener) {
-        if (listeners.contains(listener)) {
-            listeners.remove(listener);
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -509,15 +494,6 @@ public class HotelEventManager implements Runnable {
     }
 
     /**
-     * Helper to get the current time in one place, instead of 3 or more
-     * 
-     * @return long
-     */
-    private long getCurrentTime() {
-        return TimeUnit.NANOSECONDS.toMillis(System.nanoTime());
-    }
-
-    /**
      * Starts a new thread and makes it run
      */
     public void start() {
@@ -545,7 +521,7 @@ public class HotelEventManager implements Runnable {
 
     /**
      * Changes the speed of the firing Allowed: > 0 && < 2 / all numbers between
-     * 
+     *
      * @param factor
      * @return if changed succesfull
      */
@@ -558,4 +534,12 @@ public class HotelEventManager implements Runnable {
         }
     }
 
+    /**
+     * Helper to get the current time in one place, instead of 3 or more
+     *
+     * @return long
+     */
+    private long getCurrentTime() {
+        return TimeUnit.NANOSECONDS.toMillis(System.nanoTime());
+    }
 }

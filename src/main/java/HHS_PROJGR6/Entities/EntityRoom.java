@@ -8,33 +8,33 @@ import static HHS_PROJGR6.Settings.getPixelResolution;
 import static HHS_PROJGR6.Settings.getFilthTime;
 
 /*
-* Room class
-* Inherits from Entity
-*/
+ * Room class
+ * Inherits from Entity
+ */
 
 public class EntityRoom extends Entity implements IEntity {
     /**
-     * 
+     *
      */
     private int inhabitantID;
 
     /**
-     * 
+     *
      */
     private int housekeeperID;
 
     /**
-     * 
+     *
      */
     private int classification;
 
     /**
-     * 
+     *
      */
     private int dirty;
 
     /**
-     * 
+     *
      */
     public EntityRoom(String entityImage, String classification) {
         super(entityImage);
@@ -45,7 +45,7 @@ public class EntityRoom extends Entity implements IEntity {
     }
 
     /**
-     * 
+     *
      */
     public void drawEntity(Graphics g) {
         g.fillRect(getX() * getPixelResolution(), (getY() - (getHeight() - 1)) * getPixelResolution(), getWidth() * getPixelResolution(), getHeight() * getPixelResolution());
@@ -77,7 +77,6 @@ public class EntityRoom extends Entity implements IEntity {
     }
 
     /**
-     * 
      * @param classification
      */
     public void setClassification(String classification) {
@@ -85,46 +84,6 @@ public class EntityRoom extends Entity implements IEntity {
     }
 
     /**
-     * 
-     * @param classification
-     * @return
-     */
-    public int getClassification() {
-        return this.classification;
-    }
-
-    /**
-     * @return the inhabitantID
-     */
-    public int getInhabitantID() {
-        return this.inhabitantID;
-    }
-
-    /**
-     * @param inhabitantID
-     *                         the inhabitantID to set
-     */
-    public void setInhabitantID(int inhabitantID) {
-        this.inhabitantID = inhabitantID;
-    }
-
-    /**
-     * @return the housekeeperID
-     */
-    public int getHousekeeperID() {
-        return this.housekeeperID;
-    }
-
-    /**
-     * @param inhabitantID
-     *                         the housekeeperID to set
-     */
-    public void setHousekeeperID(int housekeeperID) {
-        this.housekeeperID = housekeeperID;
-    }
-
-    /**
-     * 
      * @return
      */
     public boolean isDirty() {
@@ -132,14 +91,14 @@ public class EntityRoom extends Entity implements IEntity {
     }
 
     /**
-     * 
+     *
      */
     public void makeDirty() {
         this.dirty = getFilthTime();
     }
 
     /**
-     * 
+     *
      */
     public void cleanRoom() {
         this.housekeeperID = 0;
@@ -154,4 +113,40 @@ public class EntityRoom extends Entity implements IEntity {
             this.dirty++;
         }
     }
+
+    /**
+     * @return
+     */
+    public int getClassification() {
+        return this.classification;
+    }
+
+    /**
+     * @return the housekeeperID
+     */
+    public int getHousekeeperID() {
+        return this.housekeeperID;
+    }
+
+    /**
+     * @return the inhabitantID
+     */
+    public int getInhabitantID() {
+        return this.inhabitantID;
+    }
+
+    /**
+     * @param inhabitantID the inhabitantID to set
+     */
+    public void setInhabitantID(int inhabitantID) {
+        this.inhabitantID = inhabitantID;
+    }
+
+    /**
+     * @param housekeeperID
+     */
+    public void setHousekeeperID(int housekeeperID) {
+        this.housekeeperID = housekeeperID;
+    }
+
 }

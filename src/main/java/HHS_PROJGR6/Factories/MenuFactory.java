@@ -27,18 +27,18 @@ public class MenuFactory {
         button.setFont(new Font("Calabri", Font.ITALIC, 10));
 
         switch (type) {
-        case "plus":
-            button.setBackground(new Color(112, 219, 112));
-            button.setForeground(new Color(255, 255, 255));
-            break;
+            case "plus":
+                button.setBackground(new Color(112, 219, 112));
+                button.setForeground(new Color(255, 255, 255));
+                break;
 
-        case "min":
-            button.setBackground(new Color(255, 77, 77));
-            button.setForeground(new Color(255, 255, 255));
-            break;
+            case "min":
+                button.setBackground(new Color(255, 77, 77));
+                button.setForeground(new Color(255, 255, 255));
+                break;
 
-        default:
-            return button;
+            default:
+                return button;
         }
         button.addActionListener(action);
         return button;

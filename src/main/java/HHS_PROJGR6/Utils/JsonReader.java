@@ -1,21 +1,18 @@
 package HHS_PROJGR6.Utils;
 
 import HHS_PROJGR6.Interfaces.IFileReader;
-import HHS_PROJGR6.Utils.ResourceReader;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.text.ParseException;
 import java.util.Iterator;
 
-import org.json.simple.*;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-
 /*
-* Entity class
-*/
+ * Entity class
+ */
 public class JsonReader implements IFileReader {
     private File resource;
 

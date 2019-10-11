@@ -1,42 +1,40 @@
 package HHS_PROJGR6.Utils;
 
-import java.util.Comparator;
-
 import java.util.*;
 
 public class Node {
     /**
-     * 
+     *
      */
     private Node parent;
 
     /**
-     * 
+     *
      */
     private int costToParent;
 
     /**
-     * 
+     *
      */
     private int x;
 
     /**
-     * 
+     *
      */
     private int y;
 
     /**
-     * 
+     *
      */
     private int cost;
 
     /**
-     * 
+     *
      */
     public List<Node> neighbours;
 
     /**
-     * 
+     *
      */
     public Node() {
         this.x = -1;
@@ -47,7 +45,6 @@ public class Node {
     }
 
     /**
-     * 
      * @param costToParent
      */
     public void setCostToParent(Integer costToParent) {
@@ -55,7 +52,6 @@ public class Node {
     }
 
     /**
-     * 
      * @return
      */
     public Integer getCostToParent() {
@@ -63,8 +59,7 @@ public class Node {
     }
 
     /**
-     * @param parent
-     *                   the parent to set
+     * @param parent the parent to set
      */
     public void setParent(Node parent) {
         this.parent = parent;
@@ -78,7 +73,6 @@ public class Node {
     }
 
     /**
-     * 
      * @param cost
      */
     public void setCost(Integer cost) {
@@ -86,7 +80,6 @@ public class Node {
     }
 
     /**
-     * 
      * @return
      */
     public Integer getCost() {
@@ -94,7 +87,6 @@ public class Node {
     }
 
     /**
-     * 
      * @param x
      * @param y
      */
@@ -104,7 +96,6 @@ public class Node {
     }
 
     /**
-     * 
      * @return
      */
     public Integer getX() {
@@ -112,7 +103,6 @@ public class Node {
     }
 
     /**
-     * 
      * @return
      */
     public Integer getY() {
@@ -120,7 +110,6 @@ public class Node {
     }
 
     /**
-     * 
      * @return
      */
     public List<Node> getNeighbours() {
@@ -128,7 +117,6 @@ public class Node {
     }
 
     /**
-     * 
      * @param neighbour
      */
     public void addNeighbour(Node neighbour) {
@@ -136,7 +124,6 @@ public class Node {
     }
 
     /**
-     * 
      * @param other
      */
     public boolean compare(Node other) {

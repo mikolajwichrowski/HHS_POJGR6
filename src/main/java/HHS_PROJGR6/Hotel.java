@@ -20,8 +20,6 @@ import java.util.Iterator;
 
 import static HHS_PROJGR6.Settings.getLeasureTime;
 
-// imports from project
-
 /**
  *
  */
@@ -54,7 +52,7 @@ public class Hotel implements HotelEventListener {
 
     /**
      * Hotel class
-     * 
+     * <p>
      * The object derived from this class must contain all the entities. All the
      * enties will live and act here. Every event is triggered in the object derived
      * from this class. The canvas is aggregated in this class to make sure that
@@ -117,7 +115,7 @@ public class Hotel implements HotelEventListener {
     public void init() {
         try {
             // Read hotel and get highest position values
-            JsonReader reader = new JsonReader("hotel(4).layout");
+            JsonReader reader = new JsonReader("hotel.layout");
 
             // Set highest position
             highestPositions = getHighest(reader.getIterable(), "Position");
@@ -210,7 +208,7 @@ public class Hotel implements HotelEventListener {
 
     /**
      * returns hotel canvas
-     * 
+     *
      * @return
      */
     public Canvas getHotelCanvas() {
@@ -219,7 +217,7 @@ public class Hotel implements HotelEventListener {
 
     /**
      * sets hotel canvas and its resolution
-     * 
+     *
      * @param hotelCanvas
      */
     public void setHotelCanvas(Canvas hotelCanvas) {
@@ -246,7 +244,6 @@ public class Hotel implements HotelEventListener {
     }
 
     /**
-     * 
      * @param event
      */
     private void checkIn(HotelEvent event) {
@@ -284,7 +281,7 @@ public class Hotel implements HotelEventListener {
     }
 
     /**
-     * 
+     *
      */
     private void checkOut(HotelEvent event) {
         String key = event.Data.keySet().iterator().next();
@@ -316,7 +313,6 @@ public class Hotel implements HotelEventListener {
     }
 
     /**
-     * 
      * @param event
      */
     private void cleaningEmergency(HotelEvent event) {
@@ -330,7 +326,6 @@ public class Hotel implements HotelEventListener {
     }
 
     /**
-     * 
      * @param event
      */
     private void evacuate(HotelEvent event) {
@@ -361,7 +356,6 @@ public class Hotel implements HotelEventListener {
     }
 
     /**
-     * 
      * @param event
      */
     private void startCinema(HotelEvent event) {
@@ -414,7 +408,6 @@ public class Hotel implements HotelEventListener {
     }
 
     /**
-     * 
      * @param event
      */
     private void needFood(HotelEvent event) {
@@ -447,7 +440,7 @@ public class Hotel implements HotelEventListener {
     }
 
     /**
-     * 
+     *
      */
     private void gotoFitness(HotelEvent event) {
         String key = event.Data.keySet().iterator().next();
@@ -482,7 +475,7 @@ public class Hotel implements HotelEventListener {
     }
 
     /**
-     * 
+     *
      */
     private void gotoCinema(HotelEvent event) {
         String key = event.Data.keySet().iterator().next();
@@ -525,48 +518,48 @@ public class Hotel implements HotelEventListener {
 
         // Which event is fired
         switch (event.Type) {
-        case CHECK_IN:
-            checkIn(event);
-            break;
-        case CHECK_OUT:
-            checkOut(event);
-            break;
+            case CHECK_IN:
+                checkIn(event);
+                break;
+            case CHECK_OUT:
+                checkOut(event);
+                break;
 
-        case CLEANING_EMERGENCY:
-            cleaningEmergency(event);
-            break;
+            case CLEANING_EMERGENCY:
+                cleaningEmergency(event);
+                break;
 
-        case EVACUATE:
-            evacuate(event);
-            break;
+            case EVACUATE:
+                evacuate(event);
+                break;
 
-        case START_CINEMA:
-            startCinema(event);
-            break;
+            case START_CINEMA:
+                startCinema(event);
+                break;
 
-        case NEED_FOOD:
-            needFood(event);
-            break;
+            case NEED_FOOD:
+                needFood(event);
+                break;
 
-        case GOTO_FITNESS:
-            gotoFitness(event);
-            break;
+            case GOTO_FITNESS:
+                gotoFitness(event);
+                break;
 
-        case GOTO_CINEMA:
-            gotoCinema(event);
-            break;
+            case GOTO_CINEMA:
+                gotoCinema(event);
+                break;
 
-        case NONE:
-        default:
-            // No event
-            break;
+            case NONE:
+            default:
+                // No event
+                break;
 
         }
     }
 
     /**
      * Find entity with type
-     * 
+     *
      * @param type
      * @return
      */
@@ -582,8 +575,7 @@ public class Hotel implements HotelEventListener {
 
     /**
      * Find entity with type
-     * 
-     * @param type
+     *
      * @return
      */
     private ArrayList<IEntity> getReactableEntites() {
@@ -599,7 +591,7 @@ public class Hotel implements HotelEventListener {
 
     /**
      * returns array of highest values. Array contains [x, y]
-     * 
+     *
      * @return
      */
     public int[] getHighestPositions() {
@@ -608,8 +600,8 @@ public class Hotel implements HotelEventListener {
 
     /**
      * Gets highest value from layout file
-     * 
-     * @param array
+     *
+     * @param i
      * @param value
      * @return
      */
@@ -657,7 +649,7 @@ public class Hotel implements HotelEventListener {
 
     /**
      * Registers entities
-     * 
+     *
      * @param actor
      */
     private void register(ISquare actor) {
@@ -669,7 +661,7 @@ public class Hotel implements HotelEventListener {
 
     /**
      * Removes entities
-     * 
+     *
      * @param actor
      */
     private void deregister(Entity actor) {

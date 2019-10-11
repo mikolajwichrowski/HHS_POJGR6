@@ -32,12 +32,10 @@ public class Statistics extends JFrame {
         getContentPane().removeAll();
         repaint();
 
-        JTable jt = new JTable();
-
         // Define data and columns
         List<String[]> data = new ArrayList<String[]>();
 
-        String column[] = { "Person", "Floor", "Preference", "Room" };
+        String column[] = {"Person", "Floor", "Preference", "Room"};
 
         // Loop trough entities
         // Set row data
@@ -78,7 +76,7 @@ public class Statistics extends JFrame {
         String[][] arrayOfData = new String[data.size()][];
         arrayOfData = data.toArray(arrayOfData);
 
-        jt = new JTable(arrayOfData, column);
+        JTable jt = new JTable(arrayOfData, column);
         jt.setBounds(30, 40, 200, 300);
         JScrollPane sp = new JScrollPane(jt);
         try {
@@ -87,7 +85,7 @@ public class Statistics extends JFrame {
 
         }
 
+        // keep the statistics up to date
         validate();
-
     }
 }

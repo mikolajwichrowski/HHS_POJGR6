@@ -1,20 +1,20 @@
 package HHS_PROJGR6;
 
 import javax.swing.*;
-import javax.swing.plaf.metal.MetalLookAndFeel;
-
 import java.awt.*;
 
 import static HHS_PROJGR6.Settings.getPixelResolution;
 
 /**
  * App class
- * 
+ * <p>
  * Used as the application entry class. This class is part of the main only its
  * a bit neater because instead of running the application from a method we run
  * it from an object.
  */
 public class App extends JFrame {
+
+    JLabel L1, L2, L3, L4, L5;
 
     /**
      * Generated serial id
@@ -22,12 +22,6 @@ public class App extends JFrame {
     private static final long serialVersionUID = -2280803615953081532L;
 
     public App() {
-        // Fix because windows and mac do stuff diferently
-        try {
-            UIManager.setLookAndFeel(new MetalLookAndFeel());
-        } catch (Exception e) {
-
-        }
 
         // Set dimensions, create canvas and hotel
         Hotel myHotel = new Hotel();
@@ -39,35 +33,32 @@ public class App extends JFrame {
         Canvas canvas = new Canvas(d);
 
         // Change size of window for legenda
-        d = new Dimension(getPixelResolution() * (myHotel.getHighestPositions()[0] + 4), getPixelResolution() * (myHotel.getHighestPositions()[1] + 5) + 300);
+        d = new Dimension(getPixelResolution() * (myHotel.getHighestPositions()[0] + 4), getPixelResolution() * (myHotel.getHighestPositions()[1] + 2) + 200);
 
         // Add canvas to hotel
         myHotel.setHotelCanvas(canvas);
 
-        JPanel p = new JPanel();
+        // Add JPanel to show a little legenda unfortunately Windows and Mac show different layout
+        JPanel p = new JPanel(new GridLayout(5, 1));
         p.setFont(new Font("Calabri", Font.ITALIC, 20));
         p.setBackground(new Color(245, 245, 240));
-        p.setBounds(10, 600, getPixelResolution() * (myHotel.getHighestPositions()[0] + 4), 200);
-        p.setLayout(new FlowLayout());
+        p.setBounds(10, 510, 500, 100);
 
-        JLabel info = new JLabel("Groen = Kamer is schoon \n", JLabel.LEFT);
 
-        info.setForeground(Color.GREEN);
-        p.add(info);
+        L1 = new JLabel("Groen = Kamer is schoon", SwingConstants.LEFT);
+        L1.setForeground(Color.GREEN);
+        L2 = new JLabel("Oranje = Kamer wordt schoongemaakt");
+        L2.setForeground(Color.ORANGE);
+        L3 = new JLabel("Rood = Kamer vies");
+        L3.setForeground(Color.RED);
+        L4 = new JLabel("M = Menu for settings");
+        L5 = new JLabel("S = Statistics");
 
-        info = new JLabel("Oranje = Kamer wordt schoongemaakt \n", JLabel.LEFT);
-        info.setForeground(Color.ORANGE);
-        p.add(info);
-
-        info = new JLabel("Rood = Kamer vies \n", JLabel.LEFT);
-        info.setForeground(Color.RED);
-        p.add(info);
-
-        info = new JLabel("M = menu \n", JLabel.LEFT);
-        p.add(info);
-
-        info = new JLabel("S = Settings \n", JLabel.LEFT);
-        p.add(info);
+        p.add(L1);
+        p.add(L2);
+        p.add(L3);
+        p.add(L4);
+        p.add(L5);
 
         // Adding components to the JFrame
         add(myHotel.getHotelCanvas());
@@ -89,7 +80,7 @@ public class App extends JFrame {
 
     /**
      * Main runs the application
-     * 
+     *
      * @param args
      */
     public static void main(String[] args) {
