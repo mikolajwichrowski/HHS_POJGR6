@@ -13,9 +13,6 @@ import static HHS_PROJGR6.Settings.getPixelResolution;
  * it from an object.
  */
 public class App extends JFrame {
-
-    JLabel L1, L2, L3, L4, L5;
-
     /**
      * Generated serial id
      */
@@ -38,27 +35,30 @@ public class App extends JFrame {
         // Add canvas to hotel
         myHotel.setHotelCanvas(canvas);
 
-        // Add JPanel to show a little legenda unfortunately Windows and Mac show different layout
+        // Add JPanel to show a little legenda unfortunately Windows and Mac show
+        // different layout
         JPanel p = new JPanel(new GridLayout(5, 1));
         p.setFont(new Font("Calabri", Font.ITALIC, 20));
         p.setBackground(new Color(245, 245, 240));
-        p.setBounds(10, 510, 500, 100);
+        p.setBounds(10, 560, 500, 100);
 
+        JLabel text = new JLabel("Groen = Kamer is schoon", SwingConstants.LEFT);
+        text.setForeground(Color.GREEN);
+        p.add(text);
 
-        L1 = new JLabel("Groen = Kamer is schoon", SwingConstants.LEFT);
-        L1.setForeground(Color.GREEN);
-        L2 = new JLabel("Oranje = Kamer wordt schoongemaakt");
-        L2.setForeground(Color.ORANGE);
-        L3 = new JLabel("Rood = Kamer vies");
-        L3.setForeground(Color.RED);
-        L4 = new JLabel("M = Menu for settings");
-        L5 = new JLabel("S = Statistics");
+        text = new JLabel("Oranje = Kamer wordt schoongemaakt");
+        text.setForeground(Color.ORANGE);
+        p.add(text);
 
-        p.add(L1);
-        p.add(L2);
-        p.add(L3);
-        p.add(L4);
-        p.add(L5);
+        text = new JLabel("Rood = Kamer vies");
+        text.setForeground(Color.RED);
+        p.add(text);
+
+        text = new JLabel("M = Menu for settings");
+        p.add(text);
+
+        text = new JLabel("S = Statistics");
+        p.add(text);
 
         // Adding components to the JFrame
         add(myHotel.getHotelCanvas());
