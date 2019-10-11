@@ -158,11 +158,6 @@ public class Hotel implements HotelEventListener {
                 entity.setPosition(y, x);
                 entity.setDimensions(width, height);
 
-                String capacity = (String) jsonObject.get("Capacity");
-                if (capacity != null && !capacity.equals("")) {
-                    ((EntityDiner) entity).setCapacity(capacity);
-                }
-
                 // Add entity
                 register(entity);
             }
