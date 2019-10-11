@@ -47,10 +47,8 @@ public class App extends JFrame {
 
         L1 = new JLabel("Groen = Kamer is schoon", SwingConstants.LEFT);
         L1.setForeground(Color.GREEN);
-        L1.setLocation(10,0);
         L2 = new JLabel("Oranje = Kamer wordt schoongemaakt");
         L2.setForeground(Color.ORANGE);
-        L2.setLocation(20,0);
         L3 = new JLabel("Rood = Kamer vies");
         L3.setForeground(Color.RED);
         L4 = new JLabel("M = Menu for settings");
